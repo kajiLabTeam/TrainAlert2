@@ -9,25 +9,20 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.navigation.NavHostController
-import net.harutiro.trainalert2.core.router.MainRoute
 import net.harutiro.trainalert2.features.Weather.entities.CityId
 import net.harutiro.trainalert2.features.Weather.entities.Weather
 import net.harutiro.trainalert2.core.presenter.home.viewModel.HomeViewModel
-import net.harutiro.trainalert2.core.presenter.widget.LoadingPage
+import net.harutiro.trainalert2.core.presenter.component.LoadingPage
 import java.lang.Double.NaN
 
 @Composable
-fun HomePage(toDetail: (cityId: CityId) -> Unit ,viewModel: HomeViewModel = viewModel()) {
+fun HomePage(
+    toDetail: (cityId: CityId) -> Unit ,
+    viewModel: HomeViewModel = viewModel()
+) {
 
     LaunchedEffect(key1 = viewModel.weathers){
         viewModel.getWeather()

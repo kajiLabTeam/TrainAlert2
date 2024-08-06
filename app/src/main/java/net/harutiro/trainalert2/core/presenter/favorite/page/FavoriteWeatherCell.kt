@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
-import net.harutiro.trainalert2.core.presenter.widget.BookmarkButton
+import net.harutiro.trainalert2.core.presenter.component.BookmarkButton
 import net.harutiro.trainalert2.core.utils.DateUtils
 import net.harutiro.trainalert2.core.widgets.Center
 import net.harutiro.trainalert2.features.Weather.entities.Forecast

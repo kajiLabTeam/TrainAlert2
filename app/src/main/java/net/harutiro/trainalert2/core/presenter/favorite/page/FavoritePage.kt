@@ -2,7 +2,6 @@ package net.harutiro.trainalert2.core.presenter.favorite.page
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,11 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import net.harutiro.trainalert2.R
 import net.harutiro.trainalert2.core.presenter.favorite.viewModel.FavoriteViewModel
-import net.harutiro.trainalert2.core.presenter.widget.LoadingPage
+import net.harutiro.trainalert2.core.presenter.component.LoadingPage
 import net.harutiro.trainalert2.features.Weather.entities.CityId
 
 @OptIn(DelicateCoroutinesApi::class, ExperimentalFoundationApi::class)

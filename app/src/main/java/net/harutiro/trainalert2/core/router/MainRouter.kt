@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import net.harutiro.trainalert2.core.presenter.FirstPage
+import net.harutiro.trainalert2.core.presenter.component.BottomNavigationBar
 import net.harutiro.trainalert2.features.Weather.entities.CityId
 import net.harutiro.trainalert2.core.presenter.detail.page.DetailPage
 
@@ -16,7 +18,7 @@ fun MainRouter() {
 
     NavHost(navController = mainNavController, startDestination = MainRoute.BOTTOM_NAVIGATION_BAR.route){
         composable(MainRoute.BOTTOM_NAVIGATION_BAR.route){
-            BottomNavigationBarRouter(
+            FirstPage(
                 toDetail = { cityId ->
                     Log.d("MainRouter", "cityId: ${cityId.id}")
                     mainNavController.navigate("${MainRoute.DETAIL.route}/${cityId.id}")

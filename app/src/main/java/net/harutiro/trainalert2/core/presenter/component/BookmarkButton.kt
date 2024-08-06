@@ -1,10 +1,8 @@
-package net.harutiro.trainalert2.core.presenter.widget
+package net.harutiro.trainalert2.core.presenter.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -30,7 +28,6 @@ fun BookmarkButton(
 @Preview
 @Composable
 fun BookmarkButtonPreview() {
-
     val isBookmark = remember {
         mutableStateOf(false)
     }
