@@ -29,3 +29,4 @@ class MainActivity : ComponentActivity() {
     //Mizukichan!
     // makino dayo
 }
+//s.ayaka test
