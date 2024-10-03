@@ -25,4 +25,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    // makino dayo
 }
