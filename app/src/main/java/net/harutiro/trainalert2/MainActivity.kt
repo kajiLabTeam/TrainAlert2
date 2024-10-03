@@ -25,6 +25,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
+    //Mizukichan!
     // makino dayo
 }
