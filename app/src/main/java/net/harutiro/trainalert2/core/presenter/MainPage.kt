@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Map
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -41,9 +42,9 @@ fun FirstPage(){
             path = BottomNavigationBarRoute.HOME
         ),
         BottomNavigationItem(
-            title = stringResource(id = R.string.favorite),
-            selectedIcon = Icons.Filled.Favorite,
-            unselectedIcon = Icons.Filled.Favorite,
+            title = stringResource(id = R.string.map),
+            selectedIcon = Icons.Filled.Map,
+            unselectedIcon = Icons.Filled.Map,
             hasNews = false,
             badgeCount = null,
             path = BottomNavigationBarRoute.MAP

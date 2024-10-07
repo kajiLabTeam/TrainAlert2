@@ -92,7 +92,7 @@ fun Preview() {
                     path = BottomNavigationBarRoute.HOME
                 ),
                 BottomNavigationItem(
-                    title = stringResource(id = R.string.favorite),
+                    title = stringResource(id = R.string.map),
                     selectedIcon = Icons.Filled.Favorite,
                     unselectedIcon = Icons.Filled.Favorite,
                     hasNews = false,
