@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import net.harutiro.trainalert2.features.Weather.entities.CityId
+import net.harutiro.trainalert2.features.room.favoriteDB.entities.CityId
 import net.harutiro.trainalert2.features.room.favoriteDB.entities.WeatherFavoriteEntity
 
 @Dao

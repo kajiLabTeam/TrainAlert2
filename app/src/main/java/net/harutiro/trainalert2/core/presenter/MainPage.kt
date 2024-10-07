@@ -9,10 +9,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -21,27 +19,16 @@ import androidx.navigation.compose.rememberNavController
 import net.harutiro.trainalert2.R
 import net.harutiro.trainalert2.core.entities.BottomNavigationItem
 import net.harutiro.trainalert2.core.presenter.component.BottomNavigationBar
-import net.harutiro.trainalert2.core.presenter.home.HomeScreen
 import net.harutiro.trainalert2.core.router.BottomNavigationBarRoute
-import net.harutiro.trainalert2.core.router.BottomNavigationBarRouter
-import net.harutiro.trainalert2.core.utils.DateUtils
-import net.harutiro.trainalert2.features.Weather.entities.CityId
-import net.harutiro.trainalert2.features.room.favoriteDB.repositories.WeatherFavoriteRepository
-import net.harutiro.trainalert2.features.room.favoriteDB.repositories.WeatherFavoriteRepositoryImpl
-import net.harutiro.trainalert2.core.presenter.map.MapScreen
+import net.harutiro.trainalert2.core.router.MainRouter
 
 @OptIn(
     ExperimentalMaterial3Api::class,
 )
 @Composable
-fun FirstPage(
-    toDetail: (cityId: CityId) -> Unit,
-    weatherFavoriteRepository: WeatherFavoriteRepository = WeatherFavoriteRepositoryImpl()
-){
+fun FirstPage(){
 
     var selectedItemIndex by remember { mutableIntStateOf(0) }
-    var isStarted by remember { mutableStateOf(false) }
-
     val navController = rememberNavController()
 
     val bottomNavigationItems = listOf(
@@ -63,16 +50,6 @@ fun FirstPage(
         )
     )
 
-    LaunchedEffect(weatherFavoriteRepository) {
-        if(isStarted){
-            val favoriteList = weatherFavoriteRepository.getFavoriteList().await()
-            if (favoriteList.isNotEmpty()) {
-                selectedItemIndex = 1
-            }
-            isStarted = true
-        }
-    }
-
     Scaffold(
         topBar = {
             TopAppBar(title = {
@@ -89,16 +66,8 @@ fun FirstPage(
             }
         }
     ) { innerPadding ->
-
-        BottomNavigationBarRouter(
-            homePage = {
-                HomeScreen()
-            },
-            favoritePage = {
-                MapScreen()
-            },
+        MainRouter(
             navController = navController,
-            startDestination = bottomNavigationItems[selectedItemIndex].path.route,
             modifier = Modifier
                 .padding(innerPadding)
         )

@@ -1,7 +1,7 @@
 package net.harutiro.trainalert2.features.room.favoriteDB.utils.typeConverter
 
 import androidx.room.TypeConverter
-import net.harutiro.trainalert2.features.Weather.entities.CityId
+import net.harutiro.trainalert2.features.room.favoriteDB.entities.CityId
 
 class CityIdConverter {
     @TypeConverter
