@@ -71,19 +71,8 @@ dependencies {
 
     // jetpackCompose
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.runtime.livedata)
-    implementation(libs.coil)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.svg)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.material.icons.extended)
-    implementation (libs.accompanist.swiperefresh)
-
-    // Retrofit
-    implementation(libs.converter.moshi)
-    implementation(libs.logging.interceptor)
-    implementation(libs.retrofit)
-    implementation(libs.moshi.kotlin)
 
     // room
     implementation(libs.androidx.room.runtime)

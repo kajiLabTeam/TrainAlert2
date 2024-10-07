@@ -2,7 +2,7 @@ package net.harutiro.trainalert2
 
 import android.app.Application
 import androidx.room.Room
-import net.harutiro.trainalert2.core.utils.room.AppDatabase
+import net.harutiro.trainalert2.features.room.AppDatabase
 
 class Application: Application() {
 
