@@ -97,7 +97,7 @@ fun Preview() {
                     unselectedIcon = Icons.Filled.Favorite,
                     hasNews = false,
                     badgeCount = null,
-                    path = BottomNavigationBarRoute.FAVORITE
+                    path = BottomNavigationBarRoute.MAP
                 )
             ),
             selectedItemIndex = 0,

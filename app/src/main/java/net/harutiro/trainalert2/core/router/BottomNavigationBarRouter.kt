@@ -26,7 +26,7 @@ fun BottomNavigationBarRouter(
         composable(BottomNavigationBarRoute.HOME.route) {
             homePage()
         }
-        composable(BottomNavigationBarRoute.FAVORITE.route) {
+        composable(BottomNavigationBarRoute.MAP.route) {
             favoritePage()
         }
     }
@@ -34,6 +34,6 @@ fun BottomNavigationBarRouter(
 
 enum class BottomNavigationBarRoute(val route: String) {
     HOME("home"),
-    FAVORITE("favorite")
+    MAP("map")
 }
 

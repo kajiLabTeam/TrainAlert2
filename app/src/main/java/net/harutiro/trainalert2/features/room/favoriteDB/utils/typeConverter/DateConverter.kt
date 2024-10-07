@@ -1,4 +1,4 @@
-package net.harutiro.trainalert2.core.utils.room.typeConverter
+package net.harutiro.trainalert2.features.room.favoriteDB.utils.typeConverter
 
 import androidx.room.TypeConverter
 import java.util.Date
