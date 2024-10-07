@@ -3,7 +3,6 @@ package net.harutiro.trainalert2.features.room.favoriteDB.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import net.harutiro.trainalert2.features.Weather.entities.CityId
 import java.util.Date
 
 @Entity(tableName = WeatherFavoriteEntity.TABLE_NAME)

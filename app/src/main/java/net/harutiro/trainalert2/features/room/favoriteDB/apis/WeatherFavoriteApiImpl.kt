@@ -1,7 +1,7 @@
 package net.harutiro.trainalert2.features.room.favoriteDB.apis
 
 import net.harutiro.trainalert2.Application
-import net.harutiro.trainalert2.features.Weather.entities.CityId
+import net.harutiro.trainalert2.features.room.favoriteDB.entities.CityId
 import net.harutiro.trainalert2.features.room.favoriteDB.entities.WeatherFavoriteEntity
 
 class WeatherFavoriteApiImpl : WeatherFavoriteApi {

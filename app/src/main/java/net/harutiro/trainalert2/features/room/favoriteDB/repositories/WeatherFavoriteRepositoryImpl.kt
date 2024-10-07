@@ -4,9 +4,9 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import net.harutiro.trainalert2.features.Weather.entities.CityId
 import net.harutiro.trainalert2.features.room.favoriteDB.apis.WeatherFavoriteApi
 import net.harutiro.trainalert2.features.room.favoriteDB.apis.WeatherFavoriteApiImpl
+import net.harutiro.trainalert2.features.room.favoriteDB.entities.CityId
 import net.harutiro.trainalert2.features.room.favoriteDB.entities.WeatherFavoriteEntity
 import java.util.Date
 

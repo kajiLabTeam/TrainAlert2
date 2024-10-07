@@ -1,4 +1,4 @@
-package net.harutiro.trainalert2.features.Weather.entities
+package net.harutiro.trainalert2.features.room.favoriteDB.entities
 
 enum class CityId(val id: String) {
     hokkaido("016010"),
