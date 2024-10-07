@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import net.harutiro.trainalert2.core.presenter.FirstPage
 import net.harutiro.trainalert2.core.router.MainRouter
 import net.harutiro.trainalert2.ui.theme.TrainAlert2Theme
 
@@ -21,12 +22,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TrainAlert2Theme {
-                MainRouter()
+                FirstPage()
             }
         }
     }
-    //mayumichan
-    //Mizukichan!
-    // makino dayo
 }
-//s.ayaka test
