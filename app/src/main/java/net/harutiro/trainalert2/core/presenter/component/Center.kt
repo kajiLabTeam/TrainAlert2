@@ -1,4 +1,4 @@
-package net.harutiro.trainalert2.core.widgets
+package net.harutiro.trainalert2.core.presenter.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

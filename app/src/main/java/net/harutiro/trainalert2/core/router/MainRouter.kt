@@ -8,9 +8,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import net.harutiro.trainalert2.core.presenter.FirstPage
-import net.harutiro.trainalert2.core.presenter.component.BottomNavigationBar
-import net.harutiro.trainalert2.features.Weather.entities.CityId
-import net.harutiro.trainalert2.core.presenter.detail.page.DetailPage
 
 @Composable
 fun MainRouter() {
@@ -24,24 +21,6 @@ fun MainRouter() {
                     mainNavController.navigate("${MainRoute.DETAIL.route}/${cityId.id}")
                 }
             )
-        }
-        composable(
-            MainRoute.DETAIL.route + "/{cityId}",
-            arguments = listOf(navArgument("cityId") { type = NavType.StringType })
-        ){
-            val cityId: CityId? = CityId.idToCityId(
-                it.arguments?.getString("cityId") ?:""
-            )
-            if(cityId != null){
-                DetailPage(
-                    cityId = cityId,
-                    toBottomNavigationBar = {
-                        mainNavController.popBackStack()
-                    }
-                )
-            }else{
-                Log.d("MainRouter", "cityId is null")
-            }
         }
     }
 }

@@ -1,7 +1,5 @@
 package net.harutiro.trainalert2.core.presenter
 
-import android.util.Log
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -23,14 +21,14 @@ import androidx.navigation.compose.rememberNavController
 import net.harutiro.trainalert2.R
 import net.harutiro.trainalert2.core.entities.BottomNavigationItem
 import net.harutiro.trainalert2.core.presenter.component.BottomNavigationBar
-import net.harutiro.trainalert2.core.presenter.favorite.page.FavoritePage
-import net.harutiro.trainalert2.core.presenter.home.page.HomePage
+import net.harutiro.trainalert2.core.presenter.home.HomeScreen
 import net.harutiro.trainalert2.core.router.BottomNavigationBarRoute
 import net.harutiro.trainalert2.core.router.BottomNavigationBarRouter
 import net.harutiro.trainalert2.core.utils.DateUtils
 import net.harutiro.trainalert2.features.Weather.entities.CityId
-import net.harutiro.trainalert2.features.favoriteDB.repositories.WeatherFavoriteRepository
-import net.harutiro.trainalert2.features.favoriteDB.repositories.WeatherFavoriteRepositoryImpl
+import net.harutiro.trainalert2.features.room.favoriteDB.repositories.WeatherFavoriteRepository
+import net.harutiro.trainalert2.features.room.favoriteDB.repositories.WeatherFavoriteRepositoryImpl
+import net.harutiro.trainalert2.core.presenter.map.MapScreen
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -61,7 +59,7 @@ fun FirstPage(
             unselectedIcon = Icons.Filled.Favorite,
             hasNews = false,
             badgeCount = null,
-            path = BottomNavigationBarRoute.FAVORITE
+            path = BottomNavigationBarRoute.MAP
         )
     )
 
@@ -78,9 +76,7 @@ fun FirstPage(
     Scaffold(
         topBar = {
             TopAppBar(title = {
-                val now = DateUtils.getNowString()
-                Text(text = "$now の全国天気") // 今日の日付(曜日)　の天気(
-
+                Text(text = "TrainAlert2")
             })
         },
         bottomBar = {
@@ -96,10 +92,10 @@ fun FirstPage(
 
         BottomNavigationBarRouter(
             homePage = {
-                HomePage(toDetail = toDetail)
+                HomeScreen()
             },
             favoritePage = {
-                FavoritePage()
+                MapScreen()
             },
             navController = navController,
             startDestination = bottomNavigationItems[selectedItemIndex].path.route,

@@ -1,18 +1,18 @@
-package net.harutiro.trainalert2.features.favoriteDB.repositories
+package net.harutiro.trainalert2.features.room.favoriteDB.repositories
 
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import net.harutiro.trainalert2.features.Weather.entities.CityId
-import net.harutiro.trainalert2.features.favoriteDB.apis.WeatherFavoriteApi
-import net.harutiro.trainalert2.features.favoriteDB.apis.WeatherFavoriteApiImpl
-import net.harutiro.trainalert2.features.favoriteDB.entities.WeatherFavoriteEntity
+import net.harutiro.trainalert2.features.room.favoriteDB.apis.WeatherFavoriteApi
+import net.harutiro.trainalert2.features.room.favoriteDB.apis.WeatherFavoriteApiImpl
+import net.harutiro.trainalert2.features.room.favoriteDB.entities.WeatherFavoriteEntity
 import java.util.Date
 
 class WeatherFavoriteRepositoryImpl(
     private val weatherFavoriteApi: WeatherFavoriteApi = WeatherFavoriteApiImpl()
-) : WeatherFavoriteRepository{
+) : WeatherFavoriteRepository {
     @OptIn(DelicateCoroutinesApi::class)
     override fun insertFavorite(cityId: CityId) : Deferred<Result<Unit>>{
         weatherFavoriteApi.getById(cityId)?.let {
@@ -21,12 +21,14 @@ class WeatherFavoriteRepositoryImpl(
             }
         }?:run{
             return GlobalScope.async {
-                weatherFavoriteApi.insert(WeatherFavoriteEntity(
+                weatherFavoriteApi.insert(
+                    WeatherFavoriteEntity(
                     id = 0,
                     cityId = cityId,
                     createAt = Date(),
                     updateAt = Date()
-                ))
+                )
+                )
                 Result.success(Unit)
             }
         }

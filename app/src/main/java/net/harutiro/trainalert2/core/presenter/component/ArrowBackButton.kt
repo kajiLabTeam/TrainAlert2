@@ -1,4 +1,4 @@
-package net.harutiro.trainalert2.core.widgets
+package net.harutiro.trainalert2.core.presenter.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
