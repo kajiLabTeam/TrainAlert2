@@ -1,4 +1,4 @@
-シフマネ（Shift Management）
+トレアラ(TrainAlert)
 ===
 
 # 概要
