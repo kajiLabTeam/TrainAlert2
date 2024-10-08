@@ -68,6 +68,12 @@ fun FirstPage(){
         }
     ) { innerPadding ->
         MainRouter(
+            toRouteEditorScreen = {
+                navController.navigate(BottomNavigationBarRoute.ROUTE_EDITOR.route)
+            },
+            toBackScreen = {
+                navController.popBackStack()
+            },
             navController = navController,
             modifier = Modifier
                 .padding(innerPadding)

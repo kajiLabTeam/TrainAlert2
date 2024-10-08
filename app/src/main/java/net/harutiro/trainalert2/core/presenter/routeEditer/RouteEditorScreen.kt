@@ -1,18 +1,19 @@
-package net.harutiro.trainalert2.core.presenter.home
+package net.harutiro.trainalert2.core.presenter.routeEditer
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun HomeScreen(
-    toRouteEditor: () -> Unit,
-    viewModel: HomeViewModel = viewModel()
+fun RouteEditScreen(
+    toBackScreen: () -> Unit,
+    viewModel: RouteEditorViewModel = viewModel()
 ){
     Column {
-        Text(text = "HomeScreen")
+        Text(text = "RouteEditScreen")
+
         Button(
             onClick = {
                 viewModel.test()
@@ -20,12 +21,13 @@ fun HomeScreen(
         ) {
             Text(text = "Logのテスト")
         }
+
         Button(
             onClick = {
-                toRouteEditor()
+                toBackScreen()
             }
         ) {
-            Text(text = "経路作成画面へ")
+            Text(text = "戻る")
         }
     }
 }

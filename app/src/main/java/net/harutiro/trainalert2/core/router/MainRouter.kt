@@ -14,9 +14,12 @@ import androidx.navigation.navArgument
 import net.harutiro.trainalert2.core.presenter.FirstPage
 import net.harutiro.trainalert2.core.presenter.home.HomeScreen
 import net.harutiro.trainalert2.core.presenter.map.MapScreen
+import net.harutiro.trainalert2.core.presenter.routeEditer.RouteEditScreen
 
 @Composable
 fun MainRouter(
+    toRouteEditorScreen: () -> Unit,
+    toBackScreen: () -> Unit,
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
@@ -27,15 +30,23 @@ fun MainRouter(
             .fillMaxSize()
     ) {
         composable(BottomNavigationBarRoute.HOME.route) {
-            HomeScreen()
+            HomeScreen(
+                toRouteEditor = toRouteEditorScreen
+            )
         }
         composable(BottomNavigationBarRoute.MAP.route) {
             MapScreen()
+        }
+        composable(BottomNavigationBarRoute.ROUTE_EDITOR.route) {
+            RouteEditScreen(
+                toBackScreen = toBackScreen
+            )
         }
     }
 }
 
 enum class BottomNavigationBarRoute(val route: String) {
     HOME("home"),
-    MAP("map")
+    MAP("map"),
+    ROUTE_EDITOR("route_editor"),
 }
