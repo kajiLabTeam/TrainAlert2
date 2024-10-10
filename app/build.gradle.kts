@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.com.google.devtools.ksp)
     alias(libs.plugins.compose.compiler)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -81,4 +82,13 @@ dependencies {
     //
     implementation("com.google.maps.android:maps-compose:6.1.2")
     implementation(libs.play.services.location)
+}
+
+secrets {
+    propertiesFileName = "secrets.properties"
+
+    defaultPropertiesFileName = "local.properties"
+
+    ignoreList.add("keyToIgnore")
+    ignoreList.add("sdk.*")
 }
