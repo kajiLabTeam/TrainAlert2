@@ -79,5 +79,6 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     
     //
+    implementation("com.google.maps.android:maps-compose:6.1.2")
     implementation(libs.play.services.location)
 }
