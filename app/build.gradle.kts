@@ -80,5 +80,6 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     // map
+    implementation(libs.maps.compose)
     implementation(libs.play.services.location)
 }
