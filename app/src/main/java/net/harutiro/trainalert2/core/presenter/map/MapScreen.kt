@@ -10,14 +10,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun MapScreen(
     viewModel: MapViewModel = viewModel()
 ){
-    Column {
-        Text(text = "MapScreen")
-        Button(
-            onClick = {
-                viewModel.test()
-            }
-        ) {
-            Text(text = "Logのテスト")
-        }
-    }
+//    Column {
+//        Text(text = "MapScreen")
+//        Button(
+//            onClick = {
+//                viewModel.test()
+//            }
+//        ) {
+//            Text(text = "Logのテスト")
+//        }
+//    }
+
 }
