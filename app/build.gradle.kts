@@ -78,17 +78,7 @@ dependencies {
     // room
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
-    
-    //
-    implementation(libs.maps.compose)
+
+    // map
     implementation(libs.play.services.location)
-}
-
-secrets {
-    propertiesFileName = "secrets.properties"
-
-    defaultPropertiesFileName = "local.properties"
-
-    ignoreList.add("keyToIgnore")
-    ignoreList.add("sdk.*")
 }
