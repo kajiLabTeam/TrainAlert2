@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import net.harutiro.trainalert2.R
 import net.harutiro.trainalert2.core.entities.BottomNavigationItem
@@ -58,12 +59,18 @@ fun FirstPage(){
             })
         },
         bottomBar = {
-            BottomNavigationBar(
-                items = bottomNavigationItems,
-                selectedItemIndex = selectedItemIndex
-            ) { index ->
-                selectedItemIndex = index
-                navController.navigate(bottomNavigationItems[index].path.route)
+            val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+            if(
+                currentRoute == BottomNavigationBarRoute.HOME.route ||
+                currentRoute == BottomNavigationBarRoute.MAP.route
+            ){
+                BottomNavigationBar(
+                    items = bottomNavigationItems,
+                    selectedItemIndex = selectedItemIndex
+                ) { index ->
+                    selectedItemIndex = index
+                    navController.navigate(bottomNavigationItems[index].path.route)
+                }
             }
         }
     ) { innerPadding ->
