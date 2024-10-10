@@ -1,4 +1,4 @@
-package net.harutiro.trainalert2.features.room.favoriteDB.apis
+package net.harutiro.trainalert2.features.room.routeDB.apis
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import net.harutiro.trainalert2.features.room.favoriteDB.entities.RouteEntity
+import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
 @Dao
 interface RouteDao {

@@ -1,4 +1,4 @@
-package net.harutiro.trainalert2.features.room.favoriteDB.entities
+package net.harutiro.trainalert2.features.room.routeDB.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
