@@ -1,4 +1,43 @@
 package net.harutiro.trainalert2.features.notification.api
 
-class NotificationApi {
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
+import androidx.core.app.NotificationCompat
+
+class NotificationApi(private val context: Context) {
+
+    private val channelId = "train_alert_channel"
+    private val notificationId = 1
+
+    init {
+        createNotificationChannel()
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "Train Alert Notifications",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    fun showNotification() {
+        val title = "TrainAlert"
+        val message = "目的地に到着しました"
+
+        val notificationBuilder = NotificationCompat.Builder(context, channelId)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(notificationId, notificationBuilder.build())
+    }
 }
