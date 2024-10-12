@@ -1,41 +1,28 @@
 package net.harutiro.trainalert2.features.map.repository
 
 import android.location.Location
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.rememberCameraPositionState
 import net.harutiro.trainalert2.features.map.api.MapApi
-import androidx.compose.ui.Modifier
-import com.google.maps.android.compose.GoogleMap
 
+//マップの中心の値の取得
 class MapRepository {
     @Composable
-    fun MapContent(mapApi: MapApi?){
-        var latitude by remember { mutableStateOf(0.0) }
-        var longitude by remember { mutableStateOf(0.0) }
+    fun MapContent(mapApi: MapApi?, mapEffects: MapEffects){
 
-        val cameraPositionState = rememberCameraPositionState()
-        //カメラ初期値
-        fun updateCameraPosition(latitude: Double, longitude: Double) {
-            val defaultPosition = LatLng(latitude, longitude)
-            val defaultZoom = 14f
-            cameraPositionState.position = CameraPosition.fromLatLngZoom(defaultPosition, defaultZoom)
-        }
+        var lastlatitude by remember { mutableStateOf(0.0) }
+        var lastlongitude by remember { mutableStateOf(0.0) }
 
         //GoogleMap表示用（一度のみ位置情報取得）
         mapApi?.getLastLocation(object : MapApi.MyLocationCallback {
+
             override fun onLocationResult(location: Location?) {
                 if (location != null) {
-                    latitude = location.latitude
-                    longitude = location.longitude
-                    //カメラ位置、範囲の設定
-                    updateCameraPosition(latitude, longitude)
+                    lastlatitude = location.latitude
+                    lastlongitude = location.longitude
                 }
             }
 
@@ -43,10 +30,7 @@ class MapRepository {
                 // エラー処理
             }
         })
-        GoogleMap(
-            modifier = Modifier.fillMaxSize(),
-            cameraPositionState = cameraPositionState,
-        ){
-        }
+        //mapEffectsを呼び出して位置情報をカメラに入れる
+        mapEffects.MapShape(lat = lastlatitude, lon = lastlongitude)
     }
 }
