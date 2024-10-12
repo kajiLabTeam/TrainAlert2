@@ -31,6 +31,6 @@ class MapRepository {
             }
         })
         //mapEffectsを呼び出して位置情報をカメラに入れる
-        mapEffects.MapShape(lat = lastlatitude, lon = lastlongitude)
+        mapEffects.MapShape(maplatitude = lastlatitude, maplongitude = lastlongitude)
     }
 }
