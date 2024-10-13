@@ -15,12 +15,12 @@ interface RouteDao {
     fun loadAllRoute(): List<RouteEntity>
 
     // ルートデータを新規作成するメソッド
-    @Insert(onConflict = OnConflictStrategy.ABORT) // 新規作成時のみ使用, // 既存データがあれば失敗。
-    fun saveRoute(routeEntity: RouteEntity): Int
+    @Insert(onConflict = OnConflictStrategy.ABORT) // 新規作成時のみ使用。既存データがあれば失敗。
+    fun saveRoute(routeEntity: RouteEntity)
 
     // ルートデータを更新するメソッド
     @Update
-    fun update(routeEntity: RouteEntity): Int
+    fun update(routeEntity: RouteEntity)
 
     // ルートデータを削除するメソッド
     @Delete

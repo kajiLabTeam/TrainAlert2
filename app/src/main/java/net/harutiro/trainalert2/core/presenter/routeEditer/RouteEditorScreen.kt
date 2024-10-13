@@ -20,17 +20,9 @@ fun RouteEditScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "RouteEditScreen")
 
-        Button(
-            onClick = {
-                viewModel.test()
-            }
-        ) {
-            Text(text = "Logのテスト")
-        }
 
-        Text(text = "入力フォーム")
+
 
         // ルート名入力フィールド
         TextField(
