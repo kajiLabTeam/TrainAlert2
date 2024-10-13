@@ -2,6 +2,7 @@ package net.harutiro.trainalert2.core.presenter.routeEditer
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -87,7 +88,33 @@ fun RouteEditScreen(
             placeholder = { Text("例: 34.567") }
         )
         Spacer(modifier = Modifier.height(16.dp))
-        
+
+
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(
+                checked = viewModel.isNotificationEnabled,
+                onCheckedChange = { viewModel.onNotificationCheckedChange(it) }
+            )
+            Text(text = "通知")
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Checkbox(
+                checked = viewModel.isVibrationEnabled,
+                onCheckedChange = { viewModel.onVibrationCheckedChange(it) }
+            )
+            Text(text = "バイブレーション")
+        }
+
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+
+
+
         Button(onClick = { /*TODO*/ }) {
             Text(text = "保存")
             //保存ボタンは一旦ボタンがあるだけです。後から保存機能を追加します。

@@ -22,5 +22,17 @@ class RouteEditorViewModel: ViewModel() {
     var isNotificationEnabled by mutableStateOf(false)
     var isVibrationEnabled by mutableStateOf(false)
 
+    fun onNotificationCheckedChange(checked: Boolean) {
+        isNotificationEnabled = checked
+        if (!isNotificationEnabled && !isVibrationEnabled) {
+            isNotificationEnabled = true // 通知、バイブレーションのどちらも選択されていない場合は、自動的に通知を選択
+        }
+    }
 
+    fun onVibrationCheckedChange(checked: Boolean) {
+        isVibrationEnabled = checked
+        if (!isNotificationEnabled && !isVibrationEnabled) {
+            isNotificationEnabled = true// 通知、バイブレーションのどちらも選択されていない場合は、自動的に通知を選択
+        }
+    }
 }
