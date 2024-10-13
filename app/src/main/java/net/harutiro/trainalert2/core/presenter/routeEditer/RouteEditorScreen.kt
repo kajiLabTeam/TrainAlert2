@@ -35,32 +35,56 @@ fun RouteEditScreen(
         // 出発地点の経度入力フィールド
         TextField(
             value = viewModel.startLongitude,
-            onValueChange = { viewModel.startLongitude = it },
-            label = { Text("出発地点の経度") }
+            onValueChange = {
+                if (it.matches(Regex("^\\d*\\.?\\d*\$"))) { //少数のみ入力にする
+                    viewModel.startLongitude = if (it.matches(Regex("^\\d+$"))) "$it.0" else it
+                    //もし整数で入力された場合、.0をつける
+                }
+            },
+            label = { Text("出発地点の経度") },
+            placeholder = { Text("例: 123.456") }
         )
         Spacer(modifier = Modifier.height(10.dp))
 
         // 出発地点の緯度入力フィールド
         TextField(
             value = viewModel.startLatitude,
-            onValueChange = { viewModel.startLatitude = it },
-            label = { Text("出発地点の緯度") }
+            onValueChange = {
+                if (it.matches(Regex("^\\d*\\.?\\d*\$"))) {//少数のみ入力にする
+                    viewModel.startLatitude = if (it.matches(Regex("^\\d+$"))) "$it.0" else it
+                    //もし整数で入力された場合、.0をつける
+                }
+            },
+            label = { Text("出発地点の緯度") },
+            placeholder = { Text("例: 34.567") }
         )
         Spacer(modifier = Modifier.height(10.dp))
 
         // 到着地点の経度入力フィールド
         TextField(
             value = viewModel.endLongitude,
-            onValueChange = { viewModel.endLongitude = it },
-            label = { Text("到着地点の経度") }
+            onValueChange = {
+                if (it.matches(Regex("^\\d*\\.?\\d*\$"))) {//少数のみ入力にする
+                    viewModel.endLongitude = if (it.matches(Regex("^\\d+$"))) "$it.0" else it
+                    //もし整数で入力された場合、.0をつける
+                }
+            },
+            label = { Text("到着地点の経度") },
+            placeholder = { Text("例: 123.456") }
         )
         Spacer(modifier = Modifier.height(10.dp))
 
         // 到着地点の緯度入力フィールド
         TextField(
             value = viewModel.endLatitude,
-            onValueChange = { viewModel.endLatitude = it },
-            label = { Text("到着地点の緯度") }
+            onValueChange = {
+                if (it.matches(Regex("^\\d*\\.?\\d*\$"))) {//少数のみ入力にする
+                    viewModel.endLatitude = if (it.matches(Regex("^\\d+$"))) "$it.0" else it
+                    //もし整数で入力された場合、.0をつける
+                }
+            },
+            label = { Text("到着地点の緯度") },
+            placeholder = { Text("例: 34.567") }
         )
         Spacer(modifier = Modifier.height(16.dp))
         
