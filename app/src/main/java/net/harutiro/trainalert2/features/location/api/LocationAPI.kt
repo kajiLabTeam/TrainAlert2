@@ -12,7 +12,7 @@ import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.Priority
 
-class locationAPI(private val context: Context) {
+class LocationAPI(private val context: Context) {
     private var getRate: Long = 60000//取得頻度(ms)1分
     private var minRate: Long = 60000//更新頻度(ms)1分
 
