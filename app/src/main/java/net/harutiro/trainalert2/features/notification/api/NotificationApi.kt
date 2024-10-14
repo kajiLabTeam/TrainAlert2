@@ -26,7 +26,7 @@ class NotificationApi(private val context: Context) {
             notificationManager.createNotificationChannel(channel)
         }
     }
-
+    
     fun showNotification(title: String, message: String) {
         val notificationBuilder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
