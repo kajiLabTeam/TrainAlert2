@@ -38,12 +38,7 @@ fun RouteEditScreen(
         // 出発地点の経度入力フィールド
         TextField(
             value = viewModel.startLongitude,
-            onValueChange = {
-                if (it.matches(Regex("^\\d*\\.?\\d*\$"))) { //少数のみ入力にする
-                    viewModel.startLongitude = if (it.matches(Regex("^\\d+$"))) "$it.0" else it
-                    //もし整数で入力された場合、.0をつける
-                }
-            },
+            onValueChange = { viewModel.startLongitude = it },
             label = { Text("出発地点の経度") },
             placeholder = { Text("例: 123.456") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
@@ -53,12 +48,7 @@ fun RouteEditScreen(
         // 出発地点の緯度入力フィールド
         TextField(
             value = viewModel.startLatitude,
-            onValueChange = {
-                if (it.matches(Regex("^\\d*\\.?\\d*\$"))) {//少数のみ入力にする
-                    viewModel.startLatitude = if (it.matches(Regex("^\\d+$"))) "$it.0" else it
-                    //もし整数で入力された場合、.0をつける
-                }
-            },
+            onValueChange = { viewModel.startLongitude = it },
             label = { Text("出発地点の緯度") },
             placeholder = { Text("例: 34.567") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
@@ -69,12 +59,7 @@ fun RouteEditScreen(
         // 到着地点の経度入力フィールド
         TextField(
             value = viewModel.endLongitude,
-            onValueChange = {
-                if (it.matches(Regex("^\\d*\\.?\\d*\$"))) {//少数のみ入力にする
-                    viewModel.endLongitude = if (it.matches(Regex("^\\d+$"))) "$it.0" else it
-                    //もし整数で入力された場合、.0をつける
-                }
-            },
+            onValueChange = { viewModel.startLongitude = it },
             label = { Text("到着地点の経度") },
             placeholder = { Text("例: 123.456") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
@@ -84,12 +69,7 @@ fun RouteEditScreen(
         // 到着地点の緯度入力フィールド
         TextField(
             value = viewModel.endLatitude,
-            onValueChange = {
-                if (it.matches(Regex("^\\d*\\.?\\d*\$"))) {//少数のみ入力にする
-                    viewModel.endLatitude = if (it.matches(Regex("^\\d+$"))) "$it.0" else it
-                    //もし整数で入力された場合、.0をつける
-                }
-            },
+            onValueChange = { viewModel.startLongitude = it },
             label = { Text("到着地点の緯度") },
             placeholder = { Text("例: 34.567") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
@@ -123,9 +103,9 @@ fun RouteEditScreen(
 
 
 
+        // 保存ボタン
         Button(onClick = { /*TODO*/ }) {
             Text(text = "保存")
-            //保存ボタンは一旦ボタンがあるだけです。後から保存機能を追加します。
         }
 
         Button(
