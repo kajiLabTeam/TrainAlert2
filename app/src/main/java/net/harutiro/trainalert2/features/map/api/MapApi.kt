@@ -40,11 +40,12 @@ class MapApi(private val context: Context) {
                         callback.onLocationResult(location)
                     } else {
                         callback.onLocationError("Location is null")
-                        Toast.makeText(context, "位置情報を取得できません", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Location is null", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener { exception ->
                     callback.onLocationError(exception.message ?: "Unknown error")
+                    Toast.makeText(context, "Unknown error", Toast.LENGTH_SHORT).show()
                 }
         }else{
             ActivityCompat.requestPermissions(context as Activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 1000)
