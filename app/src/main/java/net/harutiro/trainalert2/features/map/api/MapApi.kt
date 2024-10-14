@@ -8,35 +8,15 @@ import android.content.pm.PackageManager
 import android.location.Location
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.Priority
 
 class MapApi(private val context: Context) {
-    private var getRate: Long = 60000//取得頻度(ms)1分
-    private var minRate: Long = 60000//更新頻度(ms)1分
-
     private var fusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(context)
-    private var locationRequest: LocationRequest? = null
-    private var locationCallback: LocationCallback? = null
 
     interface MyLocationCallback {
         fun onLocationResult(location: Location?)
         fun onLocationError(error: String)
     }
-
-
-    init {
-        // LocationRequestの設定
-        locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, getRate) // 1分ごとに取得
-            .setMinUpdateIntervalMillis(minRate) // 最小間隔1分
-            .build()
-    }
-
-    fun stopLocationUpdates() {
-        locationCallback?.let { fusedLocationClient.removeLocationUpdates(it) }
-    }
-
 
     fun getLastLocation(callback: MyLocationCallback) {
         // 位置情報を取得するためのPermissionチェック
