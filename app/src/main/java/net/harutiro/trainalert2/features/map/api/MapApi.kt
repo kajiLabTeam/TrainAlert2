@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
 
@@ -41,6 +42,7 @@ class MapApi(private val context: Context) {
                         callback.onLocationResult(location)
                     } else {
                         callback.onLocationError("Location is null")
+                        Toast.makeText(context, "位置情報を取得できません", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener { exception ->
