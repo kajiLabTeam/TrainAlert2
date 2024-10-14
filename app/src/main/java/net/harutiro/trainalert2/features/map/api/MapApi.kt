@@ -33,17 +33,22 @@ class MapApi(private val context: Context) {
 
     @SuppressLint("MissingPermission")
     private fun requestLocation(callback: MyLocationCallback) {
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                if (location != null) {
-                    callback.onLocationResult(location)
-                } else {
-                    callback.onLocationError("Location is null")
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    if (location != null) {
+                        callback.onLocationResult(location)
+                    } else {
+                        callback.onLocationError("Location is null")
+                    }
                 }
-            }
-            .addOnFailureListener { exception ->
-                callback.onLocationError(exception.message ?: "Unknown error")
-            }
+                .addOnFailureListener { exception ->
+                    callback.onLocationError(exception.message ?: "Unknown error")
+                }
+        }else{
+            ActivityCompat.requestPermissions(context as Activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 1000)
+        }
     }
 
 }
