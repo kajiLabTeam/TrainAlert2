@@ -1,6 +1,7 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
@@ -8,6 +9,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -43,7 +45,8 @@ fun RouteEditScreen(
                 }
             },
             label = { Text("出発地点の経度") },
-            placeholder = { Text("例: 123.456") }
+            placeholder = { Text("例: 123.456") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -57,7 +60,9 @@ fun RouteEditScreen(
                 }
             },
             label = { Text("出発地点の緯度") },
-            placeholder = { Text("例: 34.567") }
+            placeholder = { Text("例: 34.567") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+
         )
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -71,7 +76,8 @@ fun RouteEditScreen(
                 }
             },
             label = { Text("到着地点の経度") },
-            placeholder = { Text("例: 123.456") }
+            placeholder = { Text("例: 123.456") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -85,7 +91,9 @@ fun RouteEditScreen(
                 }
             },
             label = { Text("到着地点の緯度") },
-            placeholder = { Text("例: 34.567") }
+            placeholder = { Text("例: 34.567") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+
         )
         Spacer(modifier = Modifier.height(16.dp))
 
