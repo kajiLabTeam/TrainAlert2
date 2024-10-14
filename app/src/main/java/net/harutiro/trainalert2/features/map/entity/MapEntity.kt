@@ -1,4 +1,7 @@
 package net.harutiro.trainalert2.features.map.entity
 
-class MapEntity {
-}
+
+data class LocationData(
+    val latitude:Double,
+    val longitude:Double
+)
