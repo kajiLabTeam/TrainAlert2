@@ -19,7 +19,8 @@ class DistanceJudgement {
         //距離判定用変数
         //R*c=距離（m単位）
         val judgement:Boolean
-        if(R * c < 600){
+        val judgerange: Double = 600.0
+        if(R * c < judgerange){
             judgement = true
         }else{
             judgement = false
