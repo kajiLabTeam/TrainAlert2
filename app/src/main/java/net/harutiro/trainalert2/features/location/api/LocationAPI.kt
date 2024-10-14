@@ -1,7 +1,6 @@
 package net.harutiro.trainalert2.features.location.api
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
@@ -63,7 +62,6 @@ class LocationAPI(private val context: Context) {
         locationCallback?.let { fusedLocationClient.removeLocationUpdates(it) }
     }
 
-    @SuppressLint("MissingPermission")
     private fun requestLocation(callback: MyLocationCallback) {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
