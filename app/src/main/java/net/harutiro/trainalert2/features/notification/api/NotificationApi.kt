@@ -27,10 +27,7 @@ class NotificationApi(private val context: Context) {
         }
     }
 
-    fun showNotification() {
-        val title = "TrainAlert"
-        val message = "目的地に到着しました"
-
+    fun showNotification(title: String, message: String) {
         val notificationBuilder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(title)
