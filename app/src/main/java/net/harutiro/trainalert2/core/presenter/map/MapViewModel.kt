@@ -24,45 +24,4 @@ internal class MapViewModel:ComponentActivity() {
 
     //val TAG = "MapViewModel"
 
-    @Composable
-    fun MapSetting(mapApi: MapApi, mapRepository: MapRepository, mapOptions: MapOptions) {
-
-        var latitude by remember { mutableStateOf(0.0) }
-        var longitude by remember { mutableStateOf(0.0) }
-
-        val cameraPositionLocation = mapRepository.getMapLocationData(
-            mapApi = mapApi,
-            latitude = latitude,
-            longitude = longitude
-        )
-        val cameraPositionState = mapOptions.MapCameraPosition(cameraPositionLocation)
-
-        //GoogleMap呼び出し
-        @Composable
-        fun mapContent() {
-            GoogleMap(
-                modifier = Modifier.fillMaxSize(),
-                cameraPositionState = cameraPositionState,
-            ) {
-                //パーミッションチェックのためcontext取得
-                val context = LocalContext.current
-
-                MapEffect(Unit) { map ->
-                    //パーミッションチェック
-                    if (ActivityCompat.checkSelfPermission(
-                            context,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        ) == PackageManager.PERMISSION_GRANTED &&
-                        ActivityCompat.checkSelfPermission(
-                            context,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                        ) == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        map.isMyLocationEnabled = true
-                    }
-                }
-            }
-        }
-    }
-
 }
