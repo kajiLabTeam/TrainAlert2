@@ -18,6 +18,8 @@ class MapApi(private val context: Context) {
         fun onLocationError(error: String)
     }
 
+    private var locationCallback: LocationCallback? = null
+
     fun getLastLocation(callback: MyLocationCallback) {
         // 位置情報を取得するためのPermissionチェック
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -52,4 +54,7 @@ class MapApi(private val context: Context) {
         }
     }
 
+    fun stopLocationUpdates() {
+        locationCallback?.let { fusedLocationClient.removeLocationUpdates(it) }
+    }
 }
