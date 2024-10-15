@@ -1,25 +1,20 @@
 package net.harutiro.trainalert2.core.presenter.map
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Bundle
 import net.harutiro.trainalert2.features.map.api.MapApi
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Lifecycle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapEffect
+import com.google.maps.android.compose.MapsComposeExperimentalApi
 import net.harutiro.trainalert2.core.presenter.component.ObserveLifecycleEvent
 import net.harutiro.trainalert2.features.map.repository.MapOptions
 import net.harutiro.trainalert2.features.map.repository.MapRepository
@@ -42,11 +37,12 @@ fun MapScreen(){
     }
 
 }
+@OptIn(MapsComposeExperimentalApi::class)
 @Composable
 fun MapSetting(mapApi: MapApi, mapRepository: MapRepository, mapOptions: MapOptions) {
 
-    var latitude by remember { mutableStateOf(0.0) }
-    var longitude by remember { mutableStateOf(0.0) }
+    val latitude by remember { mutableStateOf(0.0) }
+    val longitude by remember { mutableStateOf(0.0) }
 
     val cameraPositionLocation = mapRepository.getMapLocationData(
         mapApi = mapApi,
