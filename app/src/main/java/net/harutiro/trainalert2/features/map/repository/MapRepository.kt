@@ -1,13 +1,11 @@
 package net.harutiro.trainalert2.features.map.repository
 
 import android.location.Location
-import androidx.compose.runtime.Composable
 import net.harutiro.trainalert2.features.map.api.MapApi
 import net.harutiro.trainalert2.features.map.entity.LocationData
 
 //マップの中心の値の取得
 class MapRepository {
-    @Composable
     fun getMapLocationData(mapApi: MapApi?, latitude:Double, longitude:Double):LocationData{
 
         var lastlatitude = latitude
