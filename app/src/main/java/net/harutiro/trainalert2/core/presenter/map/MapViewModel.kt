@@ -1,27 +1,47 @@
 package net.harutiro.trainalert2.core.presenter.map
 
 
-import android.Manifest
-import android.content.pm.PackageManager
-import androidx.activity.ComponentActivity
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.app.ActivityCompat
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.MapEffect
+import android.content.Context
+import androidx.lifecycle.ViewModel
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.CameraPositionState
 import net.harutiro.trainalert2.features.map.api.MapApi
-import net.harutiro.trainalert2.features.map.repository.MapOptions
+import net.harutiro.trainalert2.features.map.entity.LocationData
 import net.harutiro.trainalert2.features.map.repository.MapRepository
 
+class MapViewModel: ViewModel(){
 
-internal class MapViewModel:ComponentActivity() {
+    var mapApi: MapApi? = null
+    private val mapRepository = MapRepository()
 
-    //val TAG = "MapViewModel"
+    fun init(context: Context){
+        mapApi = MapApi(context)
+    }
 
+    fun stopLocationUpdates(){
+        mapApi?.stopLocationUpdates()
+    }
+
+    fun changeLocation(cameraPositionState: CameraPositionState) {
+        mapRepository.getMapLocationData(
+            mapApi = mapApi,
+            getLocation = { locationData ->
+                mapCameraPosition(
+                    cameraPosition = LocationData(
+                        latitude = locationData.latitude,
+                        longitude = locationData.longitude
+                    ),
+                    cameraPositionState = cameraPositionState
+                )
+            }
+        )
+    }
+
+    private fun mapCameraPosition(cameraPosition: LocationData, cameraPositionState: CameraPositionState) {
+        //カメラ初期値
+        val defaultPosition = LatLng(cameraPosition.latitude, cameraPosition.longitude)
+        val defaultZoom = 14f
+        cameraPositionState.position = CameraPosition.fromLatLngZoom(defaultPosition, defaultZoom)
+    }
 }
