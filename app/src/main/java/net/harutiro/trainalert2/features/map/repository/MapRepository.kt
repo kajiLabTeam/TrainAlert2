@@ -8,16 +8,16 @@ import net.harutiro.trainalert2.features.map.entity.LocationData
 class MapRepository {
     fun getMapLocationData(mapApi: MapApi?, latitude:Double, longitude:Double):LocationData{
 
-        var lastlatitude = latitude
-        var lastlongitude = longitude
+        var lastLatitude = latitude
+        var lastLongitude = longitude
 
         //GoogleMap表示用（一度のみ位置情報取得）
         mapApi?.getLastLocation(object : MapApi.MyLocationCallback {
 
             override fun onLocationResult(location: Location?) {
                 if (location != null) {
-                    lastlatitude = location.latitude
-                    lastlongitude = location.longitude
+                    lastLatitude = location.latitude
+                    lastLongitude = location.longitude
                 }
             }
 
@@ -25,6 +25,6 @@ class MapRepository {
                 // エラー処理
             }
         })
-        return LocationData(lastlatitude,lastlongitude)
+        return LocationData(lastLatitude,lastLongitude)
     }
 }
