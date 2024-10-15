@@ -9,12 +9,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.harutiro.trainalert2.Application
+import net.harutiro.trainalert2.MyApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
 class RouteEditorViewModel: ViewModel() {
 
-    private val routeDao = Application.database.routeDao()
+    private val routeDao = MyApplication.database.routeDao()
 
     var title by mutableStateOf("")
     var startLongitude by mutableStateOf("")
@@ -38,28 +38,29 @@ class RouteEditorViewModel: ViewModel() {
         }
     }
 
-    fun saveRoute(context: Context) {
-        val alertMethods = mutableListOf<String>()
-        if (isNotificationEnabled) alertMethods.add("通知")
-        if (isVibrationEnabled) alertMethods.add("バイブレーション")
-
-        // バリデーションチェック
-        if (alertMethods.isEmpty()) {
-            Toast.makeText(context, "通知またはバイブレーションを選択してください。", Toast.LENGTH_SHORT).show()
-            return
+    // データを保存する関数
+    fun saveRoute() {
+        // アラート方法を決定
+        val alertMethods = when {
+            isNotificationEnabled && isVibrationEnabled -> "Notification, Vibration"
+            isNotificationEnabled -> "Notification"
+            isVibrationEnabled -> "Vibration"
+            else -> "Notification" // 両方選択されていない場合はデフォルトで通知
         }
 
-        val newRoute = RouteEntity(
+        // RouteEntityの作成
+        val routeEntity = RouteEntity(
             title = title,
             startLongitude = startLongitude.toDoubleOrNull(),
             startLatitude = startLatitude.toDoubleOrNull(),
             endLongitude = endLongitude.toDoubleOrNull(),
             endLatitude = endLatitude.toDoubleOrNull(),
-            alertMethods = alertMethods.joinToString(", ")
+            alertMethods = alertMethods
         )
 
+        // データベースに保存
         viewModelScope.launch(Dispatchers.IO) {
-            routeDao.saveRoute(newRoute)
+            routeDao.saveRoute(routeEntity)
         }
     }
 

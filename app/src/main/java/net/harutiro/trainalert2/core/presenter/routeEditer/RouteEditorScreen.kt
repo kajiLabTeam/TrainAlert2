@@ -100,11 +100,10 @@ fun RouteEditScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-
-
-
-        // 保存ボタン
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = {
+            viewModel.saveRoute() // 保存機能を呼び出す
+            toBackScreen() // 戻る処理
+        }) {
             Text(text = "保存")
         }
 
