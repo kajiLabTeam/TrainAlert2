@@ -1,7 +1,6 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,7 +10,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.harutiro.trainalert2.Application
-import net.harutiro.trainalert2.features.room.routeDB.apis.RouteDao
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
 class RouteEditorViewModel: ViewModel() {
