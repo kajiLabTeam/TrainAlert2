@@ -12,10 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Lifecycle
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapEffect
 import com.google.maps.android.compose.MapsComposeExperimentalApi
+import com.google.maps.android.compose.rememberCameraPositionState
 import net.harutiro.trainalert2.core.presenter.component.ObserveLifecycleEvent
+import net.harutiro.trainalert2.features.map.entity.LocationData
 import net.harutiro.trainalert2.features.map.repository.MapOptions
 import net.harutiro.trainalert2.features.map.repository.MapRepository
 
@@ -37,6 +42,7 @@ fun MapScreen(){
     }
 
 }
+
 @OptIn(MapsComposeExperimentalApi::class)
 @Composable
 fun MapSetting(mapApi: MapApi, mapRepository: MapRepository, mapOptions: MapOptions) {
@@ -49,7 +55,7 @@ fun MapSetting(mapApi: MapApi, mapRepository: MapRepository, mapOptions: MapOpti
         latitude = latitude,
         longitude = longitude
     )
-    val cameraPositionState = mapOptions.MapCameraPosition(cameraPositionLocation)
+    val cameraPositionState = mapCameraPosition(cameraPositionLocation)
 
     GoogleMap(
         modifier = Modifier.fillMaxSize(),
@@ -67,4 +73,15 @@ fun MapSetting(mapApi: MapApi, mapRepository: MapRepository, mapOptions: MapOpti
             }
         }
     }
+}
+
+@Composable
+fun mapCameraPosition(cameraPosition: LocationData): CameraPositionState {
+    //カメラ初期値
+    val defaultPosition = LatLng(cameraPosition.latitude, cameraPosition.longitude)
+    val defaultZoom = 14f
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(defaultPosition, defaultZoom)
+    }
+    return cameraPositionState
 }
