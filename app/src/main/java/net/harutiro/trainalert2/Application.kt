@@ -4,11 +4,11 @@ import android.app.Application
 import androidx.room.Room
 import net.harutiro.trainalert2.features.room.AppDatabase
 
-class Application: Application() {
+class MyApplication : Application() { // クラス名を変更しました
 
-    // デバイス構成が変更されたとき
     companion object {
         lateinit var database: AppDatabase
+            private set // プロパティの可視性を設定
     }
 
     override fun onCreate() {
