@@ -1,15 +1,13 @@
 package net.harutiro.trainalert2.core.presenter.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import android.content.Context
-import net.harutiro.trainalert2.features.notification.api.NotificationApi
 
-class HomeViewModel(private val context: Context): ViewModel() {
+class HomeViewModel: ViewModel() {
 
-    private val notificationApi = NotificationApi(context)
+    val TAG = "HomeViewModel"
 
-    fun test() {
-        // テスト通知を表示
-        notificationApi.showNotification("テスト通知", "これはテストメッセージです。")
+    fun test(){
+        Log.d(TAG,"ホーム画面のViewModel")
     }
 }
