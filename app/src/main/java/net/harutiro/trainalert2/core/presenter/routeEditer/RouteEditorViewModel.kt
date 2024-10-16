@@ -9,12 +9,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.harutiro.trainalert2.MyApplication
+import net.harutiro.trainalert2.TrainAlertApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
 class RouteEditorViewModel: ViewModel() {
 
-    private val routeDao = MyApplication.database.routeDao()
+    private val routeDao = TrainAlertApplication.database.routeDao()
 
     var title by mutableStateOf("")
     var startLongitude by mutableStateOf("")
