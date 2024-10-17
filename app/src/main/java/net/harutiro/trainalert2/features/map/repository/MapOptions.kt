@@ -5,8 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 class MapOptions {
-    fun MapShapeOptions(startCenterLatitude:Double,startCenterLongitude: Double,endCenterLatitude:Double,endCenterLongitude: Double){
-        val judgerange = 600.0
+    fun MapShapeOptions(startCenterLatitude:Double,startCenterLongitude:Double, endCenterLatitude:Double,endCenterLongitude:Double, judgerange:Double){
         val circleOptions = CircleOptions()
             .center(LatLng(endCenterLatitude, endCenterLongitude))//end_latitude,end_longitude
             .radius(judgerange) // In meters

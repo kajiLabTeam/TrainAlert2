@@ -4,7 +4,7 @@ import kotlin.math.*
 
 class DistanceJudgement {
     //lat1:現在地  lat2:目的地
-    fun within600m(lat1: Double, lon1: Double, lat2:Double, lon2: Double): Boolean {
+    fun withinJudgerange(lat1: Double, lon1: Double, lat2:Double, lon2: Double, judgerange: Double): Boolean {
         val R = 6371000.0 // 地球の半径（メートル）
 
         val dLat = Math.toRadians(lat2 - lat1)
@@ -19,7 +19,7 @@ class DistanceJudgement {
         //距離判定用変数
         //R*c=距離（m単位）
         val judgement:Boolean
-        val judgerange: Double = 600.0
+
         if(R * c < judgerange){
             judgement = true
         }else{
