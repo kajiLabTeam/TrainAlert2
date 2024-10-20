@@ -1,20 +1,20 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.harutiro.trainalert2.MyApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
+import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository  // 正しいインポート
 
 class RouteEditorViewModel: ViewModel() {
 
-    private val routeDao = MyApplication.database.routeDao()
+    // Repositoryのインスタンスを取得
+    private val repository = RouteRepository(MyApplication.database.routeDao())
 
     var title by mutableStateOf("")
     var startLongitude by mutableStateOf("")
@@ -34,7 +34,7 @@ class RouteEditorViewModel: ViewModel() {
     fun onVibrationCheckedChange(checked: Boolean) {
         isVibrationEnabled = checked
         if (!isNotificationEnabled && !isVibrationEnabled) {
-            isNotificationEnabled = true// 通知、バイブレーションのどちらも選択されていない場合は、自動的に通知を選択
+            isNotificationEnabled = true // 通知、バイブレーションのどちらも選択されていない場合は、自動的に通知を選択
         }
     }
 
@@ -58,9 +58,9 @@ class RouteEditorViewModel: ViewModel() {
             alertMethods = alertMethods
         )
 
-        // データベースに保存
-        viewModelScope.launch(Dispatchers.IO) {
-            routeDao.saveRoute(routeEntity)
+        // Repositoryを介してデータベースに保存
+        viewModelScope.launch {
+            repository.saveRoute(routeEntity)
         }
     }
 
