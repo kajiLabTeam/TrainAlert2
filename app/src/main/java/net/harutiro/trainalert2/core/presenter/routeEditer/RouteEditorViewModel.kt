@@ -11,6 +11,7 @@ import net.harutiro.trainalert2.MyApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository  // 正しいインポート
 
+
 class RouteEditorViewModel: ViewModel() {
 
     // Repositoryのインスタンスを取得
