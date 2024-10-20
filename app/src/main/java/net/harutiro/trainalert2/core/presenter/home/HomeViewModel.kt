@@ -19,8 +19,10 @@ class HomeViewModel: ViewModel() {
     }
 
     private val routeDao = MyApplication.database.routeDao()
+
     // StateFlowでルートリストを管理
     private val _routeList = MutableStateFlow<List<RouteEntity>>(emptyList())
+
     val routeList: StateFlow<List<RouteEntity>> = _routeList
 
     init {
@@ -43,4 +45,5 @@ class HomeViewModel: ViewModel() {
             // 必要に応じてUIスレッドにデータを反映させる処理を追加
         }
     }
+
 }
