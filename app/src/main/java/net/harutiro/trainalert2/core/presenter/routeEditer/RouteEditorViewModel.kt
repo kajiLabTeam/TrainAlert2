@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import net.harutiro.trainalert2.MyApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
-import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository  // 正しいインポート
+import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 
 
 class RouteEditorViewModel: ViewModel() {
