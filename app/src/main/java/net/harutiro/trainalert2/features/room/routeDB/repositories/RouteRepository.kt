@@ -8,8 +8,6 @@ import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 class RouteRepository(private val routeDao: RouteDao) {
 
     suspend fun saveRoute(route: RouteEntity) {
-        withContext(Dispatchers.IO) {
-            routeDao.saveRoute(route)
-        }
+        routeDao.saveRoute(route)
     }
 }

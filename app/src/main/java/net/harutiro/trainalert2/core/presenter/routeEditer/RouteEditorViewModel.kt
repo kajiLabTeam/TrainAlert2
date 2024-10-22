@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.harutiro.trainalert2.MyApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
@@ -60,7 +61,7 @@ class RouteEditorViewModel: ViewModel() {
         )
 
         // Repositoryを介してデータベースに保存
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.saveRoute(routeEntity)
         }
     }
