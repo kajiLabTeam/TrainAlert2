@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import net.harutiro.trainalert2.MyApplication
+import net.harutiro.trainalert2.TrainAlertApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
 class HomeViewModel : ViewModel() {
@@ -26,8 +26,7 @@ class HomeViewModel : ViewModel() {
         Log.d(TAG,"ホーム画面のViewModel")
     }
 
-    private val routeDao = MyApplication.database.routeDao()
-
+    private val routeDao = TrainAlertApplication.database.routeDao()
     // StateFlowでルートリストを管理
     private val _routeList = MutableStateFlow<List<RouteEntity>>(emptyList())
 
@@ -53,5 +52,4 @@ class HomeViewModel : ViewModel() {
             // 必要に応じてUIスレッドにデータを反映させる処理を追加
         }
     }
-
 }

@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.harutiro.trainalert2.MyApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 
@@ -15,7 +14,7 @@ import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteReposito
 class RouteEditorViewModel: ViewModel() {
 
     // Repositoryのインスタンスを取得
-    private val repository = RouteRepository(MyApplication.database.routeDao())
+    private val repository = RouteRepository()
 
     var title by mutableStateOf("")
     var startLongitude by mutableStateOf("")
