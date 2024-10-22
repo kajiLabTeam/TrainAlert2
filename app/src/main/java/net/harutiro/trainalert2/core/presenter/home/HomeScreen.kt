@@ -65,7 +65,7 @@ fun HomeScreen(
                 text = { Text(text = "${route.title ?: "Unnamed Route"} を削除しますか？") },
                 confirmButton = {
                     Button(onClick = {
-                        viewModel.deleteRoute(route.id) // 削除メソッドを呼び出す
+                        viewModel.deleteRoute(route) // 削除メソッドを呼び出す
                         setShowDeleteDialog(null) // ダイアログを閉じる
                     }) {
                         Text("削除")
