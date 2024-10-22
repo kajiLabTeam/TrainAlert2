@@ -1,6 +1,5 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,12 +8,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.harutiro.trainalert2.Application
+import net.harutiro.trainalert2.MyApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
+import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
+
 
 class RouteEditorViewModel: ViewModel() {
 
-    private val routeDao = Application.database.routeDao()
+    // Repositoryのインスタンスを取得
+    private val repository = RouteRepository(MyApplication.database.routeDao())
 
     var title by mutableStateOf("")
     var startLongitude by mutableStateOf("")
@@ -34,32 +36,33 @@ class RouteEditorViewModel: ViewModel() {
     fun onVibrationCheckedChange(checked: Boolean) {
         isVibrationEnabled = checked
         if (!isNotificationEnabled && !isVibrationEnabled) {
-            isNotificationEnabled = true// 通知、バイブレーションのどちらも選択されていない場合は、自動的に通知を選択
+            isNotificationEnabled = true // 通知、バイブレーションのどちらも選択されていない場合は、自動的に通知を選択
         }
     }
 
-    fun saveRoute(context: Context) {
-        val alertMethods = mutableListOf<String>()
-        if (isNotificationEnabled) alertMethods.add("通知")
-        if (isVibrationEnabled) alertMethods.add("バイブレーション")
-
-        // バリデーションチェック
-        if (alertMethods.isEmpty()) {
-            Toast.makeText(context, "通知またはバイブレーションを選択してください。", Toast.LENGTH_SHORT).show()
-            return
+    // データを保存する関数
+    fun saveRoute() {
+        // アラート方法を決定
+        val alertMethods = when {
+            isNotificationEnabled && isVibrationEnabled -> "Notification, Vibration"
+            isNotificationEnabled -> "Notification"
+            isVibrationEnabled -> "Vibration"
+            else -> "Notification" // 両方選択されていない場合はデフォルトで通知
         }
 
-        val newRoute = RouteEntity(
+        // RouteEntityの作成
+        val routeEntity = RouteEntity(
             title = title,
             startLongitude = startLongitude.toDoubleOrNull(),
             startLatitude = startLatitude.toDoubleOrNull(),
             endLongitude = endLongitude.toDoubleOrNull(),
             endLatitude = endLatitude.toDoubleOrNull(),
-            alertMethods = alertMethods.joinToString(", ")
+            alertMethods = alertMethods
         )
 
+        // Repositoryを介してデータベースに保存
         viewModelScope.launch(Dispatchers.IO) {
-            routeDao.saveRoute(newRoute)
+            repository.saveRoute(routeEntity)
         }
     }
 
