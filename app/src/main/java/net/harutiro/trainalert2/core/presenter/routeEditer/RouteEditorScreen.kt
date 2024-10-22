@@ -1,12 +1,18 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -18,6 +24,8 @@ fun RouteEditScreen(
     toBackScreen: () -> Unit,
     viewModel: RouteEditorViewModel = viewModel()
 ) {
+    var showDialog by rememberSaveable { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -25,7 +33,6 @@ fun RouteEditScreen(
         horizontalAlignment = Alignment.Start, // 横方向の整列
         verticalArrangement = Arrangement.Top // 縦方向の整列を上部から
     ) {
-
         // ルート名入力フィールド
         TextField(
             value = viewModel.title,
@@ -99,7 +106,40 @@ fun RouteEditScreen(
             Text(text = "バイブレーション")
         }
 
-        Spacer(modifier = Modifier.height(24.dp)) // 余白を少し大きめに
+        Spacer(modifier = Modifier.height(24.dp)) // ボタンの後に余白
+
+        // UIコンポーネントの定義の外で条件を確認
+        if (showDialog) {
+            AlertDialog(
+                onDismissRequest = { showDialog = false },
+                title = { Text(text = "データの編集・削除を行いますか？") },
+                text = { Text("選択してください。") },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            viewModel.deleteRoute()
+                            showDialog = false
+                            toBackScreen()
+                        }
+                    ) {
+                        Text("削除")
+                    }
+                },
+                dismissButton = {
+                    Button(
+                        onClick = {
+                            showDialog = false
+                        }
+                    ) {
+                        Text("編集")
+                    }
+                }
+            )
+        }
+
+
+        Spacer(modifier = Modifier.height(24.dp)) // ダイアログ後の余白
+
 
         // 保存ボタン
         Row(
@@ -108,6 +148,7 @@ fun RouteEditScreen(
         ) {
             Button(
                 onClick = {
+                    Log.d("RouteEditor", "Save button clicked")
                     viewModel.saveRoute() // 保存機能を呼び出す
                     toBackScreen() // 戻る処理
                 },

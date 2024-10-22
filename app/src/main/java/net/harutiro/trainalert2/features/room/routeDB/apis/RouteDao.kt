@@ -22,7 +22,7 @@ interface RouteDao {
     @Update
     fun update(routeEntity: RouteEntity)
 
-    // ルートデータを削除するメソッド
-    @Delete
-    fun deleteRoute(routeEntity: RouteEntity)
+    // ID を使ってルートデータを削除するメソッド
+    @Query("DELETE FROM route_alert_data WHERE id = :routeId")
+    suspend fun deleteRouteById(routeId: Int) // このメソッドを追加
 }

@@ -75,11 +75,16 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.material.icons.extended)
 
-    // room
+    // Room
     implementation(libs.androidx.room.runtime)
+    implementation("androidx.room:room-ktx:2.6.0") // 追加
     ksp(libs.androidx.room.compiler)
 
     // map
     implementation(libs.maps.compose)
     implementation(libs.play.services.location)
+
+    // コルーチン関連の追加
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }

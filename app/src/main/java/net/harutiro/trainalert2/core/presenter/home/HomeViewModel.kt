@@ -10,7 +10,15 @@ import kotlinx.coroutines.launch
 import net.harutiro.trainalert2.MyApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel : ViewModel() {
+
+    // ルートを削除するメソッド
+    fun deleteRoute(routeId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            routeDao.deleteRouteById(routeId) // DAOの削除メソッドを呼び出す
+            loadAllRoutes() // 削除後にルートリストを再ロード
+        }
+    }
 
     val TAG = "HomeViewModel"
 
