@@ -19,21 +19,21 @@ fun RouteEditScreen(
     viewModel: RouteEditorViewModel = viewModel()
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp), // 画面全体に余白を追加
+        horizontalAlignment = Alignment.Start, // 横方向の整列
+        verticalArrangement = Arrangement.Top // 縦方向の整列を上部から
     ) {
-
-
-
 
         // ルート名入力フィールド
         TextField(
             value = viewModel.title,
             onValueChange = { viewModel.title = it },
-            label = { Text("ルート名") }
+            label = { Text("ルート名") },
+            modifier = Modifier.fillMaxWidth() // 横幅いっぱいに広げる
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(16.dp)) // 余白を増やす
 
         // 出発地点の経度入力フィールド
         TextField(
@@ -41,9 +41,10 @@ fun RouteEditScreen(
             onValueChange = { viewModel.startLongitude = it },
             label = { Text("出発地点の経度") },
             placeholder = { Text("例: 123.456") },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         // 出発地点の緯度入力フィールド
         TextField(
@@ -51,10 +52,10 @@ fun RouteEditScreen(
             onValueChange = { viewModel.startLatitude = it },
             label = { Text("出発地点の緯度") },
             placeholder = { Text("例: 34.567") },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         // 到着地点の経度入力フィールド
         TextField(
@@ -62,9 +63,10 @@ fun RouteEditScreen(
             onValueChange = { viewModel.endLongitude = it },
             label = { Text("到着地点の経度") },
             placeholder = { Text("例: 123.456") },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         // 到着地点の緯度入力フィールド
         TextField(
@@ -72,15 +74,15 @@ fun RouteEditScreen(
             onValueChange = { viewModel.endLatitude = it },
             label = { Text("到着地点の緯度") },
             placeholder = { Text("例: 34.567") },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp)) // 余白を少し大きめに
 
-
-
+        // アラート方法（通知、バイブレーション）の選択
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
         ) {
             Checkbox(
                 checked = viewModel.isNotificationEnabled,
@@ -88,7 +90,7 @@ fun RouteEditScreen(
             )
             Text(text = "通知")
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(24.dp))
 
             Checkbox(
                 checked = viewModel.isVibrationEnabled,
@@ -97,22 +99,33 @@ fun RouteEditScreen(
             Text(text = "バイブレーション")
         }
 
+        Spacer(modifier = Modifier.height(24.dp)) // 余白を少し大きめに
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(onClick = {
-            viewModel.saveRoute() // 保存機能を呼び出す
-            toBackScreen() // 戻る処理
-        }) {
-            Text(text = "保存")
-        }
-
-        Button(
-            onClick = {
-                toBackScreen()
-            }
+        // 保存ボタン
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "戻る")
+            Button(
+                onClick = {
+                    viewModel.saveRoute() // 保存機能を呼び出す
+                    toBackScreen() // 戻る処理
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "保存")
+            }
+
+            Spacer(modifier = Modifier.width(16.dp)) // ボタン間のスペース
+
+            Button(
+                onClick = {
+                    toBackScreen()
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "戻る")
+            }
         }
     }
 }

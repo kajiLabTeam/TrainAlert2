@@ -21,6 +21,7 @@ class HomeViewModel: ViewModel() {
     private val routeDao = TrainAlertApplication.database.routeDao()
     // StateFlowでルートリストを管理
     private val _routeList = MutableStateFlow<List<RouteEntity>>(emptyList())
+
     val routeList: StateFlow<List<RouteEntity>> = _routeList
 
     init {

@@ -11,10 +11,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.harutiro.trainalert2.TrainAlertApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
+import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
+
 
 class RouteEditorViewModel: ViewModel() {
 
     private val routeDao = TrainAlertApplication.database.routeDao()
+    // Repositoryのインスタンスを取得
+    private val repository = RouteRepository(MyApplication.database.routeDao())
 
     var title by mutableStateOf("")
     var startLongitude by mutableStateOf("")
@@ -34,7 +38,7 @@ class RouteEditorViewModel: ViewModel() {
     fun onVibrationCheckedChange(checked: Boolean) {
         isVibrationEnabled = checked
         if (!isNotificationEnabled && !isVibrationEnabled) {
-            isNotificationEnabled = true// 通知、バイブレーションのどちらも選択されていない場合は、自動的に通知を選択
+            isNotificationEnabled = true // 通知、バイブレーションのどちらも選択されていない場合は、自動的に通知を選択
         }
     }
 
@@ -58,9 +62,9 @@ class RouteEditorViewModel: ViewModel() {
             alertMethods = alertMethods
         )
 
-        // データベースに保存
+        // Repositoryを介してデータベースに保存
         viewModelScope.launch(Dispatchers.IO) {
-            routeDao.saveRoute(routeEntity)
+            repository.saveRoute(routeEntity)
         }
     }
 
