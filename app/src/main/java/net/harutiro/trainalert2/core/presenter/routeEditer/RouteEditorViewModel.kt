@@ -1,7 +1,5 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -44,7 +42,6 @@ class RouteEditorViewModel: ViewModel() {
     // データを保存する関数
     fun saveRoute() {
 
-        Log.d("RouteEditor", "Saving route: $title, $startLongitude, $startLatitude, $endLongitude, $endLatitude")
 
         // アラート方法を決定
         val alertMethods = when {
