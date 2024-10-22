@@ -14,6 +14,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -45,6 +46,9 @@ fun FirstPage(){
 
     var selectedItemIndex by remember { mutableIntStateOf(0) }
     val navController = rememberNavController()
+    var topBarTitle by remember {
+        mutableStateOf("TrainAlert2")
+    }
 
     val bottomNavigationItems = listOf(
         BottomNavigationItem(
@@ -68,7 +72,7 @@ fun FirstPage(){
     Scaffold(
         topBar = {
             TopAppBar(title = {
-                Text(text = "TrainAlert2")
+                Text(text = topBarTitle)
             })
         },
         bottomBar = {
@@ -88,6 +92,9 @@ fun FirstPage(){
         }
     ) { innerPadding ->
         MainRouter(
+            changeTopBarTitle = { title ->
+                topBarTitle = title
+            },
             toRouteEditorScreen = {
                 navController.navigate(BottomNavigationBarRoute.ROUTE_EDITOR.route)
             },
