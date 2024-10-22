@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -29,9 +30,9 @@ fun RouteEditScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp), // 画面全体に余白を追加
-        horizontalAlignment = Alignment.Start, // 横方向の整列
-        verticalArrangement = Arrangement.Top // 縦方向の整列を上部から
+            .padding(16.dp),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Top
     ) {
         // ルート名入力フィールド
         TextField(
@@ -105,6 +106,16 @@ fun RouteEditScreen(
             )
             Text(text = "バイブレーション")
         }
+
+        // ルートの有効/無効を選択するトグルスイッチ
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("ルートを有効にする:")
+            Switch(
+                checked = viewModel.isEnabled,
+                onCheckedChange = { viewModel.isEnabled = it }
+            )
+        }
+
 
         Spacer(modifier = Modifier.height(24.dp)) // ボタンの後に余白
 
