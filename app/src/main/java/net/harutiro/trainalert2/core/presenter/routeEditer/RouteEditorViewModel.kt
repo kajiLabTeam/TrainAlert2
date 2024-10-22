@@ -1,7 +1,5 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,16 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.harutiro.trainalert2.TrainAlertApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 
 
 class RouteEditorViewModel: ViewModel() {
 
-    private val routeDao = TrainAlertApplication.database.routeDao()
     // Repositoryのインスタンスを取得
-    private val repository = RouteRepository(MyApplication.database.routeDao())
+    private val repository = RouteRepository()
 
     var title by mutableStateOf("")
     var startLongitude by mutableStateOf("")
