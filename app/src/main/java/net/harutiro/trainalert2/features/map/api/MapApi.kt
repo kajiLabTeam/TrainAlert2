@@ -8,6 +8,7 @@ import android.location.Location
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
+import net.harutiro.trainalert2.R
 
 class MapApi(private val context: Context) {
     private var fusedLocationClient: FusedLocationProviderClient =
@@ -42,12 +43,11 @@ class MapApi(private val context: Context) {
                         callback.onLocationResult(location)
                     } else {
                         callback.onLocationError("Location is null")
-                        Toast.makeText(context, "R.string.Location_is_null", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener { exception ->
                     callback.onLocationError(exception.message ?: "Unknown error")
-                    Toast.makeText(context, "R.string.Unknown_error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.unknown_error), Toast.LENGTH_SHORT).show()
                 }
         }else{
             ActivityCompat.requestPermissions(context as Activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 1000)

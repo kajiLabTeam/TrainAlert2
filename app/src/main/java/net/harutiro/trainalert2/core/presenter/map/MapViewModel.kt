@@ -22,7 +22,7 @@ class MapViewModel: ViewModel(){
     }
 
     fun changeLocation(cameraPositionState: CameraPositionState) {
-        mapRepository.getMapLocationData{ locationData ->
+        mapRepository.getMapLocationData { locationData ->
             mapCameraPosition(
                 cameraPosition = LocationData(
                     latitude = locationData.latitude,
