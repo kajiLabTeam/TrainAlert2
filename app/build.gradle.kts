@@ -77,7 +77,7 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.runtime)
-    implementation("androidx.room:room-ktx:2.6.0") // 追加
+    implementation(libs.androidx.room.ktx) // 追加
     ksp(libs.androidx.room.compiler)
 
     // map

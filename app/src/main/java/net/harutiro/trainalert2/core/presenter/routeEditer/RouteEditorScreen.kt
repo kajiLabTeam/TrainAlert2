@@ -24,23 +24,21 @@ fun RouteEditScreen(
     toBackScreen: () -> Unit,
     viewModel: RouteEditorViewModel = viewModel()
 ) {
-    var showDialog by rememberSaveable { mutableStateOf(false) }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp), // 画面全体に余白を追加
-        horizontalAlignment = Alignment.Start, // 横方向の整列
-        verticalArrangement = Arrangement.Top // 縦方向の整列を上部から
+            .padding(16.dp),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Top
     ) {
         // ルート名入力フィールド
         TextField(
             value = viewModel.title,
             onValueChange = { viewModel.title = it },
             label = { Text("ルート名") },
-            modifier = Modifier.fillMaxWidth() // 横幅いっぱいに広げる
+            modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(16.dp)) // 余白を増やす
+        Spacer(modifier = Modifier.height(16.dp))
 
         // 出発地点の経度入力フィールド
         TextField(
@@ -84,7 +82,7 @@ fun RouteEditScreen(
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(24.dp)) // 余白を少し大きめに
+        Spacer(modifier = Modifier.height(24.dp))
 
         // アラート方法（通知、バイブレーション）の選択
         Row(
@@ -106,40 +104,7 @@ fun RouteEditScreen(
             Text(text = "バイブレーション")
         }
 
-        Spacer(modifier = Modifier.height(24.dp)) // ボタンの後に余白
-
-        // UIコンポーネントの定義の外で条件を確認
-        if (showDialog) {
-            AlertDialog(
-                onDismissRequest = { showDialog = false },
-                title = { Text(text = "データの編集・削除を行いますか？") },
-                text = { Text("選択してください。") },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            viewModel.deleteRoute()
-                            showDialog = false
-                            toBackScreen()
-                        }
-                    ) {
-                        Text("削除")
-                    }
-                },
-                dismissButton = {
-                    Button(
-                        onClick = {
-                            showDialog = false
-                        }
-                    ) {
-                        Text("編集")
-                    }
-                }
-            )
-        }
-
-
-        Spacer(modifier = Modifier.height(24.dp)) // ダイアログ後の余白
-
+        Spacer(modifier = Modifier.height(24.dp))
 
         // 保存ボタン
         Row(
@@ -157,7 +122,7 @@ fun RouteEditScreen(
                 Text(text = "保存")
             }
 
-            Spacer(modifier = Modifier.width(16.dp)) // ボタン間のスペース
+            Spacer(modifier = Modifier.width(16.dp))
 
             Button(
                 onClick = {
