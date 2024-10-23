@@ -43,10 +43,9 @@ class RouteEditorViewModel: ViewModel() {
     }
 
     // データを保存する関数
+    // データを保存する関数
     @OptIn(ExperimentalComposeUiApi::class)
     fun saveRoute() {
-
-
         // アラート方法を決定
         val alertMethods = when {
             isNotificationEnabled && isVibrationEnabled -> "Notification, Vibration"
@@ -63,14 +62,24 @@ class RouteEditorViewModel: ViewModel() {
             endLongitude = endLongitude.toDoubleOrNull(),
             endLatitude = endLatitude.toDoubleOrNull(),
             alertMethods = alertMethods,
-            isEnabled = isEnabled
+            isEnabled = isEnabled // ユーザの選択に基づいてルートの有効性を設定
         )
+
+        // ルートが有効か無効かを判定
+        if (isEnabled) {
+            // ルートが有効に選択された場合の処理
+            // ここに有効が選択された場合の処理を追加
+        } else {
+            // ルートが無効に選択された場合の処理
+            // ここに無効が選択された場合の処理を追加
+        }
 
         // Repositoryを介してデータベースに保存
         viewModelScope.launch(Dispatchers.IO) {
             repository.saveRoute(routeEntity)
         }
     }
+
 
     fun deleteRoute() {
         TODO("Not yet implemented")
