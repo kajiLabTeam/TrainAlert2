@@ -1,12 +1,18 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -21,19 +27,18 @@ fun RouteEditScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp), // 画面全体に余白を追加
-        horizontalAlignment = Alignment.Start, // 横方向の整列
-        verticalArrangement = Arrangement.Top // 縦方向の整列を上部から
+            .padding(16.dp),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Top
     ) {
-
         // ルート名入力フィールド
         TextField(
             value = viewModel.title,
             onValueChange = { viewModel.title = it },
             label = { Text("ルート名") },
-            modifier = Modifier.fillMaxWidth() // 横幅いっぱいに広げる
+            modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(16.dp)) // 余白を増やす
+        Spacer(modifier = Modifier.height(16.dp))
 
         // 出発地点の経度入力フィールド
         TextField(
@@ -77,7 +82,7 @@ fun RouteEditScreen(
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(24.dp)) // 余白を少し大きめに
+        Spacer(modifier = Modifier.height(24.dp))
 
         // アラート方法（通知、バイブレーション）の選択
         Row(
@@ -99,7 +104,7 @@ fun RouteEditScreen(
             Text(text = "バイブレーション")
         }
 
-        Spacer(modifier = Modifier.height(24.dp)) // 余白を少し大きめに
+        Spacer(modifier = Modifier.height(24.dp))
 
         // 保存ボタン
         Row(
@@ -108,6 +113,7 @@ fun RouteEditScreen(
         ) {
             Button(
                 onClick = {
+                    Log.d("RouteEditor", "Save button clicked")
                     viewModel.saveRoute() // 保存機能を呼び出す
                     toBackScreen() // 戻る処理
                 },
@@ -116,7 +122,7 @@ fun RouteEditScreen(
                 Text(text = "保存")
             }
 
-            Spacer(modifier = Modifier.width(16.dp)) // ボタン間のスペース
+            Spacer(modifier = Modifier.width(16.dp))
 
             Button(
                 onClick = {
