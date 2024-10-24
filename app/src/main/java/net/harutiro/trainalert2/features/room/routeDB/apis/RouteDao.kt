@@ -16,7 +16,7 @@ interface RouteDao {
 
     // ルートデータを新規作成するメソッド
     @Insert(onConflict = OnConflictStrategy.ABORT) // 新規作成時のみ使用。既存データがあれば失敗。
-   fun saveRoute(routeEntity: RouteEntity)
+    fun saveRoute(routeEntity: RouteEntity)
 
     // ルートデータを更新するメソッド
     @Update

@@ -12,5 +12,5 @@ data class RouteEntity (
     @ColumnInfo(name = "start_latitude") val startLatitude: Double?, // 緯度
     @ColumnInfo(name = "end_longitude") val endLongitude: Double?,
     @ColumnInfo(name = "end_latitude") val endLatitude: Double?,
-    @ColumnInfo(name = "alert_methods") val alertMethods: String? // アラート方法
+    @ColumnInfo(name = "alert_methods") val alertMethods: Int // アラート方法
 )
