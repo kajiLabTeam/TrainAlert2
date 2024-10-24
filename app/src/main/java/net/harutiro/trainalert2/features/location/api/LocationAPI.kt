@@ -5,7 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
-import android.widget.Toast
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
@@ -46,6 +46,7 @@ class LocationAPI(private val context: Context) {
             override fun onLocationResult(locationResult: LocationResult) {
                 for (location in locationResult.locations) {
                     callback.onLocationResult(location)
+                    Log.d("LocationAPI", "Location: ${location.latitude}, ${location.longitude}")
                 }
             }
 
@@ -63,25 +64,5 @@ class LocationAPI(private val context: Context) {
         locationCallback?.let { fusedLocationClient.removeLocationUpdates(it) }
     }
 
-    private fun requestLocation(callback: MyLocationCallback) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location: Location? ->
-                    if (location != null) {
-                        callback.onLocationResult(location)
-                    } else {
-                        callback.onLocationError("Location is null")
-                        Toast.makeText(context, "R.string.Location_is_null", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    callback.onLocationError(exception.message ?: "Unknown error")
-                    Toast.makeText(context, "R.string.Unknown_error", Toast.LENGTH_SHORT).show()
-                }
-        }else{
-            ActivityCompat.requestPermissions(context as Activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 1000)
-        }
-    }
 }
 
