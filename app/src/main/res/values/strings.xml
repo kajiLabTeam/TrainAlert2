@@ -2,4 +2,6 @@
     <string name="app_name">TrainAlert2</string>
     <string name="home">ルート一覧</string>
     <string name="map">マップ</string>
+    <string name="location_is_null">位置情報が取得できませんでした</string>
+    <string name="unknown_error">不明なエラーです</string>
 </resources>
