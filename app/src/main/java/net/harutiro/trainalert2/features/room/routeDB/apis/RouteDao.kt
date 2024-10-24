@@ -1,28 +1,29 @@
 package net.harutiro.trainalert2.features.room.routeDB.apis
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Delete
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
 @Dao
 interface RouteDao {
-    // すべてのルートデータを取得するメソッド
+
+    // ルートを保存
+    @Insert(onConflict = OnConflictStrategy.ABORT) // 新規作成時に既存データがあれば失敗
+    suspend fun saveRoute(route: RouteEntity)
+
+    // すべてのルートを取得
     @Query("SELECT * FROM route_alert_data")
-    fun loadAllRoute(): List<RouteEntity>
+    suspend fun getAllRoutes(): List<RouteEntity>
 
-    // ルートデータを新規作成するメソッド
-    @Insert(onConflict = OnConflictStrategy.ABORT) // 新規作成時のみ使用。既存データがあれば失敗。
-   fun saveRoute(routeEntity: RouteEntity)
-
-    // ルートデータを更新するメソッド
+    // ルートを更新
     @Update
-    fun update(routeEntity: RouteEntity)
+    suspend fun updateRoute(routeEntity: RouteEntity)
 
-    // ルートデータを削除するメソッド
+    // ルートを削除
     @Delete
-    fun deleteRoute(routeEntity: RouteEntity)
+    suspend fun deleteRoute(routeEntity: RouteEntity)
 }
