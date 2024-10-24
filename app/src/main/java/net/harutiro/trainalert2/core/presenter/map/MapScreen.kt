@@ -59,6 +59,7 @@ fun MapSetting(
 
     viewModel.changeLocation(
         cameraPositionState = cameraPositionState
+
     )
 
     GoogleMap(
