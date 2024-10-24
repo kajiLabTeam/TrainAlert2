@@ -15,9 +15,19 @@ import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
 @Composable
 fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
+    // アラート方法の表示を変換
+    val alertMethodDisplay = when (route.alertMethods) {
+        "Notification" -> "通知"
+        "Vibration" -> "バイブレーション"
+        else -> "None"
+    }
+
+    // 有効かどうかの表示を変換
+    val isEnabledDisplay = if (route.isEnabled) "オン" else "オフ"
+
     Card(
-        modifier = Modifier // 修正: Modifierを正しく参照
-            .fillMaxWidth() // ここでfillMaxWidthを呼び出す
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(8.dp),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
@@ -29,7 +39,8 @@ fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
             Text(text = "出発地点の緯度: ${route.startLatitude}")
             Text(text = "到着地点の経度: ${route.endLongitude}")
             Text(text = "到着地点の緯度: ${route.endLatitude}")
-            Text(text = "アラート方法: ${route.alertMethods ?: "None"}")
+            Text(text = "アラート方法: $alertMethodDisplay")
+            Text(text = "オン・オフ: $isEnabledDisplay")
 
             // 編集ボタン
             Row {
