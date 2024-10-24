@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -24,7 +25,14 @@ fun RouteEditScreen(
     toBackScreen: () -> Unit,
     viewModel: RouteEditorViewModel = viewModel()
 ) {
-    var showDialog by rememberSaveable { mutableStateOf(false) }
+    // ルートの有効/無効を選択するトグルスイッチ
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text("ルートを有効にする:")
+        Switch(
+            checked = viewModel.isEnabled,
+            onCheckedChange = { viewModel.isEnabled = it }
+        )
+    }
 
     Column(
         modifier = Modifier
