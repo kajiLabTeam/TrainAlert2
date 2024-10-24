@@ -1,6 +1,8 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
+import RouteEditorViewModel
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
@@ -9,12 +11,14 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -24,6 +28,16 @@ fun RouteEditScreen(
     toBackScreen: () -> Unit,
     viewModel: RouteEditorViewModel = viewModel()
 ) {
+    val context = LocalContext.current
+    val toastMessage = viewModel.toastMessage
+
+    // toastMessageが変更されたときにトーストを表示
+    LaunchedEffect(toastMessage) {
+        toastMessage?.let {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -114,13 +128,18 @@ fun RouteEditScreen(
             Button(
                 onClick = {
                     Log.d("RouteEditor", "Save button clicked")
-                    viewModel.saveRoute() // 保存機能を呼び出す
-                    toBackScreen() // 戻る処理
+                    viewModel.saveRoute {
+                        // 保存成功時の処理をUIスレッドで行う
+                        Toast.makeText(context, viewModel.toastMessage, Toast.LENGTH_SHORT).show()
+                        // ホーム画面に戻る
+                        toBackScreen()
+                    }
                 },
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = "保存")
             }
+
 
             Spacer(modifier = Modifier.width(16.dp))
 

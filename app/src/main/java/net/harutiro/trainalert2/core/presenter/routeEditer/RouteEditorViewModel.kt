@@ -1,5 +1,4 @@
-package net.harutiro.trainalert2.core.presenter.routeEditer
-
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,18 +9,10 @@ import kotlinx.coroutines.launch
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 
-class RouteEditorViewModel: ViewModel() {
+class RouteEditorViewModel : ViewModel() {
+    private val repository: RouteRepository = RouteRepository()
 
-    // アラート方法を定義する定数
-    companion object {
-        const val NOTIFICATION = 1
-        const val VIBRATION = 2
-        const val BOTH = 3
-    }
-
-    // Repositoryのインスタンスを取得
-    private val repository = RouteRepository()
-
+    var toastMessage: String? by mutableStateOf(null)
     var title by mutableStateOf("")
     var startLongitude by mutableStateOf("")
     var startLatitude by mutableStateOf("")
@@ -30,52 +21,89 @@ class RouteEditorViewModel: ViewModel() {
     var isNotificationEnabled by mutableStateOf(false)
     var isVibrationEnabled by mutableStateOf(false)
 
+    companion object {
+        const val NOTIFICATION = 1
+        const val VIBRATION = 2
+        const val BOTH = 3
+    }
+
     fun onNotificationCheckedChange(checked: Boolean) {
         isNotificationEnabled = checked
         if (!isNotificationEnabled && !isVibrationEnabled) {
-            isNotificationEnabled = true // 通知、バイブレーションのどちらも選択されていない場合は、自動的に通知を選択
+            isNotificationEnabled = true
         }
     }
 
     fun onVibrationCheckedChange(checked: Boolean) {
         isVibrationEnabled = checked
         if (!isNotificationEnabled && !isVibrationEnabled) {
-            isNotificationEnabled = true // 通知、バイブレーションのどちらも選択されていない場合は、自動的に通知を選択
+            isNotificationEnabled = true
         }
     }
 
-    // データを保存する関数
-    fun saveRoute() {
-        // アラート方法を決定
-        val alertMethods = when {
-            isNotificationEnabled && isVibrationEnabled -> BOTH // BOTH定数を使用
-            isNotificationEnabled -> NOTIFICATION // NOTIFICATION定数を使用
-            isVibrationEnabled -> VIBRATION // VIBRATION定数を使用
-            else -> NOTIFICATION // 両方選択されていない場合はデフォルトで通知
+    private fun validateInputs(): Boolean {
+        return when {
+            title.isBlank() -> {
+                toastMessage = "ルート名を入力してください"
+                false
+            }
+            startLongitude.toDoubleOrNull() == null -> {
+                toastMessage = "正しい出発地点の経度を入力してください"
+                false
+            }
+            startLatitude.toDoubleOrNull() == null -> {
+                toastMessage = "正しい出発地点の緯度を入力してください"
+                false
+            }
+            endLongitude.toDoubleOrNull() == null -> {
+                toastMessage = "正しい到着地点の経度を入力してください"
+                false
+            }
+            endLatitude.toDoubleOrNull() == null -> {
+                toastMessage = "正しい到着地点の緯度を入力してください"
+                false
+            }
+            else -> true
+        }
+    }
+
+    fun saveRoute(onSuccess: () -> Unit) {
+        if (!validateInputs()) {
+            // 無効な入力があった場合は何もせずリターン
+            return
         }
 
-        // RouteEntityの作成
         val routeEntity = RouteEntity(
             title = title,
-            startLongitude = startLongitude.toDoubleOrNull(),
-            startLatitude = startLatitude.toDoubleOrNull(),
-            endLongitude = endLongitude.toDoubleOrNull(),
-            endLatitude = endLatitude.toDoubleOrNull(),
-            alertMethods = alertMethods // 数値型で保存
+            startLongitude = startLongitude.toDouble(),
+            startLatitude = startLatitude.toDouble(),
+            endLongitude = endLongitude.toDouble(),
+            endLatitude = endLatitude.toDouble(),
+            alertMethods = when {
+                isNotificationEnabled && isVibrationEnabled -> BOTH
+                isNotificationEnabled -> NOTIFICATION
+                isVibrationEnabled -> VIBRATION
+                else -> NOTIFICATION
+            }
         )
 
-        // Repositoryを介してデータベースに保存
         viewModelScope.launch(Dispatchers.IO) {
-            repository.saveRoute(routeEntity)
+            try {
+                repository.saveRoute(routeEntity)
+                // 保存が成功した場合にメインスレッドでコールバックを実行
+                viewModelScope.launch(Dispatchers.Main) {
+                    toastMessage = "ルートが保存されました"
+                    onSuccess()
+                }
+            } catch (e: Exception) {
+                // エラーメッセージをメインスレッドで設定
+                viewModelScope.launch(Dispatchers.Main) {
+                    toastMessage = "エラーが発生しました: ${e.message}"
+                }
+            }
         }
+
     }
 
-
-    // ルートを削除する関数
-    fun deleteRoute(route: RouteEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteRoute(route) // Repository経由で削除メソッドを呼び出す
-        }
-    }
 
 }

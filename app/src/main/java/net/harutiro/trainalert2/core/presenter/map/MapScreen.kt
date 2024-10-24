@@ -16,10 +16,13 @@ import com.google.maps.android.compose.MapEffect
 import com.google.maps.android.compose.MapsComposeExperimentalApi
 import com.google.maps.android.compose.rememberCameraPositionState
 import net.harutiro.trainalert2.core.presenter.component.ObserveLifecycleEvent
+import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
+import net.harutiro.trainalert2.features.map.repository.MapOptions
 
 @Composable
 fun MapScreen(
     viewModel: MapViewModel = viewModel()
+    //,RouteEntity: RouteEntity
 ){
     viewModel.init(
         context = LocalContext.current,
@@ -28,6 +31,7 @@ fun MapScreen(
     //マップ表示
     MapSetting(
         viewModel = viewModel
+        //,routeEntity = RouteEntity
     )
 
     ObserveLifecycleEvent { event ->
@@ -45,6 +49,7 @@ fun MapScreen(
 @Composable
 fun MapSetting(
     viewModel: MapViewModel
+    //,routeEntity: RouteEntity
 ) {
     val cameraPositionState = rememberCameraPositionState {
         val defaultPosition = LatLng(35.681236, 139.767125)
@@ -62,6 +67,7 @@ fun MapSetting(
     ) {
         //パーミッションチェックのためcontext取得
         val context = LocalContext.current
+        val mapOptions: MapOptions = MapOptions()
 
         MapEffect(Unit) { map ->
             //パーミッションチェック
