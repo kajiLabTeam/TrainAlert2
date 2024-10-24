@@ -24,5 +24,5 @@ interface RouteDao {
 
     // ID を使ってルートデータを削除するメソッド
     @Query("DELETE FROM route_alert_data WHERE id = :routeId")
-    suspend fun deleteRouteById(routeId: Int) // このメソッドを追加
+    suspend fun deleteRoute(routeId: Int)
 }

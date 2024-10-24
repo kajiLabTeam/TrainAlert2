@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.harutiro.trainalert2.MyApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 
@@ -17,7 +16,7 @@ import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteReposito
 class RouteEditorViewModel: ViewModel() {
 
     // Repositoryのインスタンスを取得
-    private val repository = RouteRepository(MyApplication.database.routeDao())
+    private val repository = RouteRepository()
 
     var title by mutableStateOf("")
     var startLongitude by mutableStateOf("")
@@ -46,6 +45,8 @@ class RouteEditorViewModel: ViewModel() {
     // データを保存する関数
     @OptIn(ExperimentalComposeUiApi::class)
     fun saveRoute() {
+
+
         // アラート方法を決定
         val alertMethods = when {
             isNotificationEnabled && isVibrationEnabled -> "Notification, Vibration"
@@ -80,9 +81,11 @@ class RouteEditorViewModel: ViewModel() {
         }
     }
 
-
-    fun deleteRoute() {
-        TODO("Not yet implemented")
+    // ルートを削除する関数
+    fun deleteRoute(route: RouteEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteRoute(route) // Repository経由で削除メソッドを呼び出す
+        }
     }
 
 }

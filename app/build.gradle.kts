@@ -77,7 +77,7 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.runtime)
-    implementation("androidx.room:room-ktx:2.6.0") // 追加
+    implementation(libs.androidx.room.ktx) // 追加
     ksp(libs.androidx.room.compiler)
 
     // map
@@ -85,6 +85,6 @@ dependencies {
     implementation(libs.play.services.location)
 
     // コルーチン関連の追加
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 }

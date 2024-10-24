@@ -39,9 +39,9 @@ fun RouteEditScreen(
             value = viewModel.title,
             onValueChange = { viewModel.title = it },
             label = { Text("ルート名") },
-            modifier = Modifier.fillMaxWidth() // 横幅いっぱいに広げる
+            modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(16.dp)) // 余白を増やす
+        Spacer(modifier = Modifier.height(16.dp))
 
         // 出発地点の経度入力フィールド
         TextField(
@@ -85,7 +85,7 @@ fun RouteEditScreen(
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(24.dp)) // 余白を少し大きめに
+        Spacer(modifier = Modifier.height(24.dp))
 
         // アラート方法（通知、バイブレーション）の選択
         Row(
@@ -106,16 +106,6 @@ fun RouteEditScreen(
             )
             Text(text = "バイブレーション")
         }
-
-        // ルートの有効/無効を選択するトグルスイッチ
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("ルートを有効にする:")
-            Switch(
-                checked = viewModel.isEnabled,
-                onCheckedChange = { viewModel.isEnabled = it }
-            )
-        }
-
 
         Spacer(modifier = Modifier.height(24.dp)) // ボタンの後に余白
 
@@ -168,7 +158,7 @@ fun RouteEditScreen(
                 Text(text = "保存")
             }
 
-            Spacer(modifier = Modifier.width(16.dp)) // ボタン間のスペース
+            Spacer(modifier = Modifier.width(16.dp))
 
             Button(
                 onClick = {

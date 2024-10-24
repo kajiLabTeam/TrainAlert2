@@ -7,26 +7,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import net.harutiro.trainalert2.MyApplication
+import net.harutiro.trainalert2.TrainAlertApplication
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
+import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 
 class HomeViewModel : ViewModel() {
 
-    // ルートを削除するメソッド
-    fun deleteRoute(routeId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            routeDao.deleteRouteById(routeId) // DAOの削除メソッドを呼び出す
-            loadAllRoutes() // 削除後にルートリストを再ロード
-        }
-    }
 
-    val TAG = "HomeViewModel"
+    private val routeRepository: RouteRepository = RouteRepository() // Repositoryのインスタンスを取得
 
-    fun test(){
-        Log.d(TAG,"ホーム画面のViewModel")
-    }
-
-    private val routeDao = MyApplication.database.routeDao()
+    private val TAG = "HomeViewModel"
 
     // StateFlowでルートリストを管理
     private val _routeList = MutableStateFlow<List<RouteEntity>>(emptyList())
@@ -38,20 +28,19 @@ class HomeViewModel : ViewModel() {
         loadAllRoutes()
     }
 
+    // ルートを削除するメソッド
+    fun deleteRoute(route: RouteEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            routeRepository.deleteRoute(route) // Repositoryの削除メソッドを呼び出す
+            loadAllRoutes() // 削除後にルートリストを再ロード
+        }
+    }
+
+
     // ルートを取得する
     private fun loadAllRoutes() {
         viewModelScope.launch(Dispatchers.IO) {
-            _routeList.value = routeDao.loadAllRoute()
+            _routeList.value = routeRepository.loadAllRoutes()
         }
     }
-
-    // データベースからすべてのルートを取得する
-    fun getAllRoutes() {
-        // IOスレッドでデータを取得
-        viewModelScope.launch(Dispatchers.IO) {
-            val routes = routeDao.loadAllRoute()
-            // 必要に応じてUIスレッドにデータを反映させる処理を追加
-        }
-    }
-
 }
