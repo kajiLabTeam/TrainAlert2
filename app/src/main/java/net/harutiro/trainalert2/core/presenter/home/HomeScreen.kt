@@ -1,12 +1,12 @@
 package net.harutiro.trainalert2.core.presenter.home
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.material3.Text
 import androidx.compose.material3.AlertDialog // ここを修正
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -21,6 +21,25 @@ import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 fun HomeScreen(
     toRouteEditor: (Int?) -> Unit,
     viewModel: HomeViewModel = viewModel()
+){
+    val context = LocalContext.current
+
+    Column {
+        Text(text = "HomeScreen")
+        Button(
+            onClick = {
+                // テスト通知とバイブレーションを送る
+                viewModel.test(context)
+            }
+        ) {
+            Text(text = "通知＆バイブレーションテスト")
+        }
+        Button(
+            onClick = {
+                toRouteEditor()
+            }
+        ) {
+            Text(text = "経路作成画面へ")
 ) {
     val routeList by viewModel.routeList.collectAsState(initial = emptyList())
     val (showDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf<Pair<RouteEntity, Boolean>?>(null) }
