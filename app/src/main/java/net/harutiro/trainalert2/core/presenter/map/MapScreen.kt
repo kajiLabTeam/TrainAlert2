@@ -78,10 +78,7 @@ fun MapSetting(
         val mapOptions = MapOptions()
 
         routeList.map { route ->
-//            Log.d(
-//                "viewRouteList",
-//                "${route.startLatitude}, ${route.startLongitude}, ${route.endLatitude}, ${route.endLongitude}"
-//            )
+
         }
         MapEffect(routeList) { map ->
             //パーミッションチェック
@@ -95,42 +92,23 @@ fun MapSetting(
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 map.isMyLocationEnabled = true
-//                map.clear()
-
-                routeList.map { route ->
-                    Log.d(
-                        "routeList",
-                        "${route.startLatitude}, ${route.startLongitude}, ${route.endLatitude}, ${route.endLongitude}"
-                    )
-                }
 
                 routeList.map { route ->
                     map.addCircle(
                         mapOptions.redCircle(
-                            route.startLongitude ?: 0.0,
                             route.startLatitude ?: 0.0,
+                            route.startLongitude ?: 0.0,
                             600.0,
                         )
                     )
                     map.addCircle(
                         mapOptions.redCircle(
-                            route.endLongitude ?: 0.0,
                             route.endLatitude ?: 0.0,
+                            route.endLongitude ?: 0.0,
                             600.0,
                         )
                     )
                 }
-
-//                routeList.map { route ->
-//                    map.addCircle(
-//                        mapOptions.redCircle(
-//                            35.17621853,
-//                            137.10669712,
-//                            600.0,
-//                        )
-//                    )
-//                }
-
             }
         }
     }
