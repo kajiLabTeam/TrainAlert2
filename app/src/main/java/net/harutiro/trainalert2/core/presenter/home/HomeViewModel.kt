@@ -1,8 +1,7 @@
 package net.harutiro.trainalert2.core.presenter.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import android.content.Context
-import net.harutiro.trainalert2.features.notification.api.NotificationApi
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,15 +13,6 @@ import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteReposito
 
 class HomeViewModel : ViewModel() {
 
-    fun test(context: Context) {
-        // NotificationApiインスタンスを作成
-        val notificationApi = NotificationApi(context)
-
-        // 通知を表示
-        notificationApi.showNotification("テスト通知", "これはテストメッセージです。")
-
-        // バイブレーションを実行
-        notificationApi.vibrate(500) // 500msのバイブレーション
 
     private val routeRepository: RouteRepository = RouteRepository() // Repositoryのインスタンスを取得
 
