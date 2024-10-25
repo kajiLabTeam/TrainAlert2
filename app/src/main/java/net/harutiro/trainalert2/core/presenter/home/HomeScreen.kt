@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import net.harutiro.trainalert2.TrainAlertApplication // Ensure to import your application context
@@ -26,6 +27,7 @@ fun HomeScreen(
     toRouteEditor: (Int?) -> Unit,
     viewModel: HomeViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val routeList by viewModel.routeList.collectAsState(initial = emptyList())
     val (showDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf<Pair<RouteEntity, Boolean>?>(null) }
 
@@ -43,7 +45,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = {
-            val notificationApi = NotificationApi(TrainAlertApplication.instance) // Assuming you have a way to access the application context
+            val notificationApi = NotificationApi(context) // Assuming you have a way to access the application context
             notificationApi.showNotification("Test Notification", "This is a test notification")
             notificationApi.vibrate(500)
         }, modifier = Modifier.fillMaxWidth()) {
