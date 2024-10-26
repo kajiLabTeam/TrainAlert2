@@ -42,8 +42,6 @@ class RouteEditorViewModel: ViewModel() {
     }
 
     // データを保存する関数
-    // データを保存する関数
-    @OptIn(ExperimentalComposeUiApi::class)
     fun saveRoute() {
 
 
@@ -67,13 +65,13 @@ class RouteEditorViewModel: ViewModel() {
         )
 
         // ルートが有効か無効かを判定
-        if (isEnabled) {
+        /*if (isEnabled) {
             // ルートが有効に選択された場合の処理
             // ここに有効が選択された場合の処理を追加
         } else {
             // ルートが無効に選択された場合の処理
             // ここに無効が選択された場合の処理を追加
-        }
+        }*/
 
         // Repositoryを介してデータベースに保存
         viewModelScope.launch(Dispatchers.IO) {

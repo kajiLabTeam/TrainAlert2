@@ -109,34 +109,7 @@ fun RouteEditScreen(
 
         Spacer(modifier = Modifier.height(24.dp)) // ボタンの後に余白
 
-        // UIコンポーネントの定義の外で条件を確認
-        if (showDialog) {
-            AlertDialog(
-                onDismissRequest = { showDialog = false },
-                title = { Text(text = "データの編集・削除を行いますか？") },
-                text = { Text("選択してください。") },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            viewModel.deleteRoute()
-                            showDialog = false
-                            toBackScreen()
-                        }
-                    ) {
-                        Text("削除")
-                    }
-                },
-                dismissButton = {
-                    Button(
-                        onClick = {
-                            showDialog = false
-                        }
-                    ) {
-                        Text("編集")
-                    }
-                }
-            )
-        }
+
 
 
         Spacer(modifier = Modifier.height(24.dp)) // ダイアログ後の余白
