@@ -35,17 +35,6 @@ fun RouteEditScreen(
         )
         Spacer(modifier = Modifier.height(16.dp)) // 余白を増やす
 
-        // 出発地点の緯度入力フィールド
-        TextField(
-            value = viewModel.startLatitude,
-            onValueChange = { viewModel.startLatitude = it },
-            label = { Text("出発地点の緯度") },
-            placeholder = { Text("例: 34.567") },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-
         // 出発地点の経度入力フィールド
         TextField(
             value = viewModel.startLongitude,
@@ -74,6 +63,17 @@ fun RouteEditScreen(
             onValueChange = { viewModel.endLongitude = it },
             label = { Text("到着地点の経度") },
             placeholder = { Text("例: 123.456") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // 出発地点の緯度入力フィールド
+        TextField(
+            value = viewModel.startLatitude,
+            onValueChange = { viewModel.startLatitude = it },
+            label = { Text("出発地点の緯度") },
+            placeholder = { Text("例: 34.567") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )

@@ -17,10 +17,10 @@ class RouteEditorViewModel: ViewModel() {
     private val repository = RouteRepository()
 
     var title by mutableStateOf("")
-    var startLatitude by mutableStateOf("")
     var startLongitude by mutableStateOf("")
-    var endLatitude by mutableStateOf("")
+    var startLatitude by mutableStateOf("")
     var endLongitude by mutableStateOf("")
+    var endLatitude by mutableStateOf("")
     var isNotificationEnabled by mutableStateOf(false)
     var isVibrationEnabled by mutableStateOf(false)
 
@@ -51,10 +51,10 @@ class RouteEditorViewModel: ViewModel() {
         // RouteEntityの作成
         val routeEntity = RouteEntity(
             title = title,
-            startLatitude = startLatitude.toDoubleOrNull(),
             startLongitude = startLongitude.toDoubleOrNull(),
-            endLatitude = endLatitude.toDoubleOrNull(),
+            startLatitude = startLatitude.toDoubleOrNull(),
             endLongitude = endLongitude.toDoubleOrNull(),
+            endLatitude = endLatitude.toDoubleOrNull(),
             alertMethods = alertMethods
         )
 
