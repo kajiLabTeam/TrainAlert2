@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.location.Location
 import android.util.Log
+import android.widget.Toast
 import net.harutiro.trainalert2.TrainAlertApplication
 import net.harutiro.trainalert2.R
 import net.harutiro.trainalert2.features.map.api.MapApi
