@@ -44,16 +44,6 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = {
-            val notificationApi = NotificationApi(context) // Assuming you have a way to access the application context
-            notificationApi.showNotification("Test Notification", "This is a test notification")
-            notificationApi.vibrate(500)
-        }, modifier = Modifier.fillMaxWidth()) {
-            Text(text = "Test Notification & Vibration")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
