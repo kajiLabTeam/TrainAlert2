@@ -11,14 +11,6 @@ import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 
 class RouteEditorViewModel: ViewModel() {
-
-    // アラート方法を定義する定数
-    companion object {
-        const val NOTIFICATION = 1
-        const val VIBRATION = 2
-        const val BOTH = 3
-    }
-
     // Repositoryのインスタンスを取得
     private val repository = RouteRepository()
 
@@ -48,10 +40,10 @@ class RouteEditorViewModel: ViewModel() {
     fun saveRoute() {
         // アラート方法を決定
         val alertMethods = when {
-            isNotificationEnabled && isVibrationEnabled -> BOTH // BOTH定数を使用
-            isNotificationEnabled -> NOTIFICATION // NOTIFICATION定数を使用
-            isVibrationEnabled -> VIBRATION // VIBRATION定数を使用
-            else -> NOTIFICATION // 両方選択されていない場合はデフォルトで通知
+            isNotificationEnabled && isVibrationEnabled -> RouteEntity.BOTH
+            isNotificationEnabled -> RouteEntity.NOTIFICATION
+            isVibrationEnabled -> RouteEntity.VIBRATION
+            else -> RouteEntity.NOTIFICATION
         }
 
         // RouteEntityの作成

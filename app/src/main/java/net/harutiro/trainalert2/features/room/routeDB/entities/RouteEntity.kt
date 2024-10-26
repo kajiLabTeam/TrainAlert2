@@ -13,4 +13,10 @@ data class RouteEntity (
     @ColumnInfo(name = "end_longitude") val endLongitude: Double?,
     @ColumnInfo(name = "end_latitude") val endLatitude: Double?,
     @ColumnInfo(name = "alert_methods") val alertMethods: Int // アラート方法
-)
+){
+    companion object {
+        const val NOTIFICATION = 1
+        const val VIBRATION = 2
+        const val BOTH = 3
+    }
+}
