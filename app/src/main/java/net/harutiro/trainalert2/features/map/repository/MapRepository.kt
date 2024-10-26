@@ -3,8 +3,10 @@ package net.harutiro.trainalert2.features.map.repository
 import android.content.ContentValues.TAG
 import android.location.Location
 import android.util.Log
+import net.harutiro.trainalert2.TrainAlertApplication
 import net.harutiro.trainalert2.features.map.api.MapApi
 import net.harutiro.trainalert2.features.map.entity.LocationData
+import net.harutiro.trainalert2.features.room.routeDB.apis.RouteDao
 
 //マップの中心の値の取得
 class MapRepository {
@@ -41,5 +43,8 @@ class MapRepository {
                 Log.d(TAG, "onLocationError")
             }
         })
+    }
+    fun routeDao(): RouteDao {
+        return TrainAlertApplication.database.routeDao()
     }
 }

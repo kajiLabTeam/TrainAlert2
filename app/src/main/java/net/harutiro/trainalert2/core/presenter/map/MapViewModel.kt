@@ -11,11 +11,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import net.harutiro.trainalert2.TrainAlertApplication
-import net.harutiro.trainalert2.core.presenter.home.HomeViewModel
 import net.harutiro.trainalert2.features.map.entity.LocationData
 import net.harutiro.trainalert2.features.map.repository.MapRepository
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
@@ -59,7 +55,7 @@ class MapViewModel : ViewModel() {
     }
 
 
-    private val routeDao = TrainAlertApplication.database.routeDao()
+    private val routeDao = MapRepository().routeDao()
 
     // StateFlowでルートリストを管理
     private val _routeList = MutableLiveData<List<RouteEntity>>(emptyList())

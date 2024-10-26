@@ -2,7 +2,6 @@ package net.harutiro.trainalert2.core.presenter.map
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -77,9 +76,6 @@ fun MapSetting(
         val context = LocalContext.current
         val mapOptions = MapOptions()
 
-        routeList.map { route ->
-
-        }
         MapEffect(routeList) { map ->
             //パーミッションチェック
             if (ActivityCompat.checkSelfPermission(
