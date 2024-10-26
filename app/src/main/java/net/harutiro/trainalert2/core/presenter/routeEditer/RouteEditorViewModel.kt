@@ -41,7 +41,6 @@ class RouteEditorViewModel: ViewModel() {
     }
 
     // データを保存する関数
-    @OptIn(ExperimentalComposeUiApi::class)
     fun saveRoute() {
 
         // アラート方法を決定

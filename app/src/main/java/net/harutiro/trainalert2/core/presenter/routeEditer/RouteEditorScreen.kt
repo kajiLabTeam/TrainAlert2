@@ -25,14 +25,6 @@ fun RouteEditScreen(
     toBackScreen: () -> Unit,
     viewModel: RouteEditorViewModel = viewModel()
 ) {
-    // ルートの有効/無効を選択するトグルスイッチ
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Text("ルートを有効にする:")
-        Switch(
-            checked = viewModel.isEnabled,
-            onCheckedChange = { viewModel.isEnabled = it }
-        )
-    }
 
     Column(
         modifier = Modifier
@@ -112,6 +104,16 @@ fun RouteEditScreen(
                 onCheckedChange = { viewModel.onVibrationCheckedChange(it) }
             )
             Text(text = "バイブレーション")
+        }
+
+        // ルートの有効/無効を選択するトグルスイッチ
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("ルートを有効にする：")
+            Spacer(modifier = Modifier.width(8.dp))
+            Switch(
+                checked = viewModel.isEnabled,
+                onCheckedChange = { viewModel.isEnabled = it }
+            )
         }
 
         Spacer(modifier = Modifier.height(24.dp)) // ボタンの後に余白
