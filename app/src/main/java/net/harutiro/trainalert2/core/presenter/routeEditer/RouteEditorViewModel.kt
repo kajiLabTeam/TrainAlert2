@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 
-
 class RouteEditorViewModel: ViewModel() {
 
     // Repositoryのインスタンスを取得
@@ -40,6 +39,7 @@ class RouteEditorViewModel: ViewModel() {
 
     // データを保存する関数
     fun saveRoute() {
+
         // アラート方法を決定
         val alertMethods = when {
             isNotificationEnabled && isVibrationEnabled -> "Notification, Vibration"
@@ -61,6 +61,13 @@ class RouteEditorViewModel: ViewModel() {
         // Repositoryを介してデータベースに保存
         viewModelScope.launch(Dispatchers.IO) {
             repository.saveRoute(routeEntity)
+        }
+    }
+
+    // ルートを削除する関数
+    fun deleteRoute(route: RouteEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteRoute(route) // Repository経由で削除メソッドを呼び出す
         }
     }
 

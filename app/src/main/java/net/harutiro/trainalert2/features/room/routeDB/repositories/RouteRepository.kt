@@ -11,4 +11,12 @@ class RouteRepository() {
     suspend fun saveRoute(route: RouteEntity) {
         routeDao.saveRoute(route)
     }
+
+    suspend fun deleteRoute(route: RouteEntity) {
+        routeDao.deleteRoute(route.id)
+    }
+
+    suspend fun loadAllRoutes(): List<RouteEntity> {
+        return routeDao.loadAllRoute() // すべてのルートを取得
+    }
 }

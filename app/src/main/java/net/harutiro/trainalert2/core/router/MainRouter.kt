@@ -1,18 +1,11 @@
 package net.harutiro.trainalert2.core.router
 
-import android.icu.text.CaseMap.Title
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import net.harutiro.trainalert2.core.presenter.FirstPage
 import net.harutiro.trainalert2.core.presenter.home.HomeScreen
 import net.harutiro.trainalert2.core.presenter.map.MapScreen
 import net.harutiro.trainalert2.core.presenter.routeEditer.RouteEditScreen
@@ -20,7 +13,7 @@ import net.harutiro.trainalert2.core.presenter.routeEditer.RouteEditScreen
 @Composable
 fun MainRouter(
     changeTopBarTitle:(String) -> Unit,
-    toRouteEditorScreen: () -> Unit,
+    toRouteEditorScreen: (Int?) -> Unit,
     toBackScreen: () -> Unit,
     navController: NavHostController,
     modifier: Modifier = Modifier
@@ -28,8 +21,7 @@ fun MainRouter(
     NavHost(
         navController = navController,
         startDestination = BottomNavigationBarRoute.HOME.route,
-        modifier = modifier
-            .fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         composable(BottomNavigationBarRoute.HOME.route) {
             HomeScreen(

@@ -1,77 +1,88 @@
 package net.harutiro.trainalert2.core.presenter.home
 
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import net.harutiro.trainalert2.TrainAlertApplication // Ensure to import your application context
+import net.harutiro.trainalert2.features.notification.api.NotificationApi
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
 @Composable
 fun HomeScreen(
-    toRouteEditor: () -> Unit,
+    toRouteEditor: (Int?) -> Unit,
     viewModel: HomeViewModel = viewModel()
 ) {
-    // RouteListをStateFlowから取得
+    val context = LocalContext.current
     val routeList by viewModel.routeList.collectAsState(initial = emptyList())
+    val (showDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf<Pair<RouteEntity, Boolean>?>(null) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp), // 全体に余白を追加
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-
-        // 経路作成画面へ遷移するボタン
-        Button(
-            onClick = { toRouteEditor() },
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Button(onClick = { toRouteEditor(null) }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "経路作成画面へ")
         }
 
-        Spacer(modifier = Modifier.height(16.dp)) // ボタンとリストの間にスペース追加
+        Spacer(modifier = Modifier.height(16.dp))
 
-        // LazyColumnでルートのリストを表示
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(16.dp) // 各項目間にスペースを追加
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(routeList) { route: RouteEntity ->
-                RouteItem(route = route) // 各ルートの情報を表示するためのComposable
+                RouteItem(
+                    route = route,
+                    onEdit = {
+                        toRouteEditor(route.id)
+                    },
+                    onDelete = {
+                        setShowDeleteDialog(Pair(route, true)) // ダイアログ表示
+                    }
+                )
             }
         }
     }
-}
 
-// ルートの詳細表示用のComposable
-@Composable
-fun RouteItem(route: RouteEntity) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp), // カード全体に余白を追加
-        elevation = CardDefaults.cardElevation(4.dp) // カードに影をつけて視覚的に強調
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp) // カード内の余白
-        ) {
-            Text(text = "ルート名: ${route.title ?: "Unnamed Route"}")
-            Text(text = "出発地点の経度: ${route.startLongitude}")
-            Text(text = "出発地点の緯度: ${route.startLatitude}")
-            Text(text = "到着地点の経度: ${route.endLongitude}")
-            Text(text = "到着地点の緯度: ${route.endLatitude}")
-            Text(text = "アラート方法: ${route.alertMethods ?: "None"}")
+    // 削除確認ダイアログ
+    showDeleteDialog?.let { (route, isVisible) ->
+        if (isVisible) {
+            AlertDialog(
+                onDismissRequest = { setShowDeleteDialog(null) },
+                title = { Text(text = "削除確認") },
+                text = { Text(text = "${route.title ?: "Unnamed Route"} を削除しますか？") },
+                confirmButton = {
+                    Button(onClick = {
+                        viewModel.deleteRoute(route) // 削除メソッドを呼び出す
+                        setShowDeleteDialog(null) // ダイアログを閉じる
+                    }) {
+                        Text("削除")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = { setShowDeleteDialog(null) }) {
+                        Text("キャンセル")
+                    }
+                }
+            )
         }
     }
 }
