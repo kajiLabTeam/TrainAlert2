@@ -18,7 +18,7 @@ import net.harutiro.trainalert2.ui.theme.TrainAlert2Theme
 class MainActivity : ComponentActivity() {
 
     private val routeRepository = RouteRepository()
-    private lateinit var notificationApi: NotificationApi
+    private var notificationApi: NotificationApi? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,31 +41,32 @@ class MainActivity : ComponentActivity() {
             // データベースから目的地の情報を取得
             val routeList = routeRepository.getAllRoutes() // データベースにあるルート全てを取得する
             if (routeList.isNotEmpty()) {
-                val destination = routeList[0] // 今回は最初のルートの目的地を使う（複数ルートの場合は要修正）
+                // 全ルートに対して処理を行う
+                routeList.forEach { destination ->
+                    // 現在地を取得する部分はAyakaさんが実装予定
+                    val currentLocation = LatLng(35.681236, 139.767125) // 仮の現在地（東京駅）
 
-                // 現在地を取得する部分はAyakaさんが実装予定
-                val currentLocation = LatLng(35.681236, 139.767125) // 仮の現在地（東京駅）
+                    // 目的地を取得
+                    val destinationLocation = LatLng(
+                        destination.endLatitude ?: 0.0,
+                        destination.endLongitude ?: 0.0
+                    )
 
-                // 目的地を取得
-                val destinationLocation = LatLng(
-                    destination.endLatitude ?: 0.0,
-                    destination.endLongitude ?: 0.0
-                )
+                    // 距離判定を行う
+                    val isWithinDistance = DistanceJudgement().withinJudgerange(
+                        currentLocation.latitude, currentLocation.longitude,
+                        destinationLocation.latitude, destinationLocation.longitude,
+                        100.0 // 距離は100m以内か
+                    )
 
-                // 距離判定を行う
-                val isWithinDistance = DistanceJudgement().withinJudgerange(
-                    currentLocation.latitude, currentLocation.longitude,
-                    destinationLocation.latitude, destinationLocation.longitude,
-                    100.0 // 距離は100m以内か
-                )
-
-                // 判定がtrueの場合、通知を表示
-                if (isWithinDistance) {
-                    withContext(Dispatchers.Main) {
-                        notificationApi.showNotification(
-                            "目的地に近づきました",
-                            "間もなく到着です！"
-                        )
+                    // 判定がtrueの場合、通知を表示
+                    if (isWithinDistance) {
+                        withContext(Dispatchers.Main) {
+                            notificationApi?.showNotification(
+                                "目的地に近づきました",
+                                "間もなく到着です！"
+                            )
+                        }
                     }
                 }
             }

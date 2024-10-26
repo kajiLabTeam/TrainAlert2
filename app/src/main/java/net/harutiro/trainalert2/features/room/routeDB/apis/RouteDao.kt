@@ -13,11 +13,11 @@ interface RouteDao {
 
     // ルートを保存
     @Insert(onConflict = OnConflictStrategy.ABORT) // 新規作成時に既存データがあれば失敗
-    suspend fun saveRoute(route: RouteEntity)
+    suspend fun saveRoute(routeEntity: RouteEntity)
 
     // すべてのルートを取得
     @Query("SELECT * FROM route_alert_data")
-    suspend fun getAllRoutes(): List<RouteEntity>
+    suspend fun loadAllRoute(): List<RouteEntity>
 
     // ルートを更新
     @Update
