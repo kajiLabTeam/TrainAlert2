@@ -15,6 +15,6 @@ class RouteRepository {
 
     // ルート全てを取得するメソッドを追加
     suspend fun getAllRoutes(): List<RouteEntity> {
-        return routeDao.getAllRoutes()
+        return routeDao.loadAllRoute()
     }
 }
