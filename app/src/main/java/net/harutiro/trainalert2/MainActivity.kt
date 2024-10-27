@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
     private fun checkDistance() {
         lifecycleScope.launch(Dispatchers.IO) {
             // データベースから目的地の情報を取得
-            val routeList = routeRepository.getAllRoutes() // データベースにあるルート全てを取得する
+            val routeList = routeRepository.loadAllRoutes() // データベースにあるルート全てを取得する
             if (routeList.isNotEmpty()) {
                 // 全ルートに対して処理を行う
                 routeList.forEach { destination ->
