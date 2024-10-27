@@ -21,16 +21,26 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import net.harutiro.trainalert2.TrainAlertApplication // Ensure to import your application context
 import net.harutiro.trainalert2.features.notification.api.NotificationApi
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
+import androidx.compose.runtime.LaunchedEffect
+import androidx.lifecycle.viewmodel.compose.viewModel
+
+
 
 @Composable
 fun HomeScreen(
     toRouteEditor: (Int?) -> Unit,
-    viewModel: HomeViewModel = viewModel()
+    viewModel: HomeViewModel = viewModel() // ここで viewModel を宣言
 ) {
     val context = LocalContext.current
     val routeList by viewModel.routeList.collectAsState(initial = emptyList())
     val (showDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf<Pair<RouteEntity, Boolean>?>(null) }
 
+    // 画面が表示されるときにデータをロードする
+    LaunchedEffect(Unit) {
+        viewModel.loadAllRoutes()
+    }
+
+    // ルートリストの表示
     Column(
         modifier = Modifier
             .fillMaxSize()

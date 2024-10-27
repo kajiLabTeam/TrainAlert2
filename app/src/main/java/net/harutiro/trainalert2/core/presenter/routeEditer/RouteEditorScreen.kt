@@ -19,12 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import net.harutiro.trainalert2.core.presenter.home.HomeViewModel
 
 @Composable
 fun RouteEditScreen(
     toBackScreen: () -> Unit,
-    viewModel: RouteEditorViewModel = viewModel()
+    homeViewModel: HomeViewModel = viewModel()
 ) {
+    val viewModel: RouteEditorViewModel = viewModel(factory = RouteEditorViewModelFactory(homeViewModel))
 
     Column(
         modifier = Modifier
