@@ -3,6 +3,8 @@ package net.harutiro.trainalert2.core.presenter.routeEditer
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.contentcapture.ContentCaptureManager.Companion.isEnabled
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +24,7 @@ class RouteEditorViewModel: ViewModel() {
     var endLatitude by mutableStateOf("")
     var isNotificationEnabled by mutableStateOf(false)
     var isVibrationEnabled by mutableStateOf(false)
+    var isEnabled by mutableStateOf(true)
 
     fun onNotificationCheckedChange(checked: Boolean) {
         isNotificationEnabled = checked
@@ -55,7 +58,8 @@ class RouteEditorViewModel: ViewModel() {
             startLatitude = startLatitude.toDoubleOrNull(),
             endLongitude = endLongitude.toDoubleOrNull(),
             endLatitude = endLatitude.toDoubleOrNull(),
-            alertMethods = alertMethods
+            alertMethods = alertMethods,
+            isEnabled = isEnabled
         )
 
         // Repositoryを介してデータベースに保存
