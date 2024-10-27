@@ -107,12 +107,21 @@ fun RouteEditScreen(
             Text(text = "バイブレーション")
         }
 
+        // ルートの有効/無効を選択するトグルスイッチ
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("ルートを有効にする：")
+            Spacer(modifier = Modifier.width(8.dp))
+            Switch(
+                checked = viewModel.isEnabled,
+                onCheckedChange = { viewModel.isEnabled = it }
+            )
+        }
+
         Spacer(modifier = Modifier.height(24.dp)) // ボタンの後に余白
 
 
 
 
-        Spacer(modifier = Modifier.height(24.dp)) // ダイアログ後の余白
 
 
         // 保存ボタン
