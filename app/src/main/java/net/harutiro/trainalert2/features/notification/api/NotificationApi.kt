@@ -22,7 +22,7 @@ class NotificationApi(private val context: Context) {
             val channel = NotificationChannel(
                 channelId,
                 "Train Alert Notifications",
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_HIGH  // 高い重要度に設定
             )
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
@@ -34,11 +34,13 @@ class NotificationApi(private val context: Context) {
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(title)
             .setContentText(message)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_HIGH) // ヘッドアップ通知を表示するために高い優先度に設定
+            .setAutoCancel(true)                           // 通知をタップしたら自動的に消す
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(notificationId, notificationBuilder.build())
     }
+
 
     fun vibrate(duration: Long = 500) {
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
