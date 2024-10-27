@@ -25,7 +25,7 @@ interface RouteDao {
 
     // ルートを削除
     @Delete
-    suspend fun deleteRoute(routeEntity: RouteEntity)
+    suspend fun deleteRoute(routeEntity: Int)
 }
 
 
