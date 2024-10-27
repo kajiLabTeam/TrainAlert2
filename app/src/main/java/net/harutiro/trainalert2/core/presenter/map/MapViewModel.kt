@@ -15,10 +15,12 @@ import kotlinx.coroutines.launch
 import net.harutiro.trainalert2.features.map.entity.LocationData
 import net.harutiro.trainalert2.features.map.repository.MapRepository
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
+import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 
 class MapViewModel : ViewModel() {
 
     private val mapRepository = MapRepository()
+    private val routeRepository = RouteRepository()
 
     fun init(context: Context) {
         mapRepository.initMapApi(context)
@@ -54,9 +56,6 @@ class MapViewModel : ViewModel() {
         cameraPositionState.position = CameraPosition.fromLatLngZoom(defaultPosition, defaultZoom)
     }
 
-
-    private val routeDao = MapRepository().routeDao()
-
     // StateFlowでルートリストを管理
     private val _routeList = MutableLiveData<List<RouteEntity>>(emptyList())
 
@@ -64,7 +63,7 @@ class MapViewModel : ViewModel() {
 
     private fun loadAllRoutes() {
         viewModelScope.launch(Dispatchers.IO) {
-            val routes = routeDao.loadAllRoute() // DB操作をバックグラウンドスレッドで実行
+            val routes = routeRepository.loadAllRoutes() // DB操作をバックグラウンドスレッドで実行
             _routeList.postValue(routes.toList()) // postValueでUIスレッドに反映
             Log.d("routeList", "$routes")
         }
