@@ -23,6 +23,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import android.content.Context
+
 
 @Composable
 fun RouteEditScreen(
@@ -30,13 +32,10 @@ fun RouteEditScreen(
     viewModel: RouteEditorViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    val toastMessage = viewModel.toastMessage
 
     // toastMessageが変更されたときにトーストを表示
-    LaunchedEffect(toastMessage) {
-        toastMessage?.let {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        }
+    LaunchedEffect(viewModel.toastMessage) {
+        showToast(context, viewModel.toastMessage)
     }
 
     Column(
@@ -130,11 +129,7 @@ fun RouteEditScreen(
             )
         }
 
-        Spacer(modifier = Modifier.height(24.dp)) // ボタンの後に余白
-
-
-
-
+        Spacer(modifier = Modifier.height(24.dp))
 
 
         // 保存ボタン
@@ -145,9 +140,10 @@ fun RouteEditScreen(
             Button(
                 onClick = {
                     Log.d("RouteEditor", "Save button clicked")
+                    Log.d("RouteEditor", "Save button clicked")
                     viewModel.saveRoute {
                         // 保存成功時の処理をUIスレッドで行う
-                        Toast.makeText(context, viewModel.toastMessage, Toast.LENGTH_SHORT).show()
+                        showToast(context, viewModel.toastMessage)
                         // ホーム画面に戻る
                         toBackScreen()
                     }
@@ -169,5 +165,11 @@ fun RouteEditScreen(
                 Text(text = "戻る")
             }
         }
+    }
+}
+// トーストを表示するための関数
+fun showToast(context: Context, message: String?) {
+    message?.let {
+        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
     }
 }
