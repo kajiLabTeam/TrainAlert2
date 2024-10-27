@@ -19,10 +19,6 @@ interface RouteDao {
     @Insert(onConflict = OnConflictStrategy.ABORT) // 新規作成時に既存データがあれば失敗
     suspend fun saveRoute(routeEntity: RouteEntity)
 
-    // ルートデータを新規作成するメソッド
-    @Insert(onConflict = OnConflictStrategy.ABORT) // 新規作成時のみ使用。既存データがあれば失敗。
-    fun saveRoute(routeEntity: RouteEntity)
-
     // ルートを更新
     @Update
     suspend fun update(routeEntity: RouteEntity)
@@ -32,8 +28,4 @@ interface RouteDao {
     suspend fun deleteRoute(routeEntity: RouteEntity)
 }
 
-    // ID を使ってルートデータを削除するメソッド
-    @Query("DELETE FROM route_alert_data WHERE id = :routeId")
-    suspend fun deleteRoute(routeId: Int)
-}
 
