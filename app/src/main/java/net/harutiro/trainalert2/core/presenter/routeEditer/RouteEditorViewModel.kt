@@ -3,6 +3,8 @@ package net.harutiro.trainalert2.core.presenter.routeEditer
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.contentcapture.ContentCaptureManager.Companion.isEnabled
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -11,6 +13,7 @@ import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 
 class RouteEditorViewModel: ViewModel() {
+
     // Repositoryのインスタンスを取得
     private val repository = RouteRepository()
 
@@ -21,6 +24,7 @@ class RouteEditorViewModel: ViewModel() {
     var endLatitude by mutableStateOf("")
     var isNotificationEnabled by mutableStateOf(false)
     var isVibrationEnabled by mutableStateOf(false)
+    var isEnabled by mutableStateOf(true)
 
     fun onNotificationCheckedChange(checked: Boolean) {
         isNotificationEnabled = checked
@@ -38,6 +42,7 @@ class RouteEditorViewModel: ViewModel() {
 
     // データを保存する関数
     fun saveRoute() {
+
         // アラート方法を決定
         val alertMethods = when {
             isNotificationEnabled && isVibrationEnabled -> RouteEntity.BOTH
@@ -53,7 +58,8 @@ class RouteEditorViewModel: ViewModel() {
             startLatitude = startLatitude.toDoubleOrNull(),
             endLongitude = endLongitude.toDoubleOrNull(),
             endLatitude = endLatitude.toDoubleOrNull(),
-            alertMethods = alertMethods // 数値型で保存
+            alertMethods = alertMethods,
+            isEnabled = isEnabled
         )
 
         // Repositoryを介してデータベースに保存
@@ -61,7 +67,6 @@ class RouteEditorViewModel: ViewModel() {
             repository.saveRoute(routeEntity)
         }
     }
-
 
     // ルートを削除する関数
     fun deleteRoute(route: RouteEntity) {
