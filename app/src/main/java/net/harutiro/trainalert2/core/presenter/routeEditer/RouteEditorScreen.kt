@@ -51,16 +51,16 @@ fun RouteEditScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 到着地点の緯度入力フィールド
+        // 出発地点の緯度入力フィールド
         TextField(
-            value = viewModel.endLatitude,
-            onValueChange = { viewModel.endLatitude = it },
-            label = { Text("到着地点の緯度") },
+            value = viewModel.startLatitude,
+            onValueChange = { viewModel.startLatitude = it },
+            label = { Text("出発地点の緯度") },
             placeholder = { Text("例: 34.567") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(24.dp)) // 余白を少し大きめに
+        Spacer(modifier = Modifier.height(24.dp))
 
         // 到着地点の経度入力フィールド
         TextField(
@@ -73,16 +73,16 @@ fun RouteEditScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 出発地点の緯度入力フィールド
+        // 到着地点の緯度入力フィールド
         TextField(
-            value = viewModel.startLatitude,
-            onValueChange = { viewModel.startLatitude = it },
-            label = { Text("出発地点の緯度") },
+            value = viewModel.endLatitude,
+            onValueChange = { viewModel.endLatitude = it },
+            label = { Text("到着地点の緯度") },
             placeholder = { Text("例: 34.567") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(24.dp)) // 余白を少し大きめに
 
 
         // アラート方法（通知、バイブレーション）の選択
