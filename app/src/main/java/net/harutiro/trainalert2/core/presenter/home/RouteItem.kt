@@ -19,7 +19,7 @@ fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
     val alertMethodDisplay = when (route.alertMethods) {
         RouteEntity.NOTIFICATION -> "通知"
         RouteEntity.VIBRATION -> "バイブレーション"
-        RouteEntity.BOTH -> "通知 + バイブレーション"
+        RouteEntity.BOTH -> "通知とバイブレーション"
         else -> "None"
     }
 
