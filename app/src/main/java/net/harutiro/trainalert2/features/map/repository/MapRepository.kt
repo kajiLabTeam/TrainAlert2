@@ -5,11 +5,9 @@ import android.content.Context
 import android.location.Location
 import android.util.Log
 import android.widget.Toast
-import net.harutiro.trainalert2.TrainAlertApplication
 import net.harutiro.trainalert2.R
 import net.harutiro.trainalert2.features.map.api.MapApi
 import net.harutiro.trainalert2.features.map.entity.LocationData
-import net.harutiro.trainalert2.features.room.routeDB.apis.RouteDao
 
 //マップの中心の値の取得
 class MapRepository {
@@ -49,8 +47,5 @@ class MapRepository {
                 Toast.makeText(context, context?.getString(R.string.unknown_error), Toast.LENGTH_SHORT).show()
             }
         })
-    }
-    fun routeDao(): RouteDao {
-        return TrainAlertApplication.database.routeDao()
     }
 }
