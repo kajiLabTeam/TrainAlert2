@@ -75,7 +75,7 @@ fun RouteEditScreen(
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         // 到着地点の経度入力フィールド
         TextField(
@@ -97,7 +97,8 @@ fun RouteEditScreen(
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(24.dp)) // 余白を少し大きめに
+
 
         // アラート方法（通知、バイブレーション）の選択
         Row(

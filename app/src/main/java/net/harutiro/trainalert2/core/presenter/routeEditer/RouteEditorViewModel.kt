@@ -3,6 +3,8 @@ package net.harutiro.trainalert2.core.presenter.routeEditer
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.contentcapture.ContentCaptureManager.Companion.isEnabled
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -66,15 +68,15 @@ class RouteEditorViewModel : ViewModel() {
     fun saveRoute(onSuccess: () -> Unit) {
         if (!validateInputs()) return
 
-        // アラート方法を定義
+        // アラート方法を決定
         val alertMethods = when {
             isNotificationEnabled && isVibrationEnabled -> RouteEntity.BOTH
             isNotificationEnabled -> RouteEntity.NOTIFICATION
             isVibrationEnabled -> RouteEntity.VIBRATION
-            else -> RouteEntity.NOTIFICATION // デフォルトで通知
+            else -> RouteEntity.NOTIFICATION
         }
 
-        // RouteEntity インスタンスを作成
+        // RouteEntityの作成
         val routeEntity = RouteEntity(
             title = title,
             startLongitude = startLongitude.toDouble(),
@@ -90,7 +92,7 @@ class RouteEditorViewModel : ViewModel() {
             isEnabled = isEnabled
         )
 
-
+        // Repositoryを介してデータベースに保存
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 repository.saveRoute(routeEntity)
@@ -107,4 +109,5 @@ class RouteEditorViewModel : ViewModel() {
             }
         }
     }
+
 }

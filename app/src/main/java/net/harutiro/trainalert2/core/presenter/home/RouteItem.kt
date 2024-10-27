@@ -23,7 +23,6 @@ fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
         else -> "None"
     }
 
-
     // 有効かどうかの表示を変換
     val isEnabledDisplay = if (route.isEnabled) "オン" else "オフ"
 

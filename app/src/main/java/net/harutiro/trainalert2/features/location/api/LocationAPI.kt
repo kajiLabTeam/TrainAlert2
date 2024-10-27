@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
@@ -57,6 +58,7 @@ class LocationAPI(private val context: Context) {
             }
         }
 
+        Log.d("LocationAPI","getlocation")
         fusedLocationClient.requestLocationUpdates(locationRequest!!, locationCallback!!, null)
     }
 
