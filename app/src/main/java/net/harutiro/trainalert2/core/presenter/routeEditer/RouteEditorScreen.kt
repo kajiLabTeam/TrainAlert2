@@ -1,6 +1,6 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
-import RouteEditorViewModel
+import net.harutiro.trainalert2.core.presenter.routeEditer.RouteEditorViewModel
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -118,7 +119,22 @@ fun RouteEditScreen(
             Text(text = "バイブレーション")
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        // ルートの有効/無効を選択するトグルスイッチ
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("ルートを有効にする：")
+            Spacer(modifier = Modifier.width(8.dp))
+            Switch(
+                checked = viewModel.isEnabled,
+                onCheckedChange = { viewModel.isEnabled = it }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(24.dp)) // ボタンの後に余白
+
+
+
+
+
 
         // 保存ボタン
         Row(

@@ -1,4 +1,5 @@
-import android.widget.Toast
+package net.harutiro.trainalert2.core.presenter.routeEditer
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -20,12 +21,7 @@ class RouteEditorViewModel : ViewModel() {
     var endLatitude by mutableStateOf("")
     var isNotificationEnabled by mutableStateOf(false)
     var isVibrationEnabled by mutableStateOf(false)
-
-    companion object {
-        const val NOTIFICATION = 1
-        const val VIBRATION = 2
-        const val BOTH = 3
-    }
+    var isEnabled by mutableStateOf(true)
 
     fun onNotificationCheckedChange(checked: Boolean) {
         isNotificationEnabled = checked
@@ -68,11 +64,17 @@ class RouteEditorViewModel : ViewModel() {
     }
 
     fun saveRoute(onSuccess: () -> Unit) {
-        if (!validateInputs()) {
-            // 無効な入力があった場合は何もせずリターン
-            return
+        if (!validateInputs()) return
+
+        // アラート方法を定義
+        val alertMethods = when {
+            isNotificationEnabled && isVibrationEnabled -> RouteEntity.BOTH
+            isNotificationEnabled -> RouteEntity.NOTIFICATION
+            isVibrationEnabled -> RouteEntity.VIBRATION
+            else -> RouteEntity.NOTIFICATION // デフォルトで通知
         }
 
+        // RouteEntity インスタンスを作成
         val routeEntity = RouteEntity(
             title = title,
             startLongitude = startLongitude.toDouble(),
@@ -80,12 +82,14 @@ class RouteEditorViewModel : ViewModel() {
             endLongitude = endLongitude.toDouble(),
             endLatitude = endLatitude.toDouble(),
             alertMethods = when {
-                isNotificationEnabled && isVibrationEnabled -> BOTH
-                isNotificationEnabled -> NOTIFICATION
-                isVibrationEnabled -> VIBRATION
-                else -> NOTIFICATION
-            }
+                isNotificationEnabled && isVibrationEnabled -> RouteEntity.BOTH
+                isNotificationEnabled -> RouteEntity.NOTIFICATION
+                isVibrationEnabled -> RouteEntity.VIBRATION
+                else -> RouteEntity.NOTIFICATION // デフォルトで通知
+            },
+            isEnabled = isEnabled
         )
+
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -102,8 +106,5 @@ class RouteEditorViewModel : ViewModel() {
                 }
             }
         }
-
     }
-
-
 }

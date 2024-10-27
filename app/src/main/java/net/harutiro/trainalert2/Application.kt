@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import net.harutiro.trainalert2.features.room.AppDatabase
 
-class TrainAlertApplication : Application() { // クラス名を変更しました
+class TrainAlertApplication : Application() {
 
     companion object {
         lateinit var database: AppDatabase
