@@ -19,4 +19,9 @@ class RouteRepository() {
     suspend fun loadAllRoutes(): List<RouteEntity> {
         return routeDao.loadAllRoute() // すべてのルートを取得
     }
+
+    //is_enabledがtrueのルートデータを取得するメソッド
+    suspend fun getEnabledRoutes(): List<RouteEntity> {
+        return routeDao.getEnabledRoutes()
+    }
 }
