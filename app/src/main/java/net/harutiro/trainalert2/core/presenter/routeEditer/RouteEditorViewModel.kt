@@ -45,10 +45,10 @@ class RouteEditorViewModel: ViewModel() {
 
         // アラート方法を決定
         val alertMethods = when {
-            isNotificationEnabled && isVibrationEnabled -> "Notification, Vibration"
-            isNotificationEnabled -> "Notification"
-            isVibrationEnabled -> "Vibration"
-            else -> "Notification" // 両方選択されていない場合はデフォルトで通知
+            isNotificationEnabled && isVibrationEnabled -> RouteEntity.BOTH
+            isNotificationEnabled -> RouteEntity.NOTIFICATION
+            isVibrationEnabled -> RouteEntity.VIBRATION
+            else -> RouteEntity.NOTIFICATION
         }
 
         // RouteEntityの作成
