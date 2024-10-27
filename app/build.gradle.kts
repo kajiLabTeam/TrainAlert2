@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -75,11 +76,16 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.material.icons.extended)
 
-    // room
+    // Room
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx) // 追加
     ksp(libs.androidx.room.compiler)
 
     // map
     implementation(libs.maps.compose)
     implementation(libs.play.services.location)
+
+    // コルーチン関連の追加
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 }
