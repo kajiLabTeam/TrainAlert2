@@ -1,6 +1,8 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
+import net.harutiro.trainalert2.core.presenter.routeEditer.RouteEditorViewModel
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
@@ -10,16 +12,20 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import net.harutiro.trainalert2.core.presenter.home.HomeViewModel
+import android.content.Context
+
 
 @Composable
 fun RouteEditScreen(
@@ -27,6 +33,12 @@ fun RouteEditScreen(
     homeViewModel: HomeViewModel = viewModel()
 ) {
     val viewModel: RouteEditorViewModel = viewModel(factory = RouteEditorViewModelFactory(homeViewModel))
+    val context = LocalContext.current
+
+    // toastMessageが変更されたときにトーストを表示
+    LaunchedEffect(viewModel.toastMessage) {
+        showToast(context, viewModel.toastMessage)
+    }
 
     Column(
         modifier = Modifier
@@ -119,11 +131,7 @@ fun RouteEditScreen(
             )
         }
 
-        Spacer(modifier = Modifier.height(24.dp)) // ボタンの後に余白
-
-
-
-
+        Spacer(modifier = Modifier.height(24.dp))
 
 
         // 保存ボタン
@@ -134,8 +142,13 @@ fun RouteEditScreen(
             Button(
                 onClick = {
                     Log.d("RouteEditor", "Save button clicked")
-                    viewModel.saveRoute() // 保存機能を呼び出す
-                    toBackScreen() // 戻る処理
+                    Log.d("RouteEditor", "Save button clicked")
+                    viewModel.saveRoute {
+                        // 保存成功時の処理をUIスレッドで行う
+                        showToast(context, viewModel.toastMessage)
+                        // ホーム画面に戻る
+                        toBackScreen()
+                    }
                 },
                 modifier = Modifier.weight(1f)
             ) {
@@ -153,5 +166,11 @@ fun RouteEditScreen(
                 Text(text = "戻る")
             }
         }
+    }
+}
+// トーストを表示するための関数
+fun showToast(context: Context, message: String?) {
+    message?.let {
+        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
     }
 }

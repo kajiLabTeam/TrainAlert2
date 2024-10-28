@@ -19,6 +19,7 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
     private val repository = RouteRepository()
 
 
+    var toastMessage: String? by mutableStateOf(null)
     var title by mutableStateOf("")
     var startLongitude by mutableStateOf("")
     var startLatitude by mutableStateOf("")
@@ -42,8 +43,35 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
         }
     }
 
-    // データを保存する関数
-    fun saveRoute() {
+    private fun validateInputs(): Boolean {
+        return when {
+            title.isBlank() -> {
+                toastMessage = "ルート名を入力してください"
+                false
+            }
+            startLongitude.toDoubleOrNull() == null -> {
+                toastMessage = "正しい出発地点の経度を入力してください"
+                false
+            }
+            startLatitude.toDoubleOrNull() == null -> {
+                toastMessage = "正しい出発地点の緯度を入力してください"
+                false
+            }
+            endLongitude.toDoubleOrNull() == null -> {
+                toastMessage = "正しい到着地点の経度を入力してください"
+                false
+            }
+            endLatitude.toDoubleOrNull() == null -> {
+                toastMessage = "正しい到着地点の緯度を入力してください"
+                false
+            }
+            else -> true
+        }
+    }
+
+
+    fun saveRoute(onSuccess: () -> Unit) {
+        if (!validateInputs()) return
 
         // アラート方法を決定
         val alertMethods = when {
@@ -56,29 +84,54 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
         // RouteEntityの作成
         val routeEntity = RouteEntity(
             title = title,
-            startLongitude = startLongitude.toDoubleOrNull(),
-            startLatitude = startLatitude.toDoubleOrNull(),
-            endLongitude = endLongitude.toDoubleOrNull(),
-            endLatitude = endLatitude.toDoubleOrNull(),
-            alertMethods = alertMethods,
+            startLongitude = startLongitude.toDouble(),
+            startLatitude = startLatitude.toDouble(),
+            endLongitude = endLongitude.toDouble(),
+            endLatitude = endLatitude.toDouble(),
+            alertMethods = when {
+                isNotificationEnabled && isVibrationEnabled -> RouteEntity.BOTH
+                isNotificationEnabled -> RouteEntity.NOTIFICATION
+                isVibrationEnabled -> RouteEntity.VIBRATION
+                else -> RouteEntity.NOTIFICATION // デフォルトで通知
+            },
             isEnabled = isEnabled
         )
 
         // Repositoryを介してデータベースに保存
         viewModelScope.launch(Dispatchers.IO) {
-            repository.saveRoute(routeEntity)
-            // 保存処理が完了したらUIスレッドでルートを再ロード
-            viewModelScope.launch(Dispatchers.Main) {
-                homeViewModel.loadAllRoutes()
+            try {
+                repository.saveRoute(routeEntity)
+                // 保存処理が完了したらUIスレッドでコールバックを実行
+                viewModelScope.launch(Dispatchers.Main) {
+                    toastMessage = "ルートが保存されました"
+                    onSuccess() // 成功時の処理を実行（遷移など）
+                }
+            } catch (e: Exception) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    toastMessage = "エラーが発生しました: ${e.message}"
+                }
             }
         }
     }
 
     // ルートを削除する関数
-    fun deleteRoute(route: RouteEntity) {
+    fun deleteRoute(route: RouteEntity, onSuccess: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteRoute(route) // Repository経由で削除メソッドを呼び出す
+            try {
+                repository.deleteRoute(route) // Repository経由で削除メソッドを呼び出す
+                // 削除が成功した場合にメインスレッドでコールバックを実行
+                viewModelScope.launch(Dispatchers.Main) {
+                    toastMessage = "ルートが削除されました"
+                    onSuccess() // 成功時の処理を実行
+                }
+            } catch (e: Exception) {
+                // エラーメッセージをメインスレッドで設定
+                viewModelScope.launch(Dispatchers.Main) {
+                    toastMessage = "エラーが発生しました: ${e.message}"
+                }
+            }
         }
     }
+
 
 }

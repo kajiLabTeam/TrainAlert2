@@ -36,12 +36,11 @@ class HomeViewModel : ViewModel() {
         }
     }
 
+
     // ルートを取得する
     fun loadAllRoutes() {
         viewModelScope.launch(Dispatchers.IO) {
             _routeList.value = routeRepository.loadAllRoutes()
         }
     }
-
-
 }

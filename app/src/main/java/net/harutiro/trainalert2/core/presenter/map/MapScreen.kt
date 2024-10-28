@@ -22,14 +22,19 @@ import net.harutiro.trainalert2.features.map.repository.MapOptions
 
 @Composable
 fun MapScreen(
-    viewModel: MapViewModel = viewModel(),
-) {
+    viewModel: MapViewModel = viewModel()
+){
 
     val context = LocalContext.current
 
+    viewModel.init(
+        context = LocalContext.current,
+    )
+
     //マップ表示
     MapSetting(
-        viewModel = viewModel,
+        viewModel = viewModel
+        //,routeEntity = RouteEntity
     )
 
     ObserveLifecycleEvent { event ->
@@ -44,7 +49,6 @@ fun MapScreen(
                     context = context,
                 )
             }
-
             else -> {}
         }
     }
@@ -54,6 +58,7 @@ fun MapScreen(
 @Composable
 fun MapSetting(
     viewModel: MapViewModel = viewModel(),
+    //,routeEntity: RouteEntity
 ) {
     val cameraPositionState = rememberCameraPositionState {
         val defaultPosition = LatLng(35.681236, 139.767125)
@@ -110,3 +115,4 @@ fun MapSetting(
         }
     }
 }
+
