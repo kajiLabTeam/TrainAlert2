@@ -49,25 +49,42 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
                 toastMessage = "ルート名を入力してください"
                 false
             }
-            startLongitude.toDoubleOrNull() == null -> {
+            startLongitude.isBlank() -> {
                 toastMessage = "正しい出発地点の経度を入力してください"
                 false
             }
-            startLatitude.toDoubleOrNull() == null -> {
+            startLongitude.toDoubleOrNull() == null -> {
+                toastMessage = "出発地点の経度には数値を入力してください"
+                false
+            }
+            startLatitude.isBlank() -> {
                 toastMessage = "正しい出発地点の緯度を入力してください"
                 false
             }
-            endLongitude.toDoubleOrNull() == null -> {
+            startLatitude.toDoubleOrNull() == null -> {
+                toastMessage = "出発地点の緯度には数値を入力してください"
+                false
+            }
+            endLongitude.isBlank() -> {
                 toastMessage = "正しい到着地点の経度を入力してください"
                 false
             }
-            endLatitude.toDoubleOrNull() == null -> {
+            endLongitude.toDoubleOrNull() == null -> {
+                toastMessage = "到着地点の経度には数値を入力してください"
+                false
+            }
+            endLatitude.isBlank() -> {
                 toastMessage = "正しい到着地点の緯度を入力してください"
+                false
+            }
+            endLatitude.toDoubleOrNull() == null -> {
+                toastMessage = "到着地点の緯度には数値を入力してください"
                 false
             }
             else -> true
         }
     }
+
 
 
     fun saveRoute(onSuccess: () -> Unit) {

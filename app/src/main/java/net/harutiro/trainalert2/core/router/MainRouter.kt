@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import net.harutiro.trainalert2.core.presenter.home.HomeScreen
 import net.harutiro.trainalert2.core.presenter.map.MapScreen
+import net.harutiro.trainalert2.core.presenter.home.HomeScreen
 import net.harutiro.trainalert2.core.presenter.routeEditer.RouteEditScreen
 
 @Composable
