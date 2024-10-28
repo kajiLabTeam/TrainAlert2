@@ -61,11 +61,19 @@ class MainActivity : ComponentActivity() {
 
                     // 判定がtrueの場合、通知を表示
                     if (isWithinDistance) {
-                        withContext(Dispatchers.Main) {
-                            notificationApi?.showNotification(
-                                "目的地に近づきました",
-                                "間もなく到着です！"
-                            )
+                        if(destination.alertMethods == 1) {
+                            withContext(Dispatchers.Main) {
+                                notificationApi?.showNotification(
+                                    "目的地に近づきました",
+                                    "間もなく到着です！"
+                                )
+                            }
+                        }else if(destination.alertMethods == 2){
+                            withContext(
+                                Dispatchers.Main
+                            ) {
+                                notificationApi?.vibrate()
+                                }
                         }
                     }
                 }
