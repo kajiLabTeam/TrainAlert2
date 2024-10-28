@@ -7,11 +7,16 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.core.app.NotificationCompat
+import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
+import android.app.Activity
 
 class NotificationApi(private val context: Context) {
 
     private val channelId = "train_alert_channel"
     private val notificationId = 1
+    private val handler = Handler(Looper.getMainLooper())
 
     init {
         createNotificationChannel()
@@ -41,7 +46,6 @@ class NotificationApi(private val context: Context) {
         notificationManager.notify(notificationId, notificationBuilder.build())
     }
 
-
     fun vibrate(duration: Long = 500) {
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
@@ -51,5 +55,27 @@ class NotificationApi(private val context: Context) {
         } else {
             vibrator.vibrate(duration)
         }
+    }
+
+    fun flashScreen(activity: Activity, flashCount: Int = 3, flashDuration: Long = 200) {
+        var count = 0
+        val originalColor = activity.window.decorView.background
+
+        val flashRunnable = object : Runnable {
+            override fun run() {
+                if (count < flashCount) {
+                    // 背景色を点滅させる
+                    activity.window.decorView.setBackgroundColor(
+                        if (count % 2 == 0) Color.WHITE else Color.BLACK
+                    )
+                    count++
+                    handler.postDelayed(this, flashDuration)
+                } else {
+                    // 元の色に戻す
+                    activity.window.decorView.background = originalColor
+                }
+            }
+        }
+        handler.post(flashRunnable)
     }
 }
