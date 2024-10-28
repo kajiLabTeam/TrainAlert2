@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import net.harutiro.trainalert2.core.presenter.LocationSelect.LocationSelectScreen
 import net.harutiro.trainalert2.core.presenter.map.MapScreen
 import net.harutiro.trainalert2.core.presenter.home.HomeScreen
 import net.harutiro.trainalert2.core.presenter.routeEditer.RouteEditScreen
@@ -30,7 +31,7 @@ fun MainRouter(
             changeTopBarTitle(BottomNavigationBarRoute.HOME.title)
         }
         composable(BottomNavigationBarRoute.MAP.route) {
-            MapScreen()
+            LocationSelectScreen()
             changeTopBarTitle(BottomNavigationBarRoute.MAP.title)
         }
         composable(BottomNavigationBarRoute.ROUTE_EDITOR.route) {
