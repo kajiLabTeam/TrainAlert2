@@ -25,15 +25,24 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import net.harutiro.trainalert2.core.presenter.home.HomeViewModel
 import android.content.Context
+import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
 
 @Composable
 fun RouteEditScreen(
     toBackScreen: () -> Unit,
-    homeViewModel: HomeViewModel = viewModel()
+    homeViewModel: HomeViewModel = viewModel(),
+    routeId: Int? = null
 ) {
     val viewModel: RouteEditorViewModel = viewModel(factory = RouteEditorViewModelFactory(homeViewModel))
     val context = LocalContext.current
+
+    // ルートが渡された場合は、データをロードする
+    LaunchedEffect(routeId) {
+        routeId?.let {
+            viewModel.loadRoute(routeId)
+        }
+    }
 
     // toastMessageが変更されたときにトーストを表示
     LaunchedEffect(viewModel.toastMessage) {
@@ -142,11 +151,11 @@ fun RouteEditScreen(
             Button(
                 onClick = {
                     Log.d("RouteEditor", "Save button clicked")
-                    Log.d("RouteEditor", "Save button clicked")
-                    viewModel.saveRoute {
-                        // 保存成功時の処理をUIスレッドで行う
+
+                    viewModel.saveRoute(
+                        isNewRoute = routeId == -1
+                    ) {
                         showToast(context, viewModel.toastMessage)
-                        // ホーム画面に戻る
                         toBackScreen()
                     }
                 },
