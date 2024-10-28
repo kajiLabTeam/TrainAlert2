@@ -9,11 +9,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import net.harutiro.trainalert2.core.presenter.home.HomeViewModel
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 
-class RouteEditorViewModel : ViewModel() {
-    private val repository: RouteRepository = RouteRepository()
+class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel() {
+
+    // Repositoryのインスタンスを取得
+    private val repository = RouteRepository()
+
 
     var toastMessage: String? by mutableStateOf(null)
     var title by mutableStateOf("")
@@ -28,14 +32,14 @@ class RouteEditorViewModel : ViewModel() {
     fun onNotificationCheckedChange(checked: Boolean) {
         isNotificationEnabled = checked
         if (!isNotificationEnabled && !isVibrationEnabled) {
-            isNotificationEnabled = true
+            isNotificationEnabled = true // 通知、バイブレーションのどちらも選択されていない場合は、自動的に通知を選択
         }
     }
 
     fun onVibrationCheckedChange(checked: Boolean) {
         isVibrationEnabled = checked
         if (!isNotificationEnabled && !isVibrationEnabled) {
-            isNotificationEnabled = true
+            isNotificationEnabled = true // 通知、バイブレーションのどちらも選択されていない場合は、自動的に通知を選択
         }
     }
 
@@ -64,6 +68,7 @@ class RouteEditorViewModel : ViewModel() {
             else -> true
         }
     }
+
 
     fun saveRoute(onSuccess: () -> Unit) {
         if (!validateInputs()) return
@@ -96,10 +101,28 @@ class RouteEditorViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 repository.saveRoute(routeEntity)
-                // 保存が成功した場合にメインスレッドでコールバックを実行
+                // 保存処理が完了したらUIスレッドでコールバックを実行
                 viewModelScope.launch(Dispatchers.Main) {
                     toastMessage = "ルートが保存されました"
-                    onSuccess()
+                    onSuccess() // 成功時の処理を実行（遷移など）
+                }
+            } catch (e: Exception) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    toastMessage = "エラーが発生しました: ${e.message}"
+                }
+            }
+        }
+    }
+
+    // ルートを削除する関数
+    fun deleteRoute(route: RouteEntity, onSuccess: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                repository.deleteRoute(route) // Repository経由で削除メソッドを呼び出す
+                // 削除が成功した場合にメインスレッドでコールバックを実行
+                viewModelScope.launch(Dispatchers.Main) {
+                    toastMessage = "ルートが削除されました"
+                    onSuccess() // 成功時の処理を実行
                 }
             } catch (e: Exception) {
                 // エラーメッセージをメインスレッドで設定
@@ -109,5 +132,6 @@ class RouteEditorViewModel : ViewModel() {
             }
         }
     }
+
 
 }

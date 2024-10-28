@@ -23,14 +23,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import net.harutiro.trainalert2.core.presenter.home.HomeViewModel
 import android.content.Context
 
 
 @Composable
 fun RouteEditScreen(
     toBackScreen: () -> Unit,
-    viewModel: RouteEditorViewModel = viewModel()
+    homeViewModel: HomeViewModel = viewModel()
 ) {
+    val viewModel: RouteEditorViewModel = viewModel(factory = RouteEditorViewModelFactory(homeViewModel))
     val context = LocalContext.current
 
     // toastMessageが変更されたときにトーストを表示
@@ -152,7 +154,6 @@ fun RouteEditScreen(
             ) {
                 Text(text = "保存")
             }
-
 
             Spacer(modifier = Modifier.width(16.dp))
 

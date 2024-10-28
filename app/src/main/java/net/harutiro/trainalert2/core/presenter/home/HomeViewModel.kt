@@ -38,19 +38,9 @@ class HomeViewModel : ViewModel() {
 
 
     // ルートを取得する
-    private fun loadAllRoutes() {
+    fun loadAllRoutes() {
         viewModelScope.launch(Dispatchers.IO) {
             _routeList.value = routeRepository.loadAllRoutes()
         }
     }
-
-    /* データベースからすべてのルートを取得する
-    fun getAllRoutes() {
-        // IOスレッドでデータを取得
-        viewModelScope.launch(Dispatchers.IO) {
-            val routes = routeRepository.loadAllRoutes()
-            // 必要に応じてUIスレッドにデータを反映させる処理を追加
-        }
-    }*/
-
 }
