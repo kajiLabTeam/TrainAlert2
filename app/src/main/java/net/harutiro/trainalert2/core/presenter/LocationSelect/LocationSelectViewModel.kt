@@ -2,6 +2,10 @@ package net.harutiro.trainalert2.core.presenter.LocationSelect
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -10,6 +14,9 @@ import net.harutiro.trainalert2.features.map.entity.LocationData
 import net.harutiro.trainalert2.features.map.repository.MapRepository
 
 class LocationSelectViewModel: ViewModel() {
+
+    var selectLatLon by mutableStateOf(LatLng(0.0, 0.0))
+
 
     private val mapRepository = MapRepository()
 
