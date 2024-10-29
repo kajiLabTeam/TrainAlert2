@@ -78,21 +78,33 @@ class MainActivity : ComponentActivity() {
                         judgerange // 距離は100m以内か
                     )
 
+                    val notification     = 0b0001
+                    val vibration        = 0b0010
+                    val light            = 0b0100
+                    val sound            = 0b1000
+                    val notificationNull = 0b0000
+
                     // 判定がtrueの場合、通知を表示
                     if (isWithinDistance) {
-                        if(destination.alertMethods == 1) {
+                        if(destination.alertMethods and notification == notification || destination.alertMethods  == notificationNull) {
                             withContext(Dispatchers.Main) {
                                 notificationApi?.showNotification(
                                     "目的地に近づきました",
                                     "間もなく到着です！"
                                 )
                             }
-                        }else if(destination.alertMethods == 2) {
+                        }else if(destination.alertMethods and vibration == vibration) {
                             withContext(
                                 Dispatchers.Main
                             ) {
                                 notificationApi?.vibrate()
                             }
+                        }else if(destination.alertMethods and light == light) {
+                            //画面点滅処理呼び出し
+                            Log.d("light", "light")
+                        }else if(destination.alertMethods and sound == sound) {
+                            //サウンド再生処理呼び出し
+                            Log.d("sound", "sound")
                         }
                     }
                 }
