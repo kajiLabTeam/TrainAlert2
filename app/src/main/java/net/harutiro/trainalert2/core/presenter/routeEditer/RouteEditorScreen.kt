@@ -116,7 +116,9 @@ fun RouteEditScreen(
                 isDialogVisible = true
             }
         )
-
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "到着地点に近づいたらどのようにアラートしますか？")
+        Spacer(modifier = Modifier.height(16.dp))
 
         // アラート方法（通知、バイブレーション）の選択
         Row(
@@ -136,6 +138,25 @@ fun RouteEditScreen(
                 onCheckedChange = { viewModel.onVibrationCheckedChange(it) }
             )
             Text(text = "バイブレーション")
+        }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Checkbox(
+                checked = viewModel.isLightEnabled,
+                onCheckedChange = { viewModel.onLightCheckedChange(it) }
+            )
+            Text(text = "光の点滅")
+
+            Spacer(modifier = Modifier.width(24.dp))
+
+            Checkbox(
+                checked = viewModel.isSoundEnabled,
+                onCheckedChange = { viewModel.onSoundCheckedChange(it) }
+            )
+            Text(text = "音楽")
         }
 
         // ルートの有効/無効を選択するトグルスイッチ
