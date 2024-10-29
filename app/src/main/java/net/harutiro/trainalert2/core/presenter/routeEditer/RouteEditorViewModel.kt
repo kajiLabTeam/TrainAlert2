@@ -15,7 +15,7 @@ import net.harutiro.trainalert2.core.presenter.home.HomeViewModel
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 
-@Stable
+
 class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel() {
 
     // Repositoryのインスタンスを取得
