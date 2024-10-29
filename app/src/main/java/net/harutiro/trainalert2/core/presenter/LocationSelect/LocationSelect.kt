@@ -78,7 +78,20 @@ fun LocationSelectScreen(
 
             Marker(
                 state = MarkerState(viewModel.selectLatLon),
-                title = "hogehoge",
+                title =
+                    "緯度: ${
+                        String.format(
+                            Locale.JAPAN,
+                            "%.6f",
+                            viewModel.selectLatLon.latitude
+                        )
+                    }　経度: ${
+                        String.format(
+                            Locale.JAPAN,
+                            "%.6f",
+                            viewModel.selectLatLon.longitude
+                        )
+                    }"
             )
         }
 
