@@ -119,8 +119,8 @@ fun LocationSelectScreen(
 
         Button(
             onClick = {
-                selectedLocation = LatLng(0.0,0.0)
                 toBackEditor(selectedLocation)
+                selectedLocation = LatLng(0.0,0.0)
             },
             enabled = selectedLocation != LatLng(0.0,0.0),
             modifier = Modifier
