@@ -21,4 +21,8 @@ data class RouteEntity(
         const val LIGHT = 0b0100        // ライト
         const val SOUND = 0b1000        // サウンド
     }
+
+    // 0b0001または0b0000の場合に通知とみなす
+    val isNotificationOnly: Boolean
+        get() = alertMethods == NOTIFICATION || alertMethods == 0b0000
 }
