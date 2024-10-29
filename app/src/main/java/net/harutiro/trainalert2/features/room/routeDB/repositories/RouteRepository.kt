@@ -16,6 +16,12 @@ class RouteRepository() {
         routeDao.deleteRoute(route.id)
     }
 
+    // ルートを更新するメソッド
+    suspend fun updateRoute(route: RouteEntity) {
+        routeDao.update(route) // DAOのupdateメソッドを呼び出す
+    }
+
+
     suspend fun loadAllRoutes(): List<RouteEntity> {
         return routeDao.loadAllRoute() // すべてのルートを取得
     }
@@ -23,5 +29,10 @@ class RouteRepository() {
     //is_enabledがtrueのルートデータを取得するメソッド
     suspend fun getEnabledRoutes(): List<RouteEntity> {
         return routeDao.getEnabledRoutes()
+    }
+
+    //idが一致するルートデータを取得するメソッド
+    suspend fun getRouteById(id: Int): RouteEntity? {
+        return routeDao.getRouteById(id)
     }
 }
