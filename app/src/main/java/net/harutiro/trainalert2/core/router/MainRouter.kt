@@ -41,9 +41,12 @@ fun MainRouter(
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt("routeId")
 
+            // routeId が -1 の場合は新規作成
+            val isNewRoute = id == -1
             RouteEditScreen(
                 toBackScreen = toBackScreen,
-                routeId = id
+                isNewRoute = isNewRoute,
+                routeId = if (isNewRoute) null else id
             )
             changeTopBarTitle(BottomNavigationBarRoute.ROUTE_EDITOR.title)
         }

@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import net.harutiro.trainalert2.core.presenter.home.HomeViewModel
 
 class RouteEditorViewModelFactory(
-    private val homeViewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel,
+    routeId: Int?,
+    isNewRoute: Boolean
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RouteEditorViewModel::class.java)) {
