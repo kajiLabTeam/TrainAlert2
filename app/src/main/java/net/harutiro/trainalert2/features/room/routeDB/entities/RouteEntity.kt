@@ -20,10 +20,5 @@ data class RouteEntity(
         const val VIBRATION = 0b0010    // バイブレーション
         const val LIGHT = 0b0100        // ライト
         const val SOUND = 0b1000        // サウンド
-
-        // デフォルトのアラート方法（通知）を返す関数
-        fun getDefaultAlertMethod(): Int {
-            return NOTIFICATION // 通知がデフォルト
-        }
     }
 }

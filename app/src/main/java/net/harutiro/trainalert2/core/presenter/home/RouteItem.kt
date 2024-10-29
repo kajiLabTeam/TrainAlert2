@@ -15,22 +15,8 @@ import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
 @Composable
 fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
-    // アラート方法の表示を変換
-    val alertMethodDisplay = buildString {
-        if (route.alertMethods and RouteEntity.NOTIFICATION != 0) append("通知")
-        if (route.alertMethods and RouteEntity.VIBRATION != 0) {
-            if (isNotEmpty()) append("と")
-            append("バイブレーション")
-        }
-        if (route.alertMethods and RouteEntity.LIGHT != 0) {
-            if (isNotEmpty()) append("と")
-            append("ライト")
-        }
-        if (route.alertMethods and RouteEntity.SOUND != 0) {
-            if (isNotEmpty()) append("と")
-            append("サウンド")
-        }
-    }
+    // アラート方法のビットフラグを表示
+    val alertMethodDisplay = "0b" + route.alertMethods.toString(2).padStart(4, '0')
 
     // 有効かどうかの表示を変換
     val isEnabledDisplay = if (route.isEnabled) "オン" else "オフ"
