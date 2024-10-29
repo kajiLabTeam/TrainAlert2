@@ -95,8 +95,8 @@ fun FirstPage(){
             changeTopBarTitle = { title ->
                 topBarTitle = title
             },
-            toRouteEditorScreen = {
-                navController.navigate(BottomNavigationBarRoute.ROUTE_EDITOR.route)
+            toRouteEditorScreen = { id ->
+                navController.navigate("${BottomNavigationBarRoute.ROUTE_EDITOR.route}/${id}")
             },
             toBackScreen = {
                 navController.popBackStack()

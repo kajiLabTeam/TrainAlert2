@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
@@ -29,16 +28,31 @@ class LocationAPI(private val context: Context) {
 
     init {
         // LocationRequestの設定
-        locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, getRate) // 1分ごとに取得
-            .setMinUpdateIntervalMillis(minRate) // 最小間隔1分
-            .build()
+        locationRequest =
+            LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, getRate) // 1分ごとに取得
+                .setMinUpdateIntervalMillis(minRate) // 最小間隔1分
+                .build()
     }
 
     fun startLocationUpdates(callback: MyLocationCallback) {
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             if (context is Activity) {
-                ActivityCompat.requestPermissions(context, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 1000)
+                ActivityCompat.requestPermissions(
+                    context,
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ),
+                    1000
+                )
             }
             return
         }
@@ -58,13 +72,8 @@ class LocationAPI(private val context: Context) {
             }
         }
 
-        Log.d("LocationAPI","getlocation")
+        Log.d("LocationAPI", "getlocation")
         fusedLocationClient.requestLocationUpdates(locationRequest!!, locationCallback!!, null)
     }
-
-    fun stopLocationUpdates() {
-        locationCallback?.let { fusedLocationClient.removeLocationUpdates(it) }
-    }
-
 }
 

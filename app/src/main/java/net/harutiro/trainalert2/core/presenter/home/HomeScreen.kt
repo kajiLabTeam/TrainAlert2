@@ -48,7 +48,7 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Button(onClick = { toRouteEditor(null) }, modifier = Modifier.fillMaxWidth()) {
+        Button(onClick = { toRouteEditor(-1) }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "経路作成画面へ")
         }
 
