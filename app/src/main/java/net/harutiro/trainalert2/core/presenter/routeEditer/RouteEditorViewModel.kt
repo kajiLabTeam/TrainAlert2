@@ -164,7 +164,7 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
     }
 
     // ルートを削除する関数
-    fun deleteRoute(route: RouteEntity, onSuccess: () -> Unit) {
+    /*fun deleteRoute(route: RouteEntity, onSuccess: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 repository.deleteRoute(route) // Repository経由で削除メソッドを呼び出す
@@ -180,5 +180,5 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
                 }
             }
         }
-    }
+    }*/
 }
