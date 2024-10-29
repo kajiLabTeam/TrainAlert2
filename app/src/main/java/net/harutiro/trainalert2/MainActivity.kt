@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.harutiro.trainalert2.core.presenter.FirstPage
 import net.harutiro.trainalert2.features.location.entity.CurrentLocationData
 import net.harutiro.trainalert2.features.location.repository.DistanceJudgement
@@ -40,7 +41,6 @@ class MainActivity : ComponentActivity() {
 
         // 距離判定の処理
         checkDistance()
-
     }
 
     private fun checkDistance() {
@@ -80,17 +80,25 @@ class MainActivity : ComponentActivity() {
 
                     // 判定がtrueの場合、通知を表示
                     if (isWithinDistance) {
-                        lifecycleScope.launch(Dispatchers.Main) {
-                            notificationApi?.showNotification(
-                                "目的地に近づきました",
-                                "間もなく到着です！"
-                            )
+                        if(destination.alertMethods == 1) {
+                            withContext(Dispatchers.Main) {
+                                notificationApi?.showNotification(
+                                    "目的地に近づきました",
+                                    "間もなく到着です！"
+                                )
+                            }
+                        }else if(destination.alertMethods == 2) {
+                            withContext(
+                                Dispatchers.Main
+                            ) {
+                                notificationApi?.vibrate()
+                            }
                         }
                     }
                 }
             }
 
-        } // 仮の現在地（東京駅）
+        }
 
 
     }
