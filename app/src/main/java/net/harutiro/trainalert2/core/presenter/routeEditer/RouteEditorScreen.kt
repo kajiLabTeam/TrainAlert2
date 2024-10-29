@@ -16,9 +16,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -84,7 +89,7 @@ fun RouteEditScreen(
             latitude = viewModel.startLatitude,
             longitude = viewModel.startLongitude,
             onClick = {
-                selectedTitle = "出発地点の経度・緯度を選択"
+                selectedTitle = "出発地点をタップしてください"
                 onLocationSelected = { location ->
                     viewModel.startLongitude = location.longitude.toString()
                     viewModel.startLatitude = location.latitude.toString()
@@ -101,7 +106,7 @@ fun RouteEditScreen(
             latitude = viewModel.endLatitude,
             longitude = viewModel.endLongitude,
             onClick = {
-                selectedTitle = "到着地点の経度・緯度を選択"
+                selectedTitle = "到着地点をタップしてください"
                 onLocationSelected = { location ->
                     viewModel.endLongitude = location.longitude.toString()
                     viewModel.endLatitude = location.latitude.toString()
@@ -267,12 +272,24 @@ fun ShowLocationSelectDialog(
                 .fillMaxHeight(0.7f)
         ) {
             Column{
-                Text(
-                    text="経度・緯度を選択",
-                    fontSize = 24.sp,
-                    modifier = Modifier
-                        .padding(8.dp),
-                )
+                Row{
+                    IconButton(
+                        onClick = {
+                            onDismissRequest()
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
+                    Text(
+                        text=title,
+                        fontSize = 24.sp,
+                        modifier = Modifier
+                            .padding(8.dp),
+                    )
+                }
                 LocationSelectScreen(
                     toBackEditor = { location ->
                         onLocationSelected(location)
