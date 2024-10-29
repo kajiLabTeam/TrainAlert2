@@ -157,6 +157,14 @@ fun RouteEditScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Button(
+            onClick = {
+                toBackScreen()
+            },
+            modifier = Modifier.weight(1f)
+            ) {
+            Text(text = "戻る")
+            }
+            Button(
                 onClick = {
                     Log.d("RouteEditor", "Save button clicked")
 
@@ -175,14 +183,6 @@ fun RouteEditScreen(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Button(
-                onClick = {
-                    toBackScreen()
-                },
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(text = "戻る")
-            }
         }
     }
 
