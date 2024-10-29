@@ -1,5 +1,6 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,15 +10,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.harutiro.trainalert2.core.presenter.home.HomeViewModel
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
+
 
 class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel() {
 
     // Repositoryのインスタンスを取得
     private val repository = RouteRepository()
-
 
     var toastMessage: String? by mutableStateOf(null)
     var title by mutableStateOf("")
@@ -28,6 +30,8 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
     var isNotificationEnabled by mutableStateOf(false)
     var isVibrationEnabled by mutableStateOf(false)
     var isEnabled by mutableStateOf(true)
+
+    var currentRouteId: Int? = null // 編集するルートのIDを保持
 
     fun onNotificationCheckedChange(checked: Boolean) {
         isNotificationEnabled = checked
@@ -85,9 +89,29 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
         }
     }
 
+    // ルートデータをロードするメソッド
+    fun loadRoute(routeId : Int) {
+        viewModelScope.launch(Dispatchers.IO){
+            val route = repository.getRouteById(routeId)
+
+            title = route?.title ?: ""
+            startLongitude = route?.startLongitude?.toString() ?: ""
+            startLatitude = route?.startLatitude?.toString() ?:""
+            endLongitude = route?.endLongitude?.toString() ?:""
+            endLatitude = route?.endLatitude?.toString() ?:""
+            isNotificationEnabled = route?.alertMethods == RouteEntity.NOTIFICATION || route?.alertMethods == RouteEntity.BOTH
+            isVibrationEnabled = route?.alertMethods == RouteEntity.VIBRATION || route?.alertMethods == RouteEntity.BOTH
+            isEnabled = route?.isEnabled ?: true
+            currentRouteId = route?.id // ルートのIDを保存
+        }
+    }
 
 
-    fun saveRoute(onSuccess: () -> Unit) {
+
+    fun saveRoute(
+        isNewRoute: Boolean,
+        onSuccess: () -> Unit
+    ) {
         if (!validateInputs()) return
 
         // アラート方法を決定
@@ -100,6 +124,7 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
 
         // RouteEntityの作成
         val routeEntity = RouteEntity(
+            id = currentRouteId ?: 0,
             title = title,
             startLongitude = startLongitude.toDouble(),
             startLatitude = startLatitude.toDouble(),
@@ -117,7 +142,14 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
         // Repositoryを介してデータベースに保存
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                repository.saveRoute(routeEntity)
+                if (isNewRoute) {
+                    // 新規ルートを作成
+                    repository.saveRoute(routeEntity)
+                } else {
+                    // 既存のルートを更新
+                    repository.updateRoute(routeEntity)
+                }
+
                 // 保存処理が完了したらUIスレッドでコールバックを実行
                 viewModelScope.launch(Dispatchers.Main) {
                     toastMessage = "ルートが保存されました"
@@ -149,6 +181,4 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
             }
         }
     }
-
-
 }

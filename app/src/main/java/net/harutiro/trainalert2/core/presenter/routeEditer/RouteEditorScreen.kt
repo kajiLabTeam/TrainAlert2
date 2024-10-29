@@ -1,6 +1,5 @@
 package net.harutiro.trainalert2.core.presenter.routeEditer
 
-import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -46,6 +45,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.maps.model.LatLng
 import net.harutiro.trainalert2.core.presenter.LocationSelect.LocationSelectScreen
 import net.harutiro.trainalert2.core.presenter.home.HomeViewModel
+import android.content.Context
+import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.map.entity.LocationData
 import java.util.Locale
 
@@ -53,7 +54,8 @@ import java.util.Locale
 @Composable
 fun RouteEditScreen(
     toBackScreen: () -> Unit,
-    homeViewModel: HomeViewModel = viewModel()
+    homeViewModel: HomeViewModel = viewModel(),
+    routeId: Int? = null
 ) {
     var isDialogVisible by remember { mutableStateOf(false) }
     var selectedTitle by remember { mutableStateOf("") }
@@ -61,6 +63,13 @@ fun RouteEditScreen(
 
     val viewModel: RouteEditorViewModel = viewModel(factory = RouteEditorViewModelFactory(homeViewModel))
     val context = LocalContext.current
+
+    // ルートが渡された場合は、データをロードする
+    LaunchedEffect(routeId) {
+        routeId?.let {
+            viewModel.loadRoute(routeId)
+        }
+    }
 
     // toastMessageが変更されたときにトーストを表示
     LaunchedEffect(viewModel.toastMessage) {
@@ -157,9 +166,10 @@ fun RouteEditScreen(
             Button(
                 onClick = {
                     Log.d("RouteEditor", "Save button clicked")
-                    Log.d("RouteEditor", "Save button clicked")
-                    viewModel.saveRoute {
-                        // 保存成功時の処理をUIスレッドで行う
+
+                    viewModel.saveRoute(
+                        isNewRoute = routeId == -1
+                    ) {
                         showToast(context, viewModel.toastMessage)
                         // ホーム画面に戻る
                         toBackScreen()

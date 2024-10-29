@@ -1,5 +1,6 @@
 package net.harutiro.trainalert2.features.location.repository
 
+import android.location.Location
 import kotlin.math.*
 
 class DistanceJudgement {
@@ -18,13 +19,17 @@ class DistanceJudgement {
 
         //距離判定用変数
         //R*c=距離（m単位）
-        val judgement:Boolean
+        val distance = R * c
+        return distance < judgerange
+    }
 
-        if(R * c < judgerange){
-            judgement = true
-        }else{
-            judgement = false
-        }
-        return judgement
+    fun resultDistance(lat1: Double, lon1: Double, lat2:Double, lon2: Double, judgerange: Double): Boolean {
+        val result = FloatArray(3)
+
+        Location.distanceBetween(
+            lat1,lon1,lat2,lon2,result
+        )
+
+        return result[0] < judgerange
     }
 }
