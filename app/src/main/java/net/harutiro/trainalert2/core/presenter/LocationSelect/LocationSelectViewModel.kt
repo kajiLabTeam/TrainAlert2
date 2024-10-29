@@ -15,9 +15,6 @@ import net.harutiro.trainalert2.features.map.repository.MapRepository
 
 class LocationSelectViewModel: ViewModel() {
 
-    var selectLatLon by mutableStateOf(LatLng(0.0, 0.0))
-
-
     private val mapRepository = MapRepository()
 
     fun init(context: Context) {

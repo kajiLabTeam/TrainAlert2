@@ -11,6 +11,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -48,6 +49,13 @@ fun LocationSelectScreen(
         position = CameraPosition.fromLatLngZoom(defaultPosition, defaultZoom)
     }
 
+    // 選択された位置を保持するステート
+    var selectedLocation by remember { mutableStateOf(LatLng(0.0,0.0)) }
+    val markerState = remember { MarkerState(selectedLocation) }
+    LaunchedEffect(selectedLocation) {
+        markerState.position = selectedLocation
+    }
+
     viewModel.changeLocation(
         cameraPositionState = cameraPositionState
     )
@@ -58,7 +66,7 @@ fun LocationSelectScreen(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,
             onMapClick = { latLng ->
-                viewModel.selectLatLon = latLng
+                selectedLocation = latLng
             }
         ) {
             MapEffect { map ->
@@ -77,19 +85,19 @@ fun LocationSelectScreen(
             }
 
             Marker(
-                state = MarkerState(viewModel.selectLatLon),
+                state = markerState,
                 title =
                     "緯度: ${
                         String.format(
                             Locale.JAPAN,
                             "%.6f",
-                            viewModel.selectLatLon.latitude
+                            selectedLocation.latitude
                         )
                     }　経度: ${
                         String.format(
                             Locale.JAPAN,
                             "%.6f",
-                            viewModel.selectLatLon.longitude
+                            selectedLocation.longitude
                         )
                     }"
             )
@@ -104,17 +112,17 @@ fun LocationSelectScreen(
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                Text(text = "緯度: ${String.format(Locale.JAPAN, "%.6f", viewModel.selectLatLon.latitude)}")
-                Text(text = "経度: ${String.format(Locale.JAPAN, "%.6f", viewModel.selectLatLon.longitude)}")
+                Text(text = "緯度: ${String.format(Locale.JAPAN, "%.6f", selectedLocation.latitude)}")
+                Text(text = "経度: ${String.format(Locale.JAPAN, "%.6f", selectedLocation.longitude)}")
             }
         }
 
         Button(
             onClick = {
-                viewModel.selectLatLon = LatLng(0.0,0.0)
-                toBackEditor(viewModel.selectLatLon)
+                selectedLocation = LatLng(0.0,0.0)
+                toBackEditor(selectedLocation)
             },
-            enabled = viewModel.selectLatLon != LatLng(0.0,0.0),
+            enabled = selectedLocation != LatLng(0.0,0.0),
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 32.dp)
