@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
@@ -56,6 +57,9 @@ fun RouteEditScreen(
 
     val viewModel: RouteEditorViewModel = viewModel(factory = RouteEditorViewModelFactory(homeViewModel))
     val context = LocalContext.current
+
+    // ダイアログ表示フラグ
+    var isDialogOpen by remember { mutableStateOf(false) }
 
     // ルートが渡された場合は、データをロードする
     LaunchedEffect(routeId) {
@@ -157,6 +161,14 @@ fun RouteEditScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Button(
+            onClick = {
+                isDialogOpen = true
+            },
+            modifier = Modifier.weight(1f)
+            ) {
+            Text(text = "戻る")
+            }
+            Button(
                 onClick = {
                     Log.d("RouteEditor", "Save button clicked")
 
@@ -175,15 +187,27 @@ fun RouteEditScreen(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Button(
-                onClick = {
-                    toBackScreen()
-                },
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(text = "戻る")
-            }
         }
+    }
+    // ダイアログ表示
+    if (isDialogOpen) {
+        AlertDialog(
+            onDismissRequest = { isDialogOpen = false },
+            text = { Text("保存せずに戻りますか？") },
+            confirmButton = {
+                Button(onClick = {
+                    isDialogOpen = false
+                    toBackScreen() // ホーム画面に戻る処理
+                }) {
+                    Text("はい")
+                }
+            },
+            dismissButton = {
+                Button(onClick = { isDialogOpen = false }) {
+                    Text("キャンセル")
+                }
+            }
+        )
     }
 
     // ポップアップの表示

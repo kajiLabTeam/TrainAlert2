@@ -162,23 +162,4 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
             }
         }
     }
-
-    // ルートを削除する関数
-    fun deleteRoute(route: RouteEntity, onSuccess: () -> Unit) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                repository.deleteRoute(route) // Repository経由で削除メソッドを呼び出す
-                // 削除が成功した場合にメインスレッドでコールバックを実行
-                viewModelScope.launch(Dispatchers.Main) {
-                    toastMessage = "ルートが削除されました"
-                    onSuccess() // 成功時の処理を実行
-                }
-            } catch (e: Exception) {
-                // エラーメッセージをメインスレッドで設定
-                viewModelScope.launch(Dispatchers.Main) {
-                    toastMessage = "エラーが発生しました: ${e.message}"
-                }
-            }
-        }
-    }
 }
