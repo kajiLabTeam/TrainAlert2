@@ -85,7 +85,6 @@ class NotificationApi(private val context: Context) {
             start()
         }
     }
-}
 
     fun flashScreen(activity: Activity, flashCount: Int = 3, flashDuration: Long = 200) {
         var count = 0
@@ -109,5 +108,6 @@ class NotificationApi(private val context: Context) {
         }
         handler.post(flashRunnable)
     }
-
 }
+
+
