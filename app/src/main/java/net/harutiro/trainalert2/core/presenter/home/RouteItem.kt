@@ -50,10 +50,10 @@ fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
             modifier = Modifier.padding(16.dp)
         ) {
             Text(text = "ルート名: ${route.title ?: "Unnamed Route"}")
-            Text(text = "出発地点の経度: ${route.startLongitude}")
             Text(text = "出発地点の緯度: ${route.startLatitude}")
-            Text(text = "到着地点の経度: ${route.endLongitude}")
+            Text(text = "出発地点の経度: ${route.startLongitude}")
             Text(text = "到着地点の緯度: ${route.endLatitude}")
+            Text(text = "到着地点の経度: ${route.endLongitude}")
             Text(text = "アラート方法: $alertMethodDisplay")
             Text(text = "オン・オフ: $isEnabledDisplay")
 
