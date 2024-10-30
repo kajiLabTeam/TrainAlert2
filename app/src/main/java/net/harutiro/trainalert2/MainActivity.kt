@@ -99,6 +99,11 @@ class MainActivity : ComponentActivity() {
                             Log.d("light", "light")
                         }else if(destination.alertMethods and RouteEntity.SOUND == RouteEntity.SOUND) {
                             //サウンド再生処理呼び出し
+                            withContext(
+                                Dispatchers.Main
+                            ) {
+                                notificationApi?.playSounds()
+                            }
                             Log.d("sound", "sound")
                         }
                     }
