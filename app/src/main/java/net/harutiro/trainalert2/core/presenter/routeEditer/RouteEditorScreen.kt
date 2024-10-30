@@ -299,8 +299,8 @@ fun LocationSelectionCard(
                             latitude.toDouble()
                         )
                     }
-                    Text(text = "経度：${convertLongitude}", fontSize = 14.sp)
                     Text(text = "緯度：${convertLatitude}", fontSize = 14.sp)
+                    Text(text = "経度：${convertLongitude}", fontSize = 14.sp)
                 }
                 Button(
                     onClick = onClick,
