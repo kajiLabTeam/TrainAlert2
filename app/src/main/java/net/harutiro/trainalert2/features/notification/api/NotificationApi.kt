@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.core.app.NotificationCompat
+import kotlin.random.Random
 
 class NotificationApi(private val context: Context) {
 
@@ -42,14 +43,20 @@ class NotificationApi(private val context: Context) {
     }
 
 
-    fun vibrate(duration: Long = 500) {
+    fun vibrate() {
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val vibrationEffect = VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE)
+            // ランダムなパターンを生成
+            val timings = LongArray(10) { Random.nextLong(100, 500) }
+            val amplitudes = IntArray(10) { Random.nextInt(50, 255) }
+
+            val vibrationEffect = VibrationEffect.createWaveform(timings, amplitudes, -1) // 一回のみの振動
             vibrator.vibrate(vibrationEffect)
         } else {
-            vibrator.vibrate(duration)
+            // 旧バージョンはランダムなパターンで振動を繰り返し
+            val pattern = LongArray(20) { Random.nextLong(100, 500) }
+            vibrator.vibrate(pattern, -1)
         }
     }
 }
