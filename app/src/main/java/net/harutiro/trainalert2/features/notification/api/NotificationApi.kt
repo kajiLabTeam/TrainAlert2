@@ -62,23 +62,20 @@ class NotificationApi(private val context: Context) {
     }
 
     fun playSounds() {
-        // 10回の音声再生を行うためのカウンタ
         val playCount = 10
         var currentPlay = 0
-
-        // 最初の音を再生開始
-        playSound(currentPlay, playCount)
+        startPlayingSound(playCount, currentPlay)
     }
 
-    private fun playSound(currentPlay: Int, playCount: Int) {
-        if (currentPlay < playCount) {
-            // MediaPlayerを使用して音声を再生する
-            val mediaPlayer = MediaPlayer.create(context, R.raw.notification_sound)
-            mediaPlayer.setOnCompletionListener { player: MediaPlayer ->
-                player.release()  // 再生が完了したらリソースを解放
-                playSound(currentPlay + 1, playCount) // 次の音を再生
+    fun startPlayingSound(playCount: Int, currentPlay: Int) {
+        if (currentPlay >= playCount) return
+
+        MediaPlayer.create(context, R.raw.notification_sound).apply {
+            setOnCompletionListener {
+                release()
+                startPlayingSound(playCount, currentPlay + 1)
             }
-            mediaPlayer.start()  // 音を再生
+            start()
         }
     }
 }
