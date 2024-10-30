@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
@@ -57,6 +58,9 @@ fun RouteEditScreen(
     val viewModel: RouteEditorViewModel = viewModel(factory = RouteEditorViewModelFactory(homeViewModel))
     val context = LocalContext.current
 
+    // ダイアログ表示フラグ
+    var isDialogOpen by remember { mutableStateOf(false) }
+
     // ルートが渡された場合は、データをロードする
     LaunchedEffect(routeId) {
         routeId?.let {
@@ -87,14 +91,14 @@ fun RouteEditScreen(
 
         // 出発地点
         LocationSelectionCard(
-            title = "出発地点の経度・緯度",
+            title = "出発地点の緯度・経度",
             latitude = viewModel.startLatitude,
             longitude = viewModel.startLongitude,
             onClick = {
                 selectedTitle = "出発地点をタップしてください"
                 onLocationSelected = { location ->
-                    viewModel.startLongitude = location.longitude.toString()
                     viewModel.startLatitude = location.latitude.toString()
+                    viewModel.startLongitude = location.longitude.toString()
                 }
                 isDialogVisible = true
             }
@@ -104,19 +108,21 @@ fun RouteEditScreen(
 
         // 到着地点
         LocationSelectionCard(
-            title = "到着地点の経度・緯度",
+            title = "到着地点の緯度・経度",
             latitude = viewModel.endLatitude,
             longitude = viewModel.endLongitude,
             onClick = {
                 selectedTitle = "到着地点をタップしてください"
                 onLocationSelected = { location ->
-                    viewModel.endLongitude = location.longitude.toString()
                     viewModel.endLatitude = location.latitude.toString()
+                    viewModel.endLongitude = location.longitude.toString()
                 }
                 isDialogVisible = true
             }
         )
-
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "アラート方法を選択：")
+        Spacer(modifier = Modifier.height(16.dp))
 
         // アラート方法（通知、バイブレーション）の選択
         Row(
@@ -125,7 +131,9 @@ fun RouteEditScreen(
         ) {
             Checkbox(
                 checked = viewModel.isNotificationEnabled,
-                onCheckedChange = { viewModel.onNotificationCheckedChange(it) }
+                onCheckedChange = { checked ->
+                    viewModel.onNotificationCheckedChange(checked)
+                }
             )
             Text(text = "通知")
 
@@ -133,9 +141,34 @@ fun RouteEditScreen(
 
             Checkbox(
                 checked = viewModel.isVibrationEnabled,
-                onCheckedChange = { viewModel.onVibrationCheckedChange(it) }
+                onCheckedChange = { checked ->
+                    viewModel.onVibrationCheckedChange(checked)
+                }
             )
             Text(text = "バイブレーション")
+        }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Checkbox(
+                checked = viewModel.isLightEnabled,
+                onCheckedChange = { checked ->
+                    viewModel.onLightCheckedChange(checked)
+                }
+            )
+            Text(text = "光の点滅")
+
+            Spacer(modifier = Modifier.width(24.dp))
+
+            Checkbox(
+                checked = viewModel.isSoundEnabled,
+                onCheckedChange = { checked ->
+                    viewModel.onSoundCheckedChange(checked)
+                }
+            )
+            Text(text = "音楽")
         }
 
         // ルートの有効/無効を選択するトグルスイッチ
@@ -157,6 +190,14 @@ fun RouteEditScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Button(
+            onClick = {
+                isDialogOpen = true
+            },
+            modifier = Modifier.weight(1f)
+            ) {
+            Text(text = "←戻る")
+            }
+            Button(
                 onClick = {
                     Log.d("RouteEditor", "Save button clicked")
 
@@ -175,15 +216,27 @@ fun RouteEditScreen(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Button(
-                onClick = {
-                    toBackScreen()
-                },
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(text = "戻る")
-            }
         }
+    }
+    // ダイアログ表示
+    if (isDialogOpen) {
+        AlertDialog(
+            onDismissRequest = { isDialogOpen = false },
+            text = { Text("保存せずに戻りますか？") },
+            confirmButton = {
+                Button(onClick = {
+                    isDialogOpen = false
+                    toBackScreen() // ホーム画面に戻る処理
+                }) {
+                    Text("はい")
+                }
+            },
+            dismissButton = {
+                Button(onClick = { isDialogOpen = false }) {
+                    Text("キャンセル")
+                }
+            }
+        )
     }
 
     // ポップアップの表示
@@ -246,8 +299,8 @@ fun LocationSelectionCard(
                             latitude.toDouble()
                         )
                     }
-                    Text(text = "経度：${convertLongitude}", fontSize = 14.sp)
                     Text(text = "緯度：${convertLatitude}", fontSize = 14.sp)
+                    Text(text = "経度：${convertLongitude}", fontSize = 14.sp)
                 }
                 Button(
                     onClick = onClick,
