@@ -66,13 +66,17 @@ fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
                 text = "出発地点",
                 style = androidx.compose.material3.MaterialTheme.typography.titleMedium
             )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = "緯度: ${route.startLatitude}", style = androidx.compose.material3.MaterialTheme.typography.bodyMedium)
-                Text(text = "経度: ${route.startLongitude}", style = androidx.compose.material3.MaterialTheme.typography.bodyMedium)
+            Column {
+                Text(
+                    text = "緯度: ${route.startLatitude}",
+                    style = androidx.compose.material3.MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "経度: ${route.startLongitude}",
+                    style = androidx.compose.material3.MaterialTheme.typography.bodyMedium
+                )
             }
+
 
             Divider(modifier = Modifier.padding(vertical = 8.dp))
 
@@ -81,13 +85,18 @@ fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
                 text = "到着地点",
                 style = androidx.compose.material3.MaterialTheme.typography.titleMedium
             )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = "緯度: ${route.endLatitude}", style = androidx.compose.material3.MaterialTheme.typography.bodyMedium)
-                Text(text = "経度: ${route.endLongitude}", style = androidx.compose.material3.MaterialTheme.typography.bodyMedium)
+            Column {
+                Text(
+                    text = "緯度: ${route.endLatitude}",
+                    style = androidx.compose.material3.MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "経度: ${route.endLongitude}",
+                    style = androidx.compose.material3.MaterialTheme.typography.bodyMedium
+                )
             }
+
+
 
             Divider(modifier = Modifier.padding(vertical = 8.dp))
 
