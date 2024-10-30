@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Divider
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material3.HorizontalDivider
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
 @Composable
@@ -59,7 +60,7 @@ fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            Divider(modifier = Modifier.padding(vertical = 8.dp))
+            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
             // 出発地点
             Text(
@@ -78,7 +79,7 @@ fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
             }
 
 
-            Divider(modifier = Modifier.padding(vertical = 8.dp))
+            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
             // 到着地点
             Text(
@@ -98,7 +99,7 @@ fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
 
 
 
-            Divider(modifier = Modifier.padding(vertical = 8.dp))
+            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
             // アラート方法
             Text(
@@ -107,7 +108,7 @@ fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
             )
             Text(text = alertMethodDisplay, style = androidx.compose.material3.MaterialTheme.typography.bodyMedium)
 
-            Divider(modifier = Modifier.padding(vertical = 8.dp))
+            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
             // オン・オフ
             Text(
