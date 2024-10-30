@@ -1,5 +1,7 @@
 package net.harutiro.trainalert2.core.presenter.home
 
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,31 +15,31 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import net.harutiro.trainalert2.TrainAlertApplication // Ensure to import your application context
+import net.harutiro.trainalert2.features.notification.api.NotificationApi
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import androidx.compose.runtime.LaunchedEffect
-import android.app.Activity
-
-
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @Composable
 fun HomeScreen(
     toRouteEditor: (Int?) -> Unit,
-    viewModel: HomeViewModel = viewModel()
+    viewModel: HomeViewModel = viewModel() // ここで viewModel を宣言
 ) {
+    val context = LocalContext.current
     val routeList by viewModel.routeList.collectAsState(initial = emptyList())
     val (showDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf<Pair<RouteEntity, Boolean>?>(null) }
 
-    // Create an instance of NotificationApi
-    val notificationApi = NotificationApi(context)
-
-    // Load routes when the screen is displayed
+    // 画面が表示されるときにデータをロードする
     LaunchedEffect(Unit) {
         viewModel.loadAllRoutes()
     }
 
+    // ルートリストの表示
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -45,15 +47,8 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Button(onClick = { toRouteEditor(-1) }, modifier = Modifier.fillMaxWidth()) {
+        Button(onClick = { toRouteEditor(null) }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "経路作成画面へ")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Button to trigger vibration for testing
-        Button(onClick = { notificationApi.vibrate() }, modifier = Modifier.fillMaxWidth()) {
-            Text(text = "Vibrate Test")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -69,14 +64,14 @@ fun HomeScreen(
                         toRouteEditor(route.id)
                     },
                     onDelete = {
-                        setShowDeleteDialog(Pair(route, true)) // Show delete confirmation dialog
+                        setShowDeleteDialog(Pair(route, true)) // ダイアログ表示
                     }
                 )
             }
         }
     }
 
-    // Delete confirmation dialog
+    // 削除確認ダイアログ
     showDeleteDialog?.let { (route, isVisible) ->
         if (isVisible) {
             AlertDialog(
@@ -85,8 +80,8 @@ fun HomeScreen(
                 text = { Text(text = "${route.title ?: "Unnamed Route"} を削除しますか？") },
                 confirmButton = {
                     Button(onClick = {
-                        viewModel.deleteRoute(route)
-                        setShowDeleteDialog(null)
+                        viewModel.deleteRoute(route) // 削除メソッドを呼び出す
+                        setShowDeleteDialog(null) // ダイアログを閉じる
                     }) {
                         Text("削除")
                     }
