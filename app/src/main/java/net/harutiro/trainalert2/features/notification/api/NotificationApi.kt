@@ -7,12 +7,17 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.core.app.NotificationCompat
+import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
+import android.app.Activity
 import kotlin.random.Random
 
 class NotificationApi(private val context: Context) {
 
     private val channelId = "train_alert_channel"
     private val notificationId = 1
+    private val handler = Handler(Looper.getMainLooper())
 
     init {
         createNotificationChannel()
@@ -43,7 +48,9 @@ class NotificationApi(private val context: Context) {
     }
 
 
+
     fun vibrate() {
+      
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -59,4 +66,28 @@ class NotificationApi(private val context: Context) {
             vibrator.vibrate(pattern, -1)
         }
     }
+
+    fun flashScreen(activity: Activity, flashCount: Int = 3, flashDuration: Long = 200) {
+        var count = 0
+        val originalBrightness = activity.window.attributes.screenBrightness
+        val attributes = activity.window.attributes
+
+        val flashRunnable = object : Runnable {
+            override fun run() {
+                if (count < flashCount) {
+                    // 明るさを交互に切り替える
+                    attributes.screenBrightness = if (count % 2 == 0) 1.0f else 0.1f
+                    activity.window.attributes = attributes
+                    count++
+                    handler.postDelayed(this, flashDuration)
+                } else {
+                    // 元の明るさに戻す
+                    attributes.screenBrightness = originalBrightness
+                    activity.window.attributes = attributes
+                }
+            }
+        }
+        handler.post(flashRunnable)
+    }
+
 }
