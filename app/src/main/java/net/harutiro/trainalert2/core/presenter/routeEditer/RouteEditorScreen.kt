@@ -91,14 +91,14 @@ fun RouteEditScreen(
 
         // 出発地点
         LocationSelectionCard(
-            title = "出発地点の経度・緯度",
+            title = "出発地点の緯度・経度",
             latitude = viewModel.startLatitude,
             longitude = viewModel.startLongitude,
             onClick = {
                 selectedTitle = "出発地点をタップしてください"
                 onLocationSelected = { location ->
-                    viewModel.startLongitude = location.longitude.toString()
                     viewModel.startLatitude = location.latitude.toString()
+                    viewModel.startLongitude = location.longitude.toString()
                 }
                 isDialogVisible = true
             }
@@ -108,20 +108,20 @@ fun RouteEditScreen(
 
         // 到着地点
         LocationSelectionCard(
-            title = "到着地点の経度・緯度",
+            title = "到着地点の緯度・経度",
             latitude = viewModel.endLatitude,
             longitude = viewModel.endLongitude,
             onClick = {
                 selectedTitle = "到着地点をタップしてください"
                 onLocationSelected = { location ->
-                    viewModel.endLongitude = location.longitude.toString()
                     viewModel.endLatitude = location.latitude.toString()
+                    viewModel.endLongitude = location.longitude.toString()
                 }
                 isDialogVisible = true
             }
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "到着地点に近づいたらどのようにアラートしますか？")
+        Text(text = "アラート方法を選択：")
         Spacer(modifier = Modifier.height(16.dp))
 
         // アラート方法（通知、バイブレーション）の選択
@@ -195,7 +195,7 @@ fun RouteEditScreen(
             },
             modifier = Modifier.weight(1f)
             ) {
-            Text(text = "戻る")
+            Text(text = "←戻る")
             }
             Button(
                 onClick = {
@@ -299,8 +299,8 @@ fun LocationSelectionCard(
                             latitude.toDouble()
                         )
                     }
-                    Text(text = "経度：${convertLongitude}", fontSize = 14.sp)
                     Text(text = "緯度：${convertLatitude}", fontSize = 14.sp)
+                    Text(text = "経度：${convertLongitude}", fontSize = 14.sp)
                 }
                 Button(
                     onClick = onClick,
