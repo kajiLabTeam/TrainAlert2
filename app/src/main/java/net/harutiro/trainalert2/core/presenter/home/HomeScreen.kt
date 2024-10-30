@@ -22,25 +22,25 @@ import net.harutiro.trainalert2.TrainAlertApplication // Ensure to import your a
 import net.harutiro.trainalert2.features.notification.api.NotificationApi
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import androidx.compose.runtime.LaunchedEffect
-import androidx.lifecycle.viewmodel.compose.viewModel
-
-
+import android.app.Activity
 
 @Composable
 fun HomeScreen(
     toRouteEditor: (Int?) -> Unit,
-    viewModel: HomeViewModel = viewModel() // ここで viewModel を宣言
+    viewModel: HomeViewModel = viewModel()
 ) {
     val context = LocalContext.current
     val routeList by viewModel.routeList.collectAsState(initial = emptyList())
     val (showDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf<Pair<RouteEntity, Boolean>?>(null) }
 
-    // 画面が表示されるときにデータをロードする
+    // Create an instance of NotificationApi
+    val notificationApi = NotificationApi(context)
+
+    // Load routes when the screen is displayed
     LaunchedEffect(Unit) {
         viewModel.loadAllRoutes()
     }
 
-    // ルートリストの表示
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -50,6 +50,13 @@ fun HomeScreen(
     ) {
         Button(onClick = { toRouteEditor(null) }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "経路作成画面へ")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Button to trigger vibration for testing
+        Button(onClick = { notificationApi.vibrate() }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = "Vibrate Test")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -65,14 +72,14 @@ fun HomeScreen(
                         toRouteEditor(route.id)
                     },
                     onDelete = {
-                        setShowDeleteDialog(Pair(route, true)) // ダイアログ表示
+                        setShowDeleteDialog(Pair(route, true)) // Show delete confirmation dialog
                     }
                 )
             }
         }
     }
 
-    // 削除確認ダイアログ
+    // Delete confirmation dialog
     showDeleteDialog?.let { (route, isVisible) ->
         if (isVisible) {
             AlertDialog(
@@ -81,8 +88,8 @@ fun HomeScreen(
                 text = { Text(text = "${route.title ?: "Unnamed Route"} を削除しますか？") },
                 confirmButton = {
                     Button(onClick = {
-                        viewModel.deleteRoute(route) // 削除メソッドを呼び出す
-                        setShowDeleteDialog(null) // ダイアログを閉じる
+                        viewModel.deleteRoute(route)
+                        setShowDeleteDialog(null)
                     }) {
                         Text("削除")
                     }
