@@ -131,7 +131,9 @@ fun RouteEditScreen(
         ) {
             Checkbox(
                 checked = viewModel.isNotificationEnabled,
-                onCheckedChange = { viewModel.onNotificationCheckedChange(it) }
+                onCheckedChange = { checked ->
+                    viewModel.onNotificationCheckedChange(checked)
+                }
             )
             Text(text = "通知")
 
@@ -139,7 +141,9 @@ fun RouteEditScreen(
 
             Checkbox(
                 checked = viewModel.isVibrationEnabled,
-                onCheckedChange = { viewModel.onVibrationCheckedChange(it) }
+                onCheckedChange = { checked ->
+                    viewModel.onVibrationCheckedChange(checked)
+                }
             )
             Text(text = "バイブレーション")
         }
@@ -150,7 +154,9 @@ fun RouteEditScreen(
         ) {
             Checkbox(
                 checked = viewModel.isLightEnabled,
-                onCheckedChange = { viewModel.onLightCheckedChange(it) }
+                onCheckedChange = { checked ->
+                    viewModel.onLightCheckedChange(checked)
+                }
             )
             Text(text = "光の点滅")
 
@@ -158,7 +164,9 @@ fun RouteEditScreen(
 
             Checkbox(
                 checked = viewModel.isSoundEnabled,
-                onCheckedChange = { viewModel.onSoundCheckedChange(it) }
+                onCheckedChange = { checked ->
+                    viewModel.onSoundCheckedChange(checked)
+                }
             )
             Text(text = "音楽")
         }
