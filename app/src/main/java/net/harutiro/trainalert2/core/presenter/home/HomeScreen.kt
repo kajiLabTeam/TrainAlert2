@@ -17,18 +17,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
-import net.harutiro.trainalert2.features.notification.api.NotificationApi
+
+
 
 @Composable
 fun HomeScreen(
     toRouteEditor: (Int?) -> Unit,
     viewModel: HomeViewModel = viewModel() // ここで viewModel を宣言
 ) {
-
-    val context = LocalContext.current
-    val notificationApi = remember { NotificationApi(context) } // NotificationApiのインスタンスを作成
-
     val routeList by viewModel.routeList.collectAsState(initial = emptyList())
     val (showDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf<Pair<RouteEntity, Boolean>?>(null) }
 
@@ -47,13 +43,6 @@ fun HomeScreen(
     ) {
         Button(onClick = { toRouteEditor(-1) }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "経路作成画面へ")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // 音を再生するボタンを追加
-        Button(onClick = { notificationApi.playSounds() }, modifier = Modifier.fillMaxWidth()) {
-            Text(text = "通知音を再生")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
