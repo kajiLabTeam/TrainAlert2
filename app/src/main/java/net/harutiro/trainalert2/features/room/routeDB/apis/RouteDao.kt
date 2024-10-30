@@ -30,4 +30,7 @@ interface RouteDao {
     @Query("SELECT * FROM route_alert_data WHERE is_enabled = 1")
     fun getEnabledRoutes(): List<RouteEntity>
 
+    @Query("SELECT * FROM route_alert_data WHERE id = :routeId")
+    fun getRouteById(routeId: Int):RouteEntity?
+
 }

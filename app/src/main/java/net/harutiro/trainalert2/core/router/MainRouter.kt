@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import net.harutiro.trainalert2.core.presenter.map.MapScreen
 import net.harutiro.trainalert2.core.presenter.home.HomeScreen
 import net.harutiro.trainalert2.core.presenter.routeEditer.RouteEditScreen
@@ -33,9 +35,15 @@ fun MainRouter(
             MapScreen()
             changeTopBarTitle(BottomNavigationBarRoute.MAP.title)
         }
-        composable(BottomNavigationBarRoute.ROUTE_EDITOR.route) {
+        composable(
+            BottomNavigationBarRoute.ROUTE_EDITOR.route + "/{routeId}",
+            arguments = listOf(navArgument("routeId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getInt("routeId")
+
             RouteEditScreen(
-                toBackScreen = toBackScreen
+                toBackScreen = toBackScreen,
+                routeId = id
             )
             changeTopBarTitle(BottomNavigationBarRoute.ROUTE_EDITOR.title)
         }

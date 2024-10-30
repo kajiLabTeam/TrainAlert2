@@ -58,7 +58,6 @@ fun MapScreen(
 @Composable
 fun MapSetting(
     viewModel: MapViewModel = viewModel(),
-    //,routeEntity: RouteEntity
 ) {
     val cameraPositionState = rememberCameraPositionState {
         val defaultPosition = LatLng(35.681236, 139.767125)
@@ -70,7 +69,6 @@ fun MapSetting(
 
     viewModel.changeLocation(
         cameraPositionState = cameraPositionState
-
     )
 
     GoogleMap(
