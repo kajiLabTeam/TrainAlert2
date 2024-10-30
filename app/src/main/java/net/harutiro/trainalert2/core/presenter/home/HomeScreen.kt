@@ -1,7 +1,5 @@
 package net.harutiro.trainalert2.core.presenter.home
 
-import android.os.VibrationEffect
-import android.os.Vibrator
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,16 +13,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import net.harutiro.trainalert2.TrainAlertApplication // Ensure to import your application context
-import net.harutiro.trainalert2.features.notification.api.NotificationApi
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import android.app.Activity
-
 
 
 
@@ -33,7 +27,6 @@ fun HomeScreen(
     toRouteEditor: (Int?) -> Unit,
     viewModel: HomeViewModel = viewModel() // ここで viewModel を宣言
 ) {
-    val context = LocalContext.current
     val routeList by viewModel.routeList.collectAsState(initial = emptyList())
     val (showDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf<Pair<RouteEntity, Boolean>?>(null) }
     val notificationApi = NotificationApi(context) // NotificationApi インスタンスを作成
@@ -51,7 +44,7 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Button(onClick = { toRouteEditor(null) }, modifier = Modifier.fillMaxWidth()) {
+        Button(onClick = { toRouteEditor(-1) }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "経路作成画面へ")
         }
 
