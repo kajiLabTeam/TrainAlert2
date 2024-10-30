@@ -22,7 +22,6 @@ import net.harutiro.trainalert2.TrainAlertApplication // Ensure to import your a
 import net.harutiro.trainalert2.features.notification.api.NotificationApi
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import androidx.compose.runtime.LaunchedEffect
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun HomeScreen(
@@ -54,7 +53,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // 音を再生するボタンを追加
-        Button(onClick = { notificationApi.playsounds() }, modifier = Modifier.fillMaxWidth()) {
+        Button(onClick = { notificationApi.playSounds() }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "通知音を再生")
         }
 
