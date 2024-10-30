@@ -3,10 +3,12 @@ package net.harutiro.trainalert2.features.notification.api
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.core.app.NotificationCompat
+import net.harutiro.trainalert2.R
 import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
@@ -47,8 +49,6 @@ class NotificationApi(private val context: Context) {
         notificationManager.notify(notificationId, notificationBuilder.build())
     }
 
-
-
     fun vibrate() {
       
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -64,6 +64,25 @@ class NotificationApi(private val context: Context) {
             // 旧バージョンはランダムなパターンで振動を繰り返し
             val pattern = LongArray(20) { Random.nextLong(100, 500) }
             vibrator.vibrate(pattern, -1)
+        }
+    }
+
+
+    fun playSounds() {
+        val playCount = 10
+        var currentPlay = 0
+        startPlayingSound(playCount, currentPlay)
+    }
+
+    fun startPlayingSound(playCount: Int, currentPlay: Int) {
+        if (currentPlay >= playCount) return
+
+        MediaPlayer.create(context, R.raw.notification_sound).apply {
+            setOnCompletionListener {
+                release()
+                startPlayingSound(playCount, currentPlay + 1)
+            }
+            start()
         }
     }
 
@@ -89,5 +108,6 @@ class NotificationApi(private val context: Context) {
         }
         handler.post(flashRunnable)
     }
-
 }
+
+
