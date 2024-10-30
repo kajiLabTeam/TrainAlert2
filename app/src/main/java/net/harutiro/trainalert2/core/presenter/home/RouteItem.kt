@@ -1,9 +1,5 @@
 package net.harutiro.trainalert2.core.presenter.home
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -22,7 +18,6 @@ import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
     // アラート方法の表示を変換
     val alertMethodDisplay = buildString {
-        // 何も選択されていない場合は「通知」をデフォルト表示
         if (route.alertMethods == 0) {
             append("通知")
         } else {
