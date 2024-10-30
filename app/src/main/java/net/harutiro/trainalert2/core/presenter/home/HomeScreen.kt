@@ -23,6 +23,8 @@ import net.harutiro.trainalert2.features.notification.api.NotificationApi
 import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
+import android.app.Activity
+
 
 
 
@@ -34,6 +36,7 @@ fun HomeScreen(
     val context = LocalContext.current
     val routeList by viewModel.routeList.collectAsState(initial = emptyList())
     val (showDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf<Pair<RouteEntity, Boolean>?>(null) }
+    val notificationApi = NotificationApi(context) // NotificationApi インスタンスを作成
 
     // 画面が表示されるときにデータをロードする
     LaunchedEffect(Unit) {
@@ -50,6 +53,20 @@ fun HomeScreen(
     ) {
         Button(onClick = { toRouteEditor(null) }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "経路作成画面へ")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Flash Screen ボタン
+        Button(
+            onClick = {
+                if (context is Activity) {
+                    notificationApi.flashScreen(context as Activity, flashCount = 15, flashDuration = 1000)
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "フラッシュ通知をテスト")
         }
 
         Spacer(modifier = Modifier.height(16.dp))

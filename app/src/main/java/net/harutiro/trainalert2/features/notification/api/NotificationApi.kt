@@ -59,23 +59,25 @@ class NotificationApi(private val context: Context) {
 
     fun flashScreen(activity: Activity, flashCount: Int = 3, flashDuration: Long = 200) {
         var count = 0
-        val originalColor = activity.window.decorView.background
+        val originalBrightness = activity.window.attributes.screenBrightness
+        val attributes = activity.window.attributes
 
         val flashRunnable = object : Runnable {
             override fun run() {
                 if (count < flashCount) {
-                    // 背景色を点滅させる
-                    activity.window.decorView.setBackgroundColor(
-                        if (count % 2 == 0) Color.WHITE else Color.BLACK
-                    )
+                    // 明るさを交互に切り替える
+                    attributes.screenBrightness = if (count % 2 == 0) 1.0f else 0.1f
+                    activity.window.attributes = attributes
                     count++
                     handler.postDelayed(this, flashDuration)
                 } else {
-                    // 元の色に戻す
-                    activity.window.decorView.background = originalColor
+                    // 元の明るさに戻す
+                    attributes.screenBrightness = originalBrightness
+                    activity.window.attributes = attributes
                 }
             }
         }
         handler.post(flashRunnable)
     }
+
 }
