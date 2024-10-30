@@ -88,14 +88,21 @@ class MainActivity : ComponentActivity() {
                                     "間もなく到着です！"
                                 )
                             }
+                            Log.d("notification", "notification")
                         }else if(destination.alertMethods and RouteEntity.VIBRATION == RouteEntity.VIBRATION) {
                             withContext(
                                 Dispatchers.Main
                             ) {
                                 notificationApi?.vibrate()
                             }
+                            Log.d("vibration", "vibration")
                         }else if(destination.alertMethods and RouteEntity.LIGHT == RouteEntity.LIGHT) {
                             //画面点滅処理呼び出し
+                            withContext(
+                                Dispatchers.Main
+                            ) {
+                                notificationApi?.flashScreen(this@MainActivity)
+                            }
                             Log.d("light", "light")
                         }else if(destination.alertMethods and RouteEntity.SOUND == RouteEntity.SOUND) {
                             //サウンド再生処理呼び出し
