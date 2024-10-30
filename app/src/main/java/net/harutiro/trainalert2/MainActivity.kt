@@ -15,6 +15,7 @@ import net.harutiro.trainalert2.features.location.entity.CurrentLocationData
 import net.harutiro.trainalert2.features.location.repository.DistanceJudgement
 import net.harutiro.trainalert2.features.location.repository.LocationRepository
 import net.harutiro.trainalert2.features.notification.api.NotificationApi
+import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 import net.harutiro.trainalert2.features.room.routeDB.repositories.RouteRepository
 import net.harutiro.trainalert2.ui.theme.TrainAlert2Theme
 
@@ -80,19 +81,25 @@ class MainActivity : ComponentActivity() {
 
                     // 判定がtrueの場合、通知を表示
                     if (isWithinDistance) {
-                        if(destination.alertMethods == 1) {
+                        if(destination.alertMethods and RouteEntity.NOTIFICATION == RouteEntity.NOTIFICATION || destination.alertMethods  == RouteEntity.NONE) {
                             withContext(Dispatchers.Main) {
                                 notificationApi?.showNotification(
                                     "目的地に近づきました",
                                     "間もなく到着です！"
                                 )
                             }
-                        }else if(destination.alertMethods == 2) {
+                        }else if(destination.alertMethods and RouteEntity.VIBRATION == RouteEntity.VIBRATION) {
                             withContext(
                                 Dispatchers.Main
                             ) {
                                 notificationApi?.vibrate()
                             }
+                        }else if(destination.alertMethods and RouteEntity.LIGHT == RouteEntity.LIGHT) {
+                            //画面点滅処理呼び出し
+                            Log.d("light", "light")
+                        }else if(destination.alertMethods and RouteEntity.SOUND == RouteEntity.SOUND) {
+                            //サウンド再生処理呼び出し
+                            Log.d("sound", "sound")
                         }
                     }
                 }

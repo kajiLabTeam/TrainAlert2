@@ -16,6 +16,7 @@ data class RouteEntity(
     @ColumnInfo(name = "is_enabled") val isEnabled: Boolean // ルートの有効/無効
 ) {
     companion object {
+        const val NONE = 0b0000
         const val NOTIFICATION = 0b0001 // 通知
         const val VIBRATION = 0b0010    // バイブレーション
         const val LIGHT = 0b0100        // ライト
