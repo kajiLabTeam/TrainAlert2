@@ -129,6 +129,13 @@ class RouteEditorViewModel(private val homeViewModel: HomeViewModel) : ViewModel
             endLatitude = route?.endLatitude?.toString() ?: ""
             isEnabled = route?.isEnabled ?: true
             currentRouteId = route?.id
+
+            // アラート方法の状態を設定
+            alertMethods = route?.alertMethods ?: 0b0000
+            isNotificationEnabled = (alertMethods and RouteEntity.NOTIFICATION) != 0
+            isVibrationEnabled = (alertMethods and RouteEntity.VIBRATION) != 0
+            isSoundEnabled = (alertMethods and RouteEntity.SOUND) != 0
+            isLightEnabled = (alertMethods and RouteEntity.LIGHT) != 0
         }
     }
 
