@@ -16,8 +16,13 @@ data class RouteEntity(
     @ColumnInfo(name = "is_enabled") val isEnabled: Boolean // ルートの有効/無効
 ) {
     companion object {
-        const val NOTIFICATION = 1
-        const val VIBRATION = 2
-        const val BOTH = 3
+        const val NOTIFICATION = 0b0001 // 通知
+        const val VIBRATION = 0b0010    // バイブレーション
+        const val LIGHT = 0b0100        // ライト
+        const val SOUND = 0b1000        // サウンド
     }
+
+    // 0b0001または0b0000の場合に通知とみなす
+    val isNotificationOnly: Boolean
+        get() = alertMethods == NOTIFICATION || alertMethods == 0b0000
 }

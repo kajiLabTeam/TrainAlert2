@@ -15,13 +15,8 @@ import net.harutiro.trainalert2.features.room.routeDB.entities.RouteEntity
 
 @Composable
 fun RouteItem(route: RouteEntity, onEdit: () -> Unit, onDelete: () -> Unit) {
-    // アラート方法の表示を変換
-    val alertMethodDisplay = when (route.alertMethods) {
-        RouteEntity.NOTIFICATION -> "通知"
-        RouteEntity.VIBRATION -> "バイブレーション"
-        RouteEntity.BOTH -> "通知とバイブレーション"
-        else -> "None"
-    }
+    // アラート方法のビットフラグを表示
+    val alertMethodDisplay = "0b" + route.alertMethods.toString(2).padStart(4, '0')
 
     // 有効かどうかの表示を変換
     val isEnabledDisplay = if (route.isEnabled) "オン" else "オフ"
