@@ -2,7 +2,11 @@
 ===
 
 # 発表資料
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTDZSHJ29sa8ME7Kr0JZJr5MuCd-JVeNR33wDKdAVGy7wiA2L61Svi0CIKvtDaK_IyQ6izVTr0KrSO4/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+画像をクリックするとGoogleSlideのサイトに飛びます
+<a href="https://docs.google.com/presentation/d/1VmZ5MqhrQ4TsarSlLL7I6Yjs7zetDlh5msGu6t8NdqU/edit?usp=sharing">
+<img width="960" style="margin: 10px;  border-radius: 20px;"   src="./ReadmeImages/2024年TrainAlert梶研発表.png">
+</a>
 
 # 概要
 電車の乗り過ごしを防止するアプリケーション
