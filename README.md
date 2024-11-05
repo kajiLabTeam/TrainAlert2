@@ -1,6 +1,9 @@
 トレアラ(TrainAlert)
 ===
 
+# 発表資料
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTDZSHJ29sa8ME7Kr0JZJr5MuCd-JVeNR33wDKdAVGy7wiA2L61Svi0CIKvtDaK_IyQ6izVTr0KrSO4/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
 # 概要
 電車の乗り過ごしを防止するアプリケーション
 位置推定、ジオフェンス、通知、Mapなどが使われる
