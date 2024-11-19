@@ -90,5 +90,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     //
-    implementation ("com.google.accompanist:accompanist-permissions:0.23.1")
+    implementation (libs.accompanist.permissions)
 }
