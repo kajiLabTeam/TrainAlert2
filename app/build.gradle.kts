@@ -88,4 +88,7 @@ dependencies {
     // コルーチン関連の追加
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+
+    //パーミッションチェック関連
+    implementation (libs.accompanist.permissions)
 }
