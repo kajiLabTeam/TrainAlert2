@@ -88,4 +88,7 @@ dependencies {
     // コルーチン関連の追加
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+
+    //
+    implementation ("com.google.accompanist:accompanist-permissions:0.23.1")
 }
